@@ -1,0 +1,406 @@
+{
+  "Version": 1,
+  "WorkspaceRootPath": "C:\\Users\\pc\\source\\repos\\Bookify\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\unitofwork\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\unitofwork\\unitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\unitofwork\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\unitofwork\\iunitofwork.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\bookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\ibookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\ibookingrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\cartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\cartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\iroomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\roomrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\icartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\icartrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\roomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\roomtype.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\booking.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\igenericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FD384AB-3C42-4B5E-A890-8E5D517105F3}|Bookify.ConsoleApp\\Bookify.ConsoleApp.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify.consoleapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{5FD384AB-3C42-4B5E-A890-8E5D517105F3}|Bookify.ConsoleApp\\Bookify.ConsoleApp.csproj|solutionrelative:bookify.consoleapp\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\contexts\\bookifydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\contexts\\bookifydbcontext.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\migrations\\20251104235807_initial create.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\migrations\\20251104235807_initial create.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{5FD384AB-3C42-4B5E-A890-8E5D517105F3}|Bookify.ConsoleApp\\Bookify.ConsoleApp.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify.consoleapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{5FD384AB-3C42-4B5E-A890-8E5D517105F3}|Bookify.ConsoleApp\\Bookify.ConsoleApp.csproj|solutionrelative:bookify.consoleapp\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\bookingitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\bookingitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\customerprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\customerprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\baseuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\baseuser.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\adminprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\adminprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|c:\\users\\pc\\source\\repos\\bookify\\bookify\\dal\\entities\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\transaction.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
+  "DocumentGroupContainers": [
+    {
+      "Orientation": 0,
+      "VerticalTabListWidth": 256,
+      "DocumentGroups": [
+        {
+          "DockedWidth": 200,
+          "SelectedChildIndex": 3,
+          "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "IRoomRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\IRoomRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\IRoomRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\IRoomRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\IRoomRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:30:15.676Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "RoomRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\RoomRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\RoomRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\RoomRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\RoomRepository.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAQwA8AAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:30:37.908Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "BookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\BookingRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\BookingRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\BookingRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\BookingRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACEAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:31:28.004Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "Room.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Room.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\Room.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Room.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\Room.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAASAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:50:57.078Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ICartRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\ICartRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\ICartRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\ICartRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\ICartRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:31:54.18Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CartRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\CartRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\CartRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\CartRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\CartRepository.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAwAAABJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:32:16.108Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Cart.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Cart.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\Cart.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Cart.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\Cart.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABgAAAApAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:50:05.786Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IBookingRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\IBookingRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\IBookingRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\IBookingRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\IBookingRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:31:02.967Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IUnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "RelativeToolTip": "Bookify\\DAL\\UnitOfWork\\IUnitOfWork.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:33:12.561Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UnitOfWork.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\UnitOfWork\\UnitOfWork.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\UnitOfWork\\UnitOfWork.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\UnitOfWork\\UnitOfWork.cs",
+              "RelativeToolTip": "Bookify\\DAL\\UnitOfWork\\UnitOfWork.cs",
+              "ViewState": "AgIAABMAAAAAAAAAAAAgwB8AAABEAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:33:54.248Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABIAAAAJAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:29:45.333Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "RoomType.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\RoomType.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\RoomType.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\RoomType.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\RoomType.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAmwBgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:51:05.128Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "Booking.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Booking.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\Booking.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Booking.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\Booking.cs",
+              "ViewState": "AgIAAA8AAAAAAAAAAAA3wBIAAAA+AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:47:33.559Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "IGenericRepository.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\IGenericRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\IGenericRepository.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Repositories\\IGenericRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\IGenericRepository.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAoAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-05T01:28:41.528Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "20251104235807_Initial Create.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\Migrations\\20251104235807_Initial Create.cs",
+              "RelativeDocumentMoniker": "Bookify\\Migrations\\20251104235807_Initial Create.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\Migrations\\20251104235807_Initial Create.cs",
+              "RelativeToolTip": "Bookify\\Migrations\\20251104235807_Initial Create.cs",
+              "ViewState": "AgIAAOwBAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-04T23:58:07.197Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify.ConsoleApp\\appsettings.json",
+              "RelativeDocumentMoniker": "Bookify.ConsoleApp\\appsettings.json",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify.ConsoleApp\\appsettings.json",
+              "RelativeToolTip": "Bookify.ConsoleApp\\appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAIAAAA9AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2025-11-04T23:38:29.749Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify.ConsoleApp\\Program.cs",
+              "RelativeDocumentMoniker": "Bookify.ConsoleApp\\Program.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify.ConsoleApp\\Program.cs",
+              "RelativeToolTip": "Bookify.ConsoleApp\\Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-04T23:32:38.298Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "BookifyDbContext.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Contexts\\BookifyDbContext.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Contexts\\BookifyDbContext.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Contexts\\BookifyDbContext.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Contexts\\BookifyDbContext.cs",
+              "ViewState": "AgIAAGkAAAAAAAAAAAAAAHgAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-04T22:19:08.19Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 23,
+              "Title": "Transaction.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Transaction.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\Transaction.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\Transaction.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\Transaction.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAqwAwAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:51:22.675Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 18,
+              "Title": "CartItem.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\CartItem.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\CartItem.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\CartItem.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\CartItem.cs",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAA8AAAAxAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:50:36.609Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 20,
+              "Title": "CustomerProfile.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAA2AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:48:52.87Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 19,
+              "Title": "BookingItem.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\BookingItem.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\BookingItem.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\BookingItem.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\BookingItem.cs",
+              "ViewState": "AgIAAAQAAAAAAAAAAAAcwA0AAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:47:41.484Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 21,
+              "Title": "BaseUser.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\BaseUser.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\BaseUser.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\BaseUser.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\BaseUser.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:47:31.443Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 22,
+              "Title": "AdminProfile.cs",
+              "DocumentMoniker": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\AdminProfile.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\AdminProfile.cs",
+              "ToolTip": "C:\\Users\\pc\\source\\repos\\Bookify\\Bookify\\DAL\\Entities\\AdminProfile.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\AdminProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAcAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-02T15:28:50.887Z"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
