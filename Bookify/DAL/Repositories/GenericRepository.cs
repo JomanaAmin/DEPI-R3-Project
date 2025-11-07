@@ -29,6 +29,10 @@ namespace Bookify.DAL.Repositories
         {
             return await _dbSet.ToListAsync();
         }
+        public IQueryable<T> GetAllAsQueryable() 
+        {
+            return _dbSet.AsQueryable();
+        }
 
         public virtual async Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> predicate)
         {

@@ -12,6 +12,7 @@ namespace Bookify.DAL.UnitOfWork
 
         //Generic Repositories
         IGenericRepository<RoomType> RoomTypes { get; }
+        IGenericRepository<RoomImage> RoomImages { get; }
         IGenericRepository<CartItem> CartItems { get; }
         IGenericRepository<BookingItem> BookingItems { get; }
         IGenericRepository<Transaction> Transactions { get; }

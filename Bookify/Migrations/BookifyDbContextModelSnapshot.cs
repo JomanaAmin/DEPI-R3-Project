@@ -272,6 +272,28 @@ namespace Bookify.Migrations
                     b.ToTable("Rooms");
                 });
 
+            modelBuilder.Entity("Bookify.DAL.Entities.RoomImage", b =>
+                {
+                    b.Property<int>("RoomImageId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("RoomImageId"));
+
+                    b.Property<string>("ImageUrl")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RoomId")
+                        .HasColumnType("int");
+
+                    b.HasKey("RoomImageId");
+
+                    b.HasIndex("RoomId");
+
+                    b.ToTable("RoomImages");
+                });
+
             modelBuilder.Entity("Bookify.DAL.Entities.RoomType", b =>
                 {
                     b.Property<int>("RoomTypeId")
@@ -574,6 +596,17 @@ namespace Bookify.Migrations
                     b.Navigation("RoomType");
                 });
 
+            modelBuilder.Entity("Bookify.DAL.Entities.RoomImage", b =>
+                {
+                    b.HasOne("Bookify.DAL.Entities.Room", "Room")
+                        .WithMany("RoomImages")
+                        .HasForeignKey("RoomId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Room");
+                });
+
             modelBuilder.Entity("Bookify.DAL.Entities.Transaction", b =>
                 {
                     b.HasOne("Bookify.DAL.Entities.Booking", "Booking")
@@ -678,6 +711,8 @@ namespace Bookify.Migrations
                     b.Navigation("BookingItems");
 
                     b.Navigation("CartItems");
+
+                    b.Navigation("RoomImages");
                 });
 
             modelBuilder.Entity("Bookify.DAL.Entities.RoomType", b =>

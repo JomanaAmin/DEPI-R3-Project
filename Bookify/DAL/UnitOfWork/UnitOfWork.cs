@@ -17,6 +17,7 @@ namespace Bookify.DAL.UnitOfWork
             Carts = new CartRepository(_context);
 
             RoomTypes = new GenericRepository<RoomType>(_context);
+            RoomImages = new GenericRepository<RoomImage>(_context);
             CartItems = new GenericRepository<CartItem>(_context);
             BookingItems = new GenericRepository<BookingItem>(_context);
             Transactions = new GenericRepository<Transaction>(_context);
@@ -27,6 +28,7 @@ namespace Bookify.DAL.UnitOfWork
         public IBookingRepository Bookings { get; }
         public ICartRepository Carts { get; }
         public IGenericRepository<RoomType> RoomTypes { get; }
+        public IGenericRepository<RoomImage> RoomImages { get; }
         public IGenericRepository<CartItem> CartItems { get; }
         public IGenericRepository<BookingItem> BookingItems { get; }
         public IGenericRepository<Transaction> Transactions { get; }

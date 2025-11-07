@@ -15,6 +15,7 @@ namespace Bookify.DAL.Contexts
         public DbSet<CustomerProfile> CustomerProfiles { get; set; }
         public DbSet<RoomType> RoomTypes { get; set; }
         public DbSet<Room> Rooms { get; set; }
+        public DbSet<RoomImage> RoomImages { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<CartItem> CartItems { get; set; }
         public DbSet<Booking> Bookings { get; set; }
@@ -73,6 +74,11 @@ namespace Bookify.DAL.Contexts
                     .WithOne(ci => ci.Room)
                     .HasForeignKey(ci => ci.RoomId)
                     .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasMany(r => r.RoomImages)
+                    .WithOne(ri => ri.Room)
+                    .HasForeignKey(ri => ri.RoomId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
 
             modelBuilder.Entity<Booking>(entity =>
@@ -111,7 +117,7 @@ namespace Bookify.DAL.Contexts
                 var optionsBuilder = new DbContextOptionsBuilder<BookifyDbContext>();
 
                 
-                optionsBuilder.UseSqlServer("Server=DESKTOP-4UN634S\\SQLEXPRESS;Database=BookifyDB;Trusted_Connection=True;TrustServerCertificate=True;");
+                optionsBuilder.UseSqlServer("Data Source=.;Initial Catalog=BookifyDb;Integrated Security=True;Trust Server Certificate=True");
 
                 return new BookifyDbContext(optionsBuilder.Options);
             }

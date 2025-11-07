@@ -1,0 +1,16 @@
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.BusinessLayer.deps.json
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.BusinessLayer.dll
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.BusinessLayer.pdb
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.dll
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.pdb
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.csproj.AssemblyReference.cache
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.AssemblyInfoInputs.cache
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.AssemblyInfo.cs
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.csproj.CoreCompileInputs.cache
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.sourcelink.json
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify..EDE38CF9.Up2Date
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.dll
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\refint\Bookify.BusinessLayer.dll
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.pdb
+E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\ref\Bookify.BusinessLayer.dll
