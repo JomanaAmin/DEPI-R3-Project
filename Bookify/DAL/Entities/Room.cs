@@ -22,8 +22,6 @@ namespace Bookify.DAL.Entities
         public RoomType RoomType { get; set; } = null!;
         public ICollection<BookingItem> BookingItems { get; set; } = new HashSet<BookingItem>();
         public ICollection<CartItem> CartItems { get; set; } = new HashSet<CartItem>();
-
-        public IEnumerable<RoomImage> RoomImages { get; set; } = new List<RoomImage>();
     }
 
     public enum RoomStatus
@@ -33,5 +31,4 @@ namespace Bookify.DAL.Entities
         Reserved,
         Maintenance
     }
-
 }
