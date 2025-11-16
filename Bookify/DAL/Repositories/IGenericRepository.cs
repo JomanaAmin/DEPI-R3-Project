@@ -11,6 +11,6 @@ namespace Bookify.DAL.Repositories
         Task<IEnumerable<T>> GetByConditionAsync(Expression<Func<T, bool>> predicate);//An expression tree — EF Core can read and translate to SQL.
         Task CreateAsync(T entity);
         void Update(T entity);//deferred
-        void Delete(T entity);//deferred
+        Task<T?> Delete(int id);//deferred
     }
 }

@@ -9,5 +9,8 @@ namespace Bookify.DAL.Repositories
 {
     public interface IRoomImageRepository : IGenericRepository<RoomImage>
     {
+        Task AddImagesRangeAsync(List<RoomImage> images);
+        Task<List<RoomImage>> DeleteImagesRangeAsync(IEnumerable<int> ids);
+
     }
 }

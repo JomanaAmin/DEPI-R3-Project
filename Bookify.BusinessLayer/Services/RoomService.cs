@@ -1,7 +1,11 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.RoomDTOs;
+using Bookify.DAL.Entities;
 using Bookify.DAL.Repositories;
 using Bookify.DAL.UnitOfWork;
+using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,35 +18,172 @@ namespace Bookify.BusinessLayer.Services
     {
         private readonly IUnitOfWork unitOfWork;
         private IRoomRepository roomRepository;
-        public RoomService(IUnitOfWork unitOfWork)
+        private IRoomImageRepository roomImageRepository;
+        private IImageStorageService imageStorageService;
+        public RoomService(IUnitOfWork unitOfWork, IImageStorageService imageStorageService)
         {
             this.unitOfWork = unitOfWork;
             roomRepository = unitOfWork.Rooms;
+            roomImageRepository = unitOfWork.RoomImages;
+            this.imageStorageService = imageStorageService;
         }
 
-        public Task<RoomDetailsDTO> CreateRoomAsync(RoomCreateDTO roomCreateDTO)
+        public async Task<RoomDetailsDTO> CreateRoomAsync(RoomCreateDTO roomCreateDTO)
         {
-            throw new NotImplementedException();
+            Room room = new Room 
+            {
+                RoomTypeId = roomCreateDTO.RoomTypeId,
+                Floor = roomCreateDTO.Floor,
+                BuildingNumber = roomCreateDTO.BuildingNumber,
+                Status = roomCreateDTO.Status,
+               
+            };
+            await roomRepository.CreateAsync(room);
+            await unitOfWork.SaveChangesAsync();
+            int roomId = room.RoomId;
+
+            List<RoomImage> images = new List<RoomImage>();
+            images= await ExtractImageAsync(roomCreateDTO.Images, roomId);
+            room.RoomImages= images;
+            return MapToRoomDetailsDTO(room);
+
+        }
+        public async Task<RoomDetailsDTO> DeleteRoomAsync(int roomId)
+        {
+            Room? room = await roomRepository.Delete(roomId);
+            if(room == null) throw new Exception("Room not found");
+            await unitOfWork.SaveChangesAsync();
+            return MapToRoomDetailsDTO(room);
         }
 
-        public Task<RoomDetailsDTO> DeleteRoom(int roomId)
+        public async Task<RoomDetailsDTO> UpdateRoomAsync(RoomUpdateDTO roomUpdateDTO)
         {
-            throw new NotImplementedException();
+            Room room= await roomRepository.GetByIdAsync(roomUpdateDTO.RoomId);
+            if (room == null) 
+            {
+                throw new Exception($"Room with ID: {roomUpdateDTO.RoomId} not found");
+            }
+            room.RoomTypeId = roomUpdateDTO.RoomTypeId;
+            room.Floor= roomUpdateDTO.Floor;
+            room.BuildingNumber = roomUpdateDTO.BuildingNumber;
+            room.Status = roomUpdateDTO.Status;
+            roomRepository.Update(new Room 
+            { 
+                RoomId= roomUpdateDTO.RoomId,
+                RoomTypeId = roomUpdateDTO.RoomTypeId,
+                Floor = roomUpdateDTO.Floor,
+                BuildingNumber= roomUpdateDTO.BuildingNumber,
+                Status = roomUpdateDTO.Status
+            });
+            if ((roomUpdateDTO.Images != null && roomUpdateDTO.Images.Any() ))
+            {
+                List<RoomImage> images =  await ExtractImageAsync(roomUpdateDTO.Images, roomUpdateDTO.RoomId);
+                await roomImageRepository.AddImagesRangeAsync(images);
+                   
+            }
+            if (roomUpdateDTO.ImagesToDelete != null && roomUpdateDTO.ImagesToDelete.Any())
+            {
+                List<RoomImage> images = await roomImageRepository.DeleteImagesRangeAsync(roomUpdateDTO.ImagesToDelete);
+                foreach (var img in images)
+                {
+                    await imageStorageService.DeleteImageAsync(img.ImageUrl);
+                }
+
+            }
+
+            await unitOfWork.SaveChangesAsync();
+            return await ViewRoomDetails(roomUpdateDTO.RoomId);
         }
 
-        public Task<RoomDetailsDTO> UpdateRoom(RoomUpdateDTO roomUpdateDTO)
+        public async Task<List<RoomViewDTO>> ViewAllRooms()
         {
-            throw new NotImplementedException();
+            List<RoomViewDTO> rooms = await roomRepository.GetAllAsQueryable().Select(
+                r => new RoomViewDTO
+                {
+                    RoomId = r.RoomId,
+                    RoomTypeId = r.RoomTypeId,
+                    RoomTypeName = r.RoomType.TypeName,
+                    PricePerNight = r.RoomType.PricePerNight,
+                    Status = r.Status,
+                    ThumbnailImage = r.RoomImages.Select(
+                        img => img.ImageUrl
+                        ).FirstOrDefault()
+
+                }
+                ).AsNoTracking().ToListAsync();
+            return rooms;
         }
 
-        public Task<RoomViewDTO> ViewAllRooms()
+        public async Task<RoomDetailsDTO> ViewRoomDetails(int roomId)
         {
-            throw new NotImplementedException();
+            RoomDetailsDTO? room = await roomRepository.GetAllAsQueryable().Select(
+                r=> new RoomDetailsDTO 
+                {
+                    RoomId = r.RoomId,
+                    RoomTypeId = r.RoomTypeId,
+                    RoomTypeName = r.RoomType.TypeName,
+                    PricePerNight = r.RoomType.PricePerNight,
+                    Floor =  r.Floor,
+                    BuildingNumber = r.BuildingNumber,
+                    Status = r.Status,
+                    RoomType = r.RoomType,
+                    Images= r.RoomImages.Select(
+                        img=> img.ImageUrl
+                        ).ToList()
+
+                }
+                ).SingleOrDefaultAsync(r=>r.RoomId== roomId);
+            if (room == null) throw new Exception("Room ID does not exist");
+            return room;
+
         }
 
-        public Task<RoomDetailsDTO> ViewRoomDetails(int roomId)
+   
+        public RoomDetailsDTO MapToRoomDetailsDTO(Room room)
         {
-            throw new NotImplementedException();
+            return new RoomDetailsDTO
+            {
+                RoomId = room.RoomId,
+                RoomTypeId = room.RoomTypeId,
+                RoomTypeName = room.RoomType.TypeName,
+                PricePerNight = room.RoomType.PricePerNight,
+                Floor = room.Floor,
+                BuildingNumber = room.BuildingNumber,
+                Status = room.Status,
+                Images = room.RoomImages.Select(img => img.ImageUrl).ToList()
+            };
+        }
+        public RoomViewDTO MapToRoomViewDTO(Room room)
+        {
+            return new RoomViewDTO
+            {
+                RoomId = room.RoomId,
+                RoomTypeId = room.RoomTypeId,
+                RoomTypeName = room.RoomType.TypeName,
+                PricePerNight = room.RoomType.PricePerNight,
+                Status = room.Status,
+                ThumbnailImage = room.RoomImages.Select(img => img.ImageUrl).FirstOrDefault()
+            };
+        }
+ 
+        public async Task<List<RoomImage>> ExtractImageAsync(List<IFormFile> formFiles, int roomId)
+        {
+            List<RoomImage> roomImages = new List<RoomImage>();
+            foreach (IFormFile formFile in formFiles)
+            {
+                RoomImage roomImage = new RoomImage
+                {
+                    RoomId = roomId,
+                    ImageUrl = await imageStorageService.SaveImagesAsync(formFile, roomId)
+                };
+                await roomImageRepository.CreateAsync(roomImage);
+                roomImages.Add(roomImage);
+            }
+            await unitOfWork.SaveChangesAsync();
+
+            return roomImages;
+
+
         }
     }
 }

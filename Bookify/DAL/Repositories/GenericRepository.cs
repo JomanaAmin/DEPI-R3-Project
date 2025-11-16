@@ -49,9 +49,15 @@ namespace Bookify.DAL.Repositories
             _dbSet.Update(entity);
         }
 
-        public virtual void Delete(T entity)
+        public virtual async Task<T?> Delete(int id)
         {
-            _dbSet.Remove(entity);
+            T? toBeDeleted = await this.GetByIdAsync(id);
+            if (toBeDeleted == null)
+            {
+                return null;
+            }
+            _dbSet.Remove(toBeDeleted);
+            return toBeDeleted;
         }
     }
 }

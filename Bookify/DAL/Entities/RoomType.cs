@@ -20,6 +20,7 @@ namespace Bookify.DAL.Entities
 
         //Navigation Properties
         public ICollection<Room> Rooms { get; set; } = new HashSet<Room>();
+
     }
 
 }

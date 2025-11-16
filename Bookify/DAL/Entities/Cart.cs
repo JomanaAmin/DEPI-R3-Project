@@ -18,7 +18,7 @@ namespace Bookify.DAL.Entities
 
         //It is better to handle the computed properties in the service layer but it is lightweight so it is ok 
         [NotMapped]
-        public decimal TotalAmount => CartItems?.Sum(ci => ci.Subtotal) ?? 0;
+        public decimal TotalAmount { get; set; } //public decimal TotalAmount => CartItems?.Sum(ci => ci.Subtotal) ?? 0;
 
         //Navigation Properties
         public CustomerProfile Customer { get; set; } = null!;

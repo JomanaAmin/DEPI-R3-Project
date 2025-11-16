@@ -1,17 +1,3 @@
-C:\Users\pc\source\repos\Bookify\Bookify\bin\Debug\net8.0\Bookify.deps.json
-C:\Users\pc\source\repos\Bookify\Bookify\bin\Debug\net8.0\Bookify.runtimeconfig.json
-C:\Users\pc\source\repos\Bookify\Bookify\bin\Debug\net8.0\Bookify.dll
-C:\Users\pc\source\repos\Bookify\Bookify\bin\Debug\net8.0\Bookify.pdb
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.csproj.AssemblyReference.cache
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.GeneratedMSBuildEditorConfig.editorconfig
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.AssemblyInfoInputs.cache
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.AssemblyInfo.cs
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.csproj.CoreCompileInputs.cache
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.dll
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\refint\Bookify.dll
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.pdb
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\Bookify.genruntimeconfig.cache
-C:\Users\pc\source\repos\Bookify\Bookify\obj\Debug\net8.0\ref\Bookify.dll
 E:\Projects\DEPI-R3-Project\Bookify\bin\Debug\net8.0\Bookify.deps.json
 E:\Projects\DEPI-R3-Project\Bookify\bin\Debug\net8.0\Bookify.runtimeconfig.json
 E:\Projects\DEPI-R3-Project\Bookify\bin\Debug\net8.0\Bookify.dll

@@ -7,33 +7,44 @@ namespace Bookify.DAL.UnitOfWork
     public class UnitOfWork : IUnitOfWork
     {
         private readonly BookifyDbContext _context;
+        private Lazy<IRoomRepository> rooms;
+        private Lazy<IBookingRepository> bookings;
+        private Lazy<ICartRepository> carts;        
+        private Lazy<IRoomImageRepository> roomImages;
 
+        private Lazy<IGenericRepository<RoomType>> roomTypes;
+        private Lazy<IGenericRepository<CartItem>> cartItems;
+        private Lazy<IGenericRepository<BookingItem>> bookingItems;
+        private Lazy<IGenericRepository<Transaction>> transactions;
+        private Lazy<IGenericRepository<CustomerProfile>> customerProfiles;
+        private Lazy<IGenericRepository<AdminProfile>> adminProfiles;
         public UnitOfWork(BookifyDbContext context)
         {
             _context = context;
+            rooms = new Lazy<IRoomRepository>(() => new RoomRepository(_context));  
+            bookings = new Lazy<IBookingRepository>(() => new BookingRepository(_context));
+            carts = new Lazy<ICartRepository>(() => new CartRepository(_context));
+            roomImages = new Lazy<IRoomImageRepository>(() => new RoomImageRepository(_context));
+            roomTypes = new Lazy<IGenericRepository<RoomType>>(() => new GenericRepository<RoomType>(_context));
+            cartItems = new Lazy<IGenericRepository<CartItem>>(() => new GenericRepository<CartItem>(_context));
+            bookingItems = new Lazy<IGenericRepository<BookingItem>>(() => new GenericRepository<BookingItem>(_context));
+            transactions = new Lazy<IGenericRepository<Transaction>>(() => new GenericRepository<Transaction>(_context));
+            customerProfiles = new Lazy<IGenericRepository<CustomerProfile>>(() => new GenericRepository<CustomerProfile>(_context));
+            adminProfiles = new Lazy<IGenericRepository<AdminProfile>>(() => new GenericRepository<AdminProfile>(_context));
 
-            Rooms = new RoomRepository(_context);
-            Bookings = new BookingRepository(_context);
-            Carts = new CartRepository(_context);
 
-            RoomTypes = new GenericRepository<RoomType>(_context);
-            RoomImages = new GenericRepository<RoomImage>(_context);
-            CartItems = new GenericRepository<CartItem>(_context);
-            BookingItems = new GenericRepository<BookingItem>(_context);
-            Transactions = new GenericRepository<Transaction>(_context);
-            CustomerProfiles = new GenericRepository<CustomerProfile>(_context);
-            AdminProfiles = new GenericRepository<AdminProfile>(_context);
-        }    
-        public IRoomRepository Rooms { get; }
-        public IBookingRepository Bookings { get; }
-        public ICartRepository Carts { get; }
-        public IGenericRepository<RoomType> RoomTypes { get; }
-        public IGenericRepository<RoomImage> RoomImages { get; }
-        public IGenericRepository<CartItem> CartItems { get; }
-        public IGenericRepository<BookingItem> BookingItems { get; }
-        public IGenericRepository<Transaction> Transactions { get; }
-        public IGenericRepository<CustomerProfile> CustomerProfiles { get; }
-        public IGenericRepository<AdminProfile> AdminProfiles { get; }
+        }
+        public IRoomRepository Rooms => rooms.Value;
+        public IBookingRepository Bookings => bookings.Value;
+        public ICartRepository Carts =>  carts.Value;
+        public IRoomImageRepository RoomImages => roomImages.Value;
+
+        public IGenericRepository<RoomType> RoomTypes => roomTypes.Value;
+        public IGenericRepository<CartItem> CartItems => cartItems.Value;
+        public IGenericRepository<BookingItem> BookingItems => bookingItems.Value;
+        public IGenericRepository<Transaction> Transactions => transactions.Value;
+        public IGenericRepository<CustomerProfile> CustomerProfiles => customerProfiles.Value;
+        public IGenericRepository<AdminProfile> AdminProfiles => adminProfiles.Value;
 
         public async Task<int> SaveChangesAsync()//returns the number of affected rows
         {

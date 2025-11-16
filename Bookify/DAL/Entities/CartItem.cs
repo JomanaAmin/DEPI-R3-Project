@@ -18,11 +18,10 @@ namespace Bookify.DAL.Entities
         
         //Computed property
         [NotMapped]
-        public int Nights => (CheckOutDate - CheckInDate).Days;
+        public int Nights { get; set; }//i am gonna compute it in the service layer as (CheckOutDate - CheckInDate).Days
 
         [NotMapped]
-        public decimal Subtotal => (Room?.RoomType?.PricePerNight ?? 0) * Nights;
-
+        public decimal Subtotal { get; set; }// => (Room?.RoomType?.PricePerNight ?? 0) * Nights;
         //Navigation Properties
         public Cart Cart { get; set; } = null!;
         public Room Room { get; set; } = null!;
