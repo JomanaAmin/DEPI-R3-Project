@@ -12,7 +12,7 @@ namespace Bookify.BusinessLayer.Contracts
 
         Task AddItemToCartAsync(string userId, CartAddItemDTO itemDto);
         Task<CartViewDTO> RemoveItemFromCartAsync(string userId, int cartItemId);
-        Task<CartViewDTO> UpdateItemDatesAsync(string userId, int cartItemId, DateTime checkInDate, DateTime checkOutDate);
+        Task<CartViewDTO> UpdateItemDatesAsync(string userId, CartItemUpdateDatesDTO cartDTO);
 
         // Retrieval and Finalization
         Task<CartViewDTO> GetCartByUserIdAsync(string userId);

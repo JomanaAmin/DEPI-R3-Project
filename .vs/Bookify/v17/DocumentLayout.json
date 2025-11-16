@@ -3,28 +3,64 @@
   "WorkspaceRootPath": "E:\\Projects\\DEPI-R3-Project\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\checkoutsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\checkoutsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\cartadditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\cartadditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\cartviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\cartviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\contracts\\icartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\contracts\\icartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\services\\cartservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\cartitemupdatedatesdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\cartitemupdatedatesdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|e:\\projects\\depi-r3-project\\bookify\\dal\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\cartitem.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\services\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\services\\roomservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10BAA519-ED66-4932-A6CA-5BF818DED7B5}|Bookify.API\\Bookify.API.csproj|e:\\projects\\depi-r3-project\\bookify.api\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10BAA519-ED66-4932-A6CA-5BF818DED7B5}|Bookify.API\\Bookify.API.csproj|solutionrelative:bookify.api\\controllers\\cartcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\cartitemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|e:\\projects\\depi-r3-project\\bookify\\dal\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\cart.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|e:\\projects\\depi-r3-project\\bookify\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\repositories\\genericrepository.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|e:\\projects\\depi-r3-project\\bookify\\dal\\entities\\customerprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\customerprofile.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\cartviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\cartviewdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|e:\\projects\\depi-r3-project\\bookify\\dal\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\cartadditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\cartadditemdto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\dtos\\cartdtos\\checkoutsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\dtos\\cartdtos\\checkoutsummarydto.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{10BAA519-ED66-4932-A6CA-5BF818DED7B5}|Bookify.API\\Bookify.API.csproj|e:\\projects\\depi-r3-project\\bookify.api\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{10BAA519-ED66-4932-A6CA-5BF818DED7B5}|Bookify.API\\Bookify.API.csproj|solutionrelative:bookify.api\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{10BAA519-ED66-4932-A6CA-5BF818DED7B5}|Bookify.API\\Bookify.API.csproj|e:\\projects\\depi-r3-project\\bookify.api\\controllers\\roomcontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -33,14 +69,6 @@
     {
       "AbsoluteMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|e:\\projects\\depi-r3-project\\bookify.businesslayer\\services\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{58890B4B-D183-4E7A-8299-5880417EAD61}|Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj|solutionrelative:bookify.businesslayer\\services\\roomtypeservice.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|e:\\projects\\depi-r3-project\\bookify\\dal\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{52F0FE33-C8EB-4522-8EAA-57639C0B9901}|Bookify\\Bookify.csproj|solutionrelative:bookify\\dal\\entities\\room.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{10BAA519-ED66-4932-A6CA-5BF818DED7B5}|Bookify.API\\Bookify.API.csproj|e:\\projects\\depi-r3-project\\bookify.api\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{10BAA519-ED66-4932-A6CA-5BF818DED7B5}|Bookify.API\\Bookify.API.csproj|solutionrelative:bookify.api\\controllers\\roomtypecontroller.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -50,37 +78,145 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 0,
+          "SelectedChildIndex": 5,
           "Children": [
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{1fc202d4-d401-403c-9834-5b218574bb67}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "CartItemUpdateDatesDTO.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemUpdateDatesDTO.cs",
+              "RelativeDocumentMoniker": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemUpdateDatesDTO.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemUpdateDatesDTO.cs",
+              "RelativeToolTip": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemUpdateDatesDTO.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T13:33:30.593Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "CustomerProfile.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\CustomerProfile.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T12:45:02.011Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "CartController.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Controllers\\CartController.cs",
+              "RelativeDocumentMoniker": "Bookify.API\\Controllers\\CartController.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Controllers\\CartController.cs",
+              "RelativeToolTip": "Bookify.API\\Controllers\\CartController.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAxwBcAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T11:24:33.24Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "CartItem.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\CartItem.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\CartItem.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\CartItem.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\CartItem.cs",
+              "ViewState": "AgIAAAgAAAAAAAAAAAAAwBAAAAAyAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T09:01:53.54Z",
+              "EditorCaption": ""
+            },
             {
               "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "CartService.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Services\\CartService.cs",
+              "RelativeDocumentMoniker": "Bookify.BusinessLayer\\Services\\CartService.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Services\\CartService.cs",
+              "RelativeToolTip": "Bookify.BusinessLayer\\Services\\CartService.cs",
+              "ViewState": "AgIAAHwAAAAAAAAAAAAqwJYAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-15T21:51:18.089Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "CartItemDTO.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemDTO.cs",
+              "RelativeDocumentMoniker": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemDTO.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemDTO.cs",
+              "RelativeToolTip": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartItemDTO.cs",
+              "ViewState": "AgIAAAIAAAAAAAAAAAAowBgAAAAIAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T10:13:59.878Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "Cart.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\Cart.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\Cart.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\Cart.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Entities\\Cart.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAVAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T10:08:56.822Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "GenericRepository.cs",
+              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeDocumentMoniker": "Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "RelativeToolTip": "Bookify\\DAL\\Repositories\\GenericRepository.cs",
+              "ViewState": "AgIAAB8AAAAAAAAAAAAkwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2025-11-16T09:37:57.332Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
               "Title": "CheckoutSummaryDTO.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CheckoutSummaryDTO.cs",
               "RelativeDocumentMoniker": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CheckoutSummaryDTO.cs",
               "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CheckoutSummaryDTO.cs",
               "RelativeToolTip": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CheckoutSummaryDTO.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAjAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAABAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-15T22:07:31.408Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 10,
               "Title": "CartViewDTO.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartViewDTO.cs",
               "RelativeDocumentMoniker": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartViewDTO.cs",
               "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartViewDTO.cs",
               "RelativeToolTip": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartViewDTO.cs",
-              "ViewState": "AgIAAAgAAAAAAAAAAAAxwA4AAAAqAAAAAAAAAA==",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-15T21:53:44.469Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 12,
               "Title": "CartAddItemDTO.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartAddItemDTO.cs",
               "RelativeDocumentMoniker": "Bookify.BusinessLayer\\DTOs\\CartDTOs\\CartAddItemDTO.cs",
@@ -93,45 +229,33 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "CartService.cs",
-              "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Services\\CartService.cs",
-              "RelativeDocumentMoniker": "Bookify.BusinessLayer\\Services\\CartService.cs",
-              "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Services\\CartService.cs",
-              "RelativeToolTip": "Bookify.BusinessLayer\\Services\\CartService.cs",
-              "ViewState": "AgIAAA0AAAAAAAAAAAAvwBgAAAAwAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-15T21:51:18.089Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "ICartService.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Contracts\\ICartService.cs",
               "RelativeDocumentMoniker": "Bookify.BusinessLayer\\Contracts\\ICartService.cs",
               "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Contracts\\ICartService.cs",
               "RelativeToolTip": "Bookify.BusinessLayer\\Contracts\\ICartService.cs",
-              "ViewState": "AgIAAAsAAAAAAAAAAAAtwBIAAAArAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAASAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-15T21:49:43.386Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 8,
+              "DocumentIndex": 11,
               "Title": "Room.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\Room.cs",
               "RelativeDocumentMoniker": "Bookify\\DAL\\Entities\\Room.cs",
               "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify\\DAL\\Entities\\Room.cs",
               "RelativeToolTip": "Bookify\\DAL\\Entities\\Room.cs",
-              "ViewState": "AgIAABEAAAAAAAAAAAAgwB4AAAARAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAAAwAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T12:57:00.842Z"
+              "WhenOpened": "2025-11-13T12:57:00.842Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 16,
               "Title": "RoomTypeService.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Services\\RoomTypeService.cs",
               "RelativeDocumentMoniker": "Bookify.BusinessLayer\\Services\\RoomTypeService.cs",
@@ -139,25 +263,24 @@
               "RelativeToolTip": "Bookify.BusinessLayer\\Services\\RoomTypeService.cs",
               "ViewState": "AgIAADcAAAAAAAAAAAAnwEIAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T12:26:15.699Z",
-              "EditorCaption": ""
+              "WhenOpened": "2025-11-13T12:26:15.699Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 4,
               "Title": "RoomService.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Services\\RoomService.cs",
               "RelativeDocumentMoniker": "Bookify.BusinessLayer\\Services\\RoomService.cs",
               "ToolTip": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Services\\RoomService.cs",
               "RelativeToolTip": "Bookify.BusinessLayer\\Services\\RoomService.cs",
-              "ViewState": "AgIAAFIAAAAAAAAAAAApwFwAAAAAAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABEAAAAFAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2025-11-09T09:51:53.932Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 6,
+              "DocumentIndex": 15,
               "Title": "RoomController.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Controllers\\RoomController.cs",
               "RelativeDocumentMoniker": "Bookify.API\\Controllers\\RoomController.cs",
@@ -170,7 +293,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 9,
+              "DocumentIndex": 14,
               "Title": "RoomTypeController.cs",
               "DocumentMoniker": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Controllers\\RoomTypeController.cs",
               "RelativeDocumentMoniker": "Bookify.API\\Controllers\\RoomTypeController.cs",
@@ -178,7 +301,8 @@
               "RelativeToolTip": "Bookify.API\\Controllers\\RoomTypeController.cs",
               "ViewState": "AgIAAA0AAAAAAAAAAAAxwDQAAAAwAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2025-11-13T12:23:12.274Z"
+              "WhenOpened": "2025-11-13T12:23:12.274Z",
+              "EditorCaption": ""
             }
           ]
         }
