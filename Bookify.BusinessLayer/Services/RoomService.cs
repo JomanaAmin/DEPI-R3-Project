@@ -18,6 +18,7 @@ namespace Bookify.BusinessLayer.Services
     {
         private readonly IUnitOfWork unitOfWork;
         private IRoomRepository roomRepository;
+        private IGenericRepository<RoomType> roomTypeRepository;
         private IRoomImageRepository roomImageRepository;
         private IImageStorageService imageStorageService;
         public RoomService(IUnitOfWork unitOfWork, IImageStorageService imageStorageService)
@@ -30,6 +31,11 @@ namespace Bookify.BusinessLayer.Services
 
         public async Task<RoomDetailsDTO> CreateRoomAsync(RoomCreateDTO roomCreateDTO)
         {
+            RoomType? roomType = await roomTypeRepository.GetByIdAsync(roomCreateDTO.RoomTypeId);
+            if (roomType == null) 
+            {
+                throw new Exception($"Room Type {roomCreateDTO.RoomTypeId} not found");
+            }
             Room room = new Room 
             {
                 RoomTypeId = roomCreateDTO.RoomTypeId,

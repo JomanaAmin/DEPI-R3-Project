@@ -1,0 +1,11 @@
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.csproj.AssemblyReference.cache
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\rpswa.dswa.cache.json
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.GeneratedMSBuildEditorConfig.editorconfig
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.AssemblyInfoInputs.cache
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.AssemblyInfo.cs
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.csproj.CoreCompileInputs.cache
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.MvcApplicationPartsAssemblyInfo.cs
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.MvcApplicationPartsAssemblyInfo.cache
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.RazorAssemblyInfo.cache
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.RazorAssemblyInfo.cs
+E:\Projects\DEPI-R3-Project\Bookify.MVC\obj\Debug\net8.0\Bookify.MVC.sourcelink.json

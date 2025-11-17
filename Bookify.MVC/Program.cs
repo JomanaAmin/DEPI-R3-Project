@@ -1,3 +1,6 @@
+using Bookify.BusinessLayer.Contracts;
+using Bookify.MVC.Services;
+
 namespace Bookify.MVC
 {
     public class Program
@@ -8,7 +11,7 @@ namespace Bookify.MVC
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
-
+            builder.Services.AddScoped<IImageStorageService,LocalImageStorageService>();
             var app = builder.Build();
 
             // Configure the HTTP request pipeline.

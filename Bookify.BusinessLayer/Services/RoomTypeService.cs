@@ -31,7 +31,8 @@ namespace Bookify.BusinessLayer.Services
                 TypeName =  roomTypeCreateDTO.TypeName,
                 Description = roomTypeCreateDTO.Description,
                 Capacity = roomTypeCreateDTO.Capacity,
-                PricePerNight = roomTypeCreateDTO.PricePerNight
+                PricePerNight = roomTypeCreateDTO.PricePerNight,
+                BedType = roomTypeCreateDTO.BedType
             };
             await roomTypeRepository.CreateAsync(roomType);
             await unitOfWork.SaveChangesAsync();
