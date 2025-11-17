@@ -1,5 +1,68 @@
 [
   {
+    "ContainingType": "Bookify.API.Controllers.CartController",
+    "Method": "GetCart",
+    "RelativePath": "api/Cart/{customerId, cartItemId}",
+    "HttpMethod": "DELETE",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": false
+      },
+      {
+        "Name": "cartItemId",
+        "Type": "System.Int32",
+        "IsRequired": false
+      },
+      {
+        "Name": "customerId, cartItemId",
+        "Type": "",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bookify.API.Controllers.CartController",
+    "Method": "GetCart",
+    "RelativePath": "api/Cart/{customerId}",
+    "HttpMethod": "GET",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
+    "ContainingType": "Bookify.API.Controllers.CartController",
+    "Method": "GetCart",
+    "RelativePath": "api/Cart/{customerId}",
+    "HttpMethod": "PUT",
+    "IsController": true,
+    "Order": 0,
+    "Parameters": [
+      {
+        "Name": "customerId",
+        "Type": "System.String",
+        "IsRequired": true
+      },
+      {
+        "Name": "cartDTO",
+        "Type": "Bookify.BusinessLayer.DTOs.CartDTOs.CartItemUpdateDatesDTO",
+        "IsRequired": true
+      }
+    ],
+    "ReturnTypes": []
+  },
+  {
     "ContainingType": "Bookify.API.Controllers.RoomController",
     "Method": "GetAllRooms",
     "RelativePath": "api/Room",

@@ -117,7 +117,7 @@ namespace Bookify.BusinessLayer.Services
             return await GetCartByUserIdAsync(customerId);
         }
         //////////UPDATE ITEM IN CART//////////
-        public async Task<CartViewDTO> UpdateItemDatesAsync(string customerId, string userId, CartItemUpdateDatesDTO cartDTO)
+        public async Task<CartViewDTO> UpdateItemDatesAsync(string customerId, CartItemUpdateDatesDTO cartDTO)
         {
             validateCustomerId(customerId, cartDTO.CartItemId);
             //CartItem? cartItem = cartItemRepo.GetAllAsQueryable().AsNoTracking().Where(ci => ci.CartItemId == cartDTO.CartItemId).FirstOrDefault();
