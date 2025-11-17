@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Projects\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj": {}
+    "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj": {}
   },
   "projects": {
-    "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj": {
+    "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj",
+        "projectUniqueName": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj",
         "projectName": "Bookify.API",
-        "projectPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj",
-        "packagesPath": "C:\\Users\\joman\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\obj\\",
+        "projectPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj",
+        "packagesPath": "C:\\Users\\theme\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.API\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\joman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\theme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -32,8 +32,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj": {
-                "projectPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj"
+              "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj": {
+                "projectPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj"
               }
             }
           }
@@ -84,24 +84,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj": {
+    "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj",
+        "projectUniqueName": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj",
         "projectName": "Bookify.BusinessLayer",
-        "projectPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj",
-        "packagesPath": "C:\\Users\\joman\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.BusinessLayer\\obj\\",
+        "projectPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.BusinessLayer\\Bookify.BusinessLayer.csproj",
+        "packagesPath": "C:\\Users\\theme\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.BusinessLayer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\joman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\theme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -116,8 +116,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\Projects\\DEPI-R3-Project\\Bookify\\Bookify.csproj": {
-                "projectPath": "E:\\Projects\\DEPI-R3-Project\\Bookify\\Bookify.csproj"
+              "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify\\Bookify.csproj": {
+                "projectPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify\\Bookify.csproj"
               }
             }
           }
@@ -163,24 +163,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Projects\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj": {
+    "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj",
+        "projectUniqueName": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj",
         "projectName": "Bookify.MVC",
-        "projectPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj",
-        "packagesPath": "C:\\Users\\joman\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.MVC\\obj\\",
+        "projectPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.MVC\\Bookify.MVC.csproj",
+        "packagesPath": "C:\\Users\\theme\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.MVC\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\joman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\theme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -195,8 +195,8 @@
           "net8.0": {
             "targetAlias": "net8.0",
             "projectReferences": {
-              "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj": {
-                "projectPath": "E:\\Projects\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj"
+              "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj": {
+                "projectPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify.API\\Bookify.API.csproj"
               }
             }
           }
@@ -235,24 +235,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "E:\\Projects\\DEPI-R3-Project\\Bookify\\Bookify.csproj": {
+    "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify\\Bookify.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Projects\\DEPI-R3-Project\\Bookify\\Bookify.csproj",
+        "projectUniqueName": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify\\Bookify.csproj",
         "projectName": "Bookify",
-        "projectPath": "E:\\Projects\\DEPI-R3-Project\\Bookify\\Bookify.csproj",
-        "packagesPath": "C:\\Users\\joman\\.nuget\\packages\\",
-        "outputPath": "E:\\Projects\\DEPI-R3-Project\\Bookify\\obj\\",
+        "projectPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify\\Bookify.csproj",
+        "packagesPath": "C:\\Users\\theme\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\theme\\Documents\\New folder\\DEPI-R3-Project\\Bookify\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\joman\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\theme\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -320,7 +320,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.305/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

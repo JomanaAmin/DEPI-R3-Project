@@ -14,3 +14,19 @@ E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.Busin
 E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\refint\Bookify.BusinessLayer.dll
 E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.pdb
 E:\Projects\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\ref\Bookify.BusinessLayer.dll
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.BusinessLayer.deps.json
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.BusinessLayer.dll
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.BusinessLayer.pdb
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.dll
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\bin\Debug\net8.0\Bookify.pdb
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.csproj.AssemblyReference.cache
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.AssemblyInfoInputs.cache
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.AssemblyInfo.cs
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.csproj.CoreCompileInputs.cache
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.sourcelink.json
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify..EDE38CF9.Up2Date
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.dll
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\refint\Bookify.BusinessLayer.dll
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\Bookify.BusinessLayer.pdb
+C:\Users\theme\Documents\New folder\DEPI-R3-Project\Bookify.BusinessLayer\obj\Debug\net8.0\ref\Bookify.BusinessLayer.dll
