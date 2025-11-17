@@ -15,7 +15,7 @@ namespace Bookify.BusinessLayer.Contracts
         Task<RoomDetailsDTO> ViewRoomDetails (int roomId);
         Task<List<RoomViewDTO>> ViewAllRooms();
         Task<RoomDetailsDTO> UpdateRoomAsync(RoomUpdateDTO roomUpdateDTO);
-        Task<RoomDetailsDTO> DeleteRoomAsync(int roomId);
+        Task DeleteRoomAsync(int roomId);
         Task<List<RoomImage>> ExtractImageAsync(List<IFormFile> formFiles, int roomId);
 
 

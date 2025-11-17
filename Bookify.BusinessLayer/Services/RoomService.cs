@@ -1,11 +1,11 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.RoomDTOs;
+using Bookify.BusinessLayer.DTOs.RoomTypeDTOs;
 using Bookify.DAL.Entities;
 using Bookify.DAL.Repositories;
 using Bookify.DAL.UnitOfWork;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -54,13 +54,19 @@ namespace Bookify.BusinessLayer.Services
             return MapToRoomDetailsDTO(room);
 
         }
-        public async Task<RoomDetailsDTO> DeleteRoomAsync(int roomId)
+        public async Task DeleteRoomAsync(int roomId)
         {
             Room? room = await roomRepository.Delete(roomId);
             if(room == null) throw new Exception("Room not found");
             await unitOfWork.SaveChangesAsync();
-            return MapToRoomDetailsDTO(room);
         }
+        //public async Task<RoomDetailsDTO> DeleteRoomAsync(int roomId)
+        //{
+        //    Room? room = await roomRepository.Delete(roomId);
+        //    if(room == null) throw new Exception("Room not found");
+        //    await unitOfWork.SaveChangesAsync();
+        //    return MapToRoomDetailsDTO(room);
+        //}
 
         public async Task<RoomDetailsDTO> UpdateRoomAsync(RoomUpdateDTO roomUpdateDTO)
         {
@@ -120,43 +126,88 @@ namespace Bookify.BusinessLayer.Services
             return rooms;
         }
 
+        //public async Task<RoomDetailsDTO> ViewRoomDetails(int roomId)
+        //{
+        //    RoomDetailsDTO? room = await roomRepository.GetAllAsQueryable().Select(
+        //        r=> new RoomDetailsDTO 
+        //        {
+        //            RoomId = r.RoomId,
+        //            RoomTypeId = r.RoomTypeId,
+        //            RoomTypeName = r.RoomType.TypeName,
+        //            PricePerNight = r.RoomType.PricePerNight,
+        //            Floor =  r.Floor,
+        //            BuildingNumber = r.BuildingNumber,
+        //            Status = r.Status,
+        //            RoomType = r.RoomType,
+        //            Images= r.RoomImages.Select(
+        //                img=> img.ImageUrl
+        //                ).ToList()
+
+        //        }
+        //        ).SingleOrDefaultAsync(r=>r.RoomId== roomId);
+        //    if (room == null) throw new Exception("Room ID does not exist");
+        //    return room;
+
+        //}
+
         public async Task<RoomDetailsDTO> ViewRoomDetails(int roomId)
         {
             RoomDetailsDTO? room = await roomRepository.GetAllAsQueryable().Select(
-                r=> new RoomDetailsDTO 
+                r => new RoomDetailsDTO
                 {
                     RoomId = r.RoomId,
-                    RoomTypeId = r.RoomTypeId,
-                    RoomTypeName = r.RoomType.TypeName,
-                    PricePerNight = r.RoomType.PricePerNight,
-                    Floor =  r.Floor,
+                    //RoomTypeId = r.RoomTypeId,
+                    //RoomTypeName = r.RoomType.TypeName,
+                    //PricePerNight = r.RoomType.PricePerNight,
+                    Floor = r.Floor,
                     BuildingNumber = r.BuildingNumber,
                     Status = r.Status,
-                    RoomType = r.RoomType,
-                    Images= r.RoomImages.Select(
-                        img=> img.ImageUrl
+                    RoomTypeDetails = new RoomTypeDetailsDTO 
+                    {
+                        RoomTypeId = r.RoomType.RoomTypeId,
+                        TypeName = r.RoomType.TypeName,
+                        Description = r.RoomType.Description,
+                        Capacity = r.RoomType.Capacity,
+                        PricePerNight = r.RoomType.PricePerNight,
+                        BedCount = r.RoomType.BedCount,
+                        BedType = r.RoomType.BedType,
+                        BathroomCount = r.RoomType.BathroomCount
+                    },
+                    Images = r.RoomImages.Select(
+                        img => img.ImageUrl
                         ).ToList()
 
                 }
-                ).SingleOrDefaultAsync(r=>r.RoomId== roomId);
+                ).SingleOrDefaultAsync(r => r.RoomId == roomId);
             if (room == null) throw new Exception("Room ID does not exist");
             return room;
 
         }
 
-   
+
         public RoomDetailsDTO MapToRoomDetailsDTO(Room room)
         {
             return new RoomDetailsDTO
             {
                 RoomId = room.RoomId,
-                RoomTypeId = room.RoomTypeId,
-                RoomTypeName = room.RoomType.TypeName,
-                PricePerNight = room.RoomType.PricePerNight,
+                //RoomTypeId = room.RoomTypeId,
+                //RoomTypeName = room.RoomType.TypeName,
+                //PricePerNight = room.RoomType.PricePerNight,
                 Floor = room.Floor,
                 BuildingNumber = room.BuildingNumber,
                 Status = room.Status,
-                Images = room.RoomImages.Select(img => img.ImageUrl).ToList()
+                Images = room.RoomImages.Select(img => img.ImageUrl).ToList(),
+                RoomTypeDetails= new RoomTypeDetailsDTO
+                {
+                    RoomTypeId = room.RoomType.RoomTypeId,
+                    TypeName = room.RoomType.TypeName,
+                    Description = room.RoomType.Description,
+                    Capacity = room.RoomType.Capacity,
+                    PricePerNight = room.RoomType.PricePerNight,
+                    BedCount = room.RoomType.BedCount,
+                    BedType = room.RoomType.BedType,
+                    BathroomCount = room.RoomType.BathroomCount
+                }
             };
         }
         public RoomViewDTO MapToRoomViewDTO(Room room)

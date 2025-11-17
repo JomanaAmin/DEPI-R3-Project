@@ -10,4 +10,8 @@
     <ProjectReference Include="..\Bookify.API\Bookify.API.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\app\" />
+  </ItemGroup>
+
 </Project>

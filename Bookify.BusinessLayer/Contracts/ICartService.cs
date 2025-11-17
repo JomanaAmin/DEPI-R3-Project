@@ -21,6 +21,9 @@ namespace Bookify.BusinessLayer.Contracts
         // Core Business Logic
         Task<bool> ValidateCartItemsAsync(string userId);
         Task<CheckoutSummaryDTO> CalculateCheckoutSummaryAsync(string userId);
-        
+        public void validateCustomerId(string customerId, int cartItemId);
+
+
+
     }
 }

@@ -19,28 +19,29 @@ namespace Bookify.API.Controllers
         public async Task<IActionResult> GetRoom(int id)
         {
             var response=await roomService.ViewRoomDetails(id);
-            //return Ok($"room {id}!");
             return Ok(response);
         }
         [HttpGet]
         public async Task<IActionResult> GetAllRooms()
         {
-            return Ok("All rooms!");
+            var response = await roomService.ViewAllRooms();
+            return Ok(response);
         }
         [HttpPost]
         public async Task<IActionResult> CreateRoom(RoomCreateDTO roomCreateDTO)
         { 
             var response=await roomService.CreateRoomAsync(roomCreateDTO);
             return Ok(response); 
-            //return Ok("Room created!"); 
         }
 
         [HttpPut]
-        public async Task<IActionResult> UpdateRoom()
-        { return Ok("Room updated!"); }
+        public async Task<IActionResult> UpdateRoom(RoomUpdateDTO roomUpdateDTO)
+        { 
+            return Ok(await roomService.UpdateRoomAsync(roomUpdateDTO)); 
+        }
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
-        { return Ok($"Room {id} deleted!"); }
+        { return Ok(await roomService.DeleteRoomAsync(id)); }
     }
 }
