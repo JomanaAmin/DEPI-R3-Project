@@ -12,5 +12,6 @@ namespace Bookify.DAL.Repositories
         Task CreateAsync(T entity);
         void Update(T entity);//deferred
         Task<T?> Delete(int id);//deferred
+        Task<T?> Delete(string id);//deferred
     }
 }

@@ -13,8 +13,7 @@ namespace Bookify.BusinessLayer.DTOs.BaseUserDTOs.CustomerProfileDTOs
         public string FullName { get; set; } = null!; // Calculated/mapped from FirstName/LastName
         public DateTime CreatedAt { get; set; }
 
-        // Add more customer-specific data here later:
-        // public string? PreferredCurrency { get; set; }
-        // public int TotalBookingsCount { get; set; } 
+        // Add more customer-specific data here later
+        //past bookings
     }
 }

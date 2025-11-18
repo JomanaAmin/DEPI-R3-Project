@@ -12,5 +12,6 @@ namespace Bookify.BusinessLayer.DTOs.BaseUserDTOs.AdminProfileDTOs
         public string Email { get; set; } = null!; // From BaseUser
         public string FullName { get; set; } = null!; // Calculated/mapped from FirstName/LastName
         public DateTime CreatedAt { get; set; }
+
     }
 }

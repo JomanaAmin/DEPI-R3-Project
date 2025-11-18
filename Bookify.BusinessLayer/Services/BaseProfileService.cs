@@ -1,4 +1,5 @@
-﻿using Bookify.DAL.Contexts;
+﻿using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
+using Bookify.DAL.Contexts;
 using Bookify.DAL.Entities;
 using Bookify.DAL.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
@@ -20,28 +21,39 @@ namespace Bookify.BusinessLayer.Services
             this.unitOfWork = unitOfWork;
             this.userManager = userManager;
         }
-
-
-        /// Handles the unique logic for creating the specific profile (Customer/Admin) and saving the changes to the database.
-        /// <param name="baseUser">The newly created BaseUser entity.</param>
-        /// <returns>The ID of the created user.</returns>
-        protected abstract Task<string> CreateSpecificProfileAndSaveAsync(BaseUser baseUser);
-
-        /// Gets the role to assign to the user (e.g., "Customer" or "Admin").
+        protected abstract Task<BaseUser> CreateSpecificProfileAndSaveAsync(BaseUser user, BaseUserCreateDTO baseUserCreateDTO);
         protected abstract string GetRoleName();
 
-        // --- Shared Core Registration Logic ---
-
-        // This method executes the standard Identity steps
-        public async Task<string> RegisterBaseUserAsync(BaseUser baseUser)
-        {
-            // 1. Assign the Role (Calling the abstract method to get the role name)
+        //////CREATING A USER//////
+        protected async Task<BaseUser> FinalizeRegistrationAsync(BaseUser baseUser, BaseUserCreateDTO baseUserCreateDTO )
+        {           
             await userManager.AddToRoleAsync(baseUser, GetRoleName());
-
-            // 2. Execute the specific profile creation (delegated to the child class)
-            string userId = await CreateSpecificProfileAndSaveAsync(baseUser);
-
-            return userId;
+            await CreateSpecificProfileAndSaveAsync(baseUser,baseUserCreateDTO);
+            return baseUser;
         }
+
+
+        protected async Task<bool> EmailExistsAsync(string email)
+        => await userManager.FindByEmailAsync(email) != null;
+
+        protected async Task<BaseUser?> GetUserByIdAsync(string userId)
+            => await userManager.FindByIdAsync(userId);
+        protected async Task<bool> DeleteByUserAsync(BaseUser baseUser)
+        {
+            var res= await userManager.DeleteAsync(baseUser);
+            return (res.Succeeded);
+        }
+        protected async Task<BaseUser?> GetUserByEmailAsync(string email)
+            => await userManager.FindByEmailAsync(email);
+
+        protected async Task<bool> CheckPasswordAsync(BaseUser user, string password)
+            => await userManager.CheckPasswordAsync(user, password);
+
+        protected async Task<IdentityResult> UpdateUserAsync(BaseUser user)
+            => await userManager.UpdateAsync(user);
+
+        protected async Task<IdentityResult> ChangePasswordAsync(
+            BaseUser user, string oldPassword, string newPassword)
+            => await userManager.ChangePasswordAsync(user, oldPassword, newPassword);
     }
 }

@@ -1,4 +1,7 @@
-﻿using Bookify.DAL.Entities;
+﻿using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
+using Bookify.BusinessLayer.DTOs.BaseUserDTOs.CustomerProfileDTOs;
+using Bookify.BusinessLayer.DTOs.BookingDTOs;
+using Bookify.DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,7 +12,10 @@ namespace Bookify.BusinessLayer.Contracts
 {
     public interface ICustomerProfileService
     {
-        Task<string> CreateCustomerProfileAsync(BaseUser baseUser, string firstName, string lastName);
-
+        Task RegisterCustomerAsync(BaseUserCreateDTO baseUserCreateDTO);
+        Task<CustomerProfileViewDTO> GetCustomerProfileAsync(string customerId);
+        Task<CustomerProfileViewDTO> UpdateCustomerDetailsAsync(string customerId, CustomerProfileUpdateDTO updateDto);
+        Task DeleteCustomerProfileAsync(string customerId);
+        Task<List<BookingViewDTO>> ViewCustomerBookingsAsync(string customerId);
     }
 }
