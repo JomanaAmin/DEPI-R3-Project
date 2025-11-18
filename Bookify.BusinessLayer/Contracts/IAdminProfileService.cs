@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Bookify.BusinessLayer.Contracts
 {
-    public interface ICustomerService
+    public interface IAdminProfileService
     {
     }
 }

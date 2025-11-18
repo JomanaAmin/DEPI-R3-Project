@@ -42,6 +42,9 @@ namespace Bookify.API.Controllers
 
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoom(int id)
-        { return Ok(await roomService.DeleteRoomAsync(id)); }
+        {
+            await roomService.DeleteRoomAsync(id);
+            return Ok(); 
+        }
     }
 }

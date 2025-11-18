@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Bookify.BusinessLayer.Services
 {
-    internal class CustomerService : ICustomerService
+    internal class AdminProfileService: IAdminProfileService
     {
     }
 }
