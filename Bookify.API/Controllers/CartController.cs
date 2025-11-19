@@ -24,7 +24,7 @@ namespace Bookify.API.Controllers
         {
             return Ok(await cartService.UpdateItemDatesAsync(customerId, cartDTO));
         }
-        [HttpDelete("{customerId, cartItemId}")]
+        [HttpDelete("/{customerId}/cart-items/{cartItemId}")]
         public async Task<IActionResult> DeleteItemFromCart(string customerId, int cartItemId) 
         {
             return Ok(await cartService.RemoveItemFromCartAsync(customerId, cartItemId));

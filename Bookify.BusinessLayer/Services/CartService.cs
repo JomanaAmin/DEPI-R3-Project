@@ -49,6 +49,10 @@ namespace Bookify.BusinessLayer.Services
             int cartId= await customerRepository.GetAllAsQueryable().AsNoTracking().Where(c=>c.CustomerId==customerId).Select(c=>c.Cart.CartId).SingleOrDefaultAsync();
             decimal pricePerNight = roomRepository.GetAllAsQueryable().AsNoTracking().Where(r => r.RoomId == cartItemDTO.RoomId).Select(r => r.RoomType.PricePerNight).FirstOrDefault();
             //This is more efficient as it only fetches the price per night instead of entire room object.
+            if (cartItemDTO.CheckInDate > cartItemDTO.CheckOutDate) 
+            {
+                throw new Exception("Check-out date must be after check-in date");
+            }
             int nights = (cartItemDTO.CheckOutDate - cartItemDTO.CheckInDate).Days;
             decimal subtotal = pricePerNight * nights;
             CartItem cartItem = new CartItem {
