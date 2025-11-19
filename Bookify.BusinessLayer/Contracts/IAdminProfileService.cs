@@ -13,9 +13,10 @@ namespace Bookify.BusinessLayer.Contracts
     public interface IAdminProfileService
     {
         Task RegisterAdminAsync(BaseUserCreateDTO baseUserCreateDTO);
-        Task<CustomerProfileViewDTO> GetAdminProfileAsync(string adminId);
-        Task UpdateAdminDetailsAsync(string adminId, AdminProfileUpdateDTO updateDto);
-        Task DeleteAdminSProfileAsync(string customerId);
+        Task<AdminProfileViewDTO> GetAdminProfileAsync(string adminId);
+        Task<AdminProfileViewDTO> UpdateAdminDetailsAsync(string adminId, AdminProfileUpdateDTO updateDto);
+        Task DeleteAdminProfileAsync(string adminId);
+        Task<AdminProfileViewDTO> ChangePassword(BaseUserChangePasswordDTO baseUserChangePasswordDTO);
 
     }
 }

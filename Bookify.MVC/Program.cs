@@ -1,3 +1,5 @@
+using Microsoft.Extensions.FileProviders;
+
 namespace Bookify.MVC
 {
     public class Program
@@ -6,7 +8,7 @@ namespace Bookify.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
-            builder.Services.AddScoped<IImageStorageService,LocalImageStorageService>();
+            //builder.Services.AddScoped<IImageStorageService,LocalImageStorageService>();
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())

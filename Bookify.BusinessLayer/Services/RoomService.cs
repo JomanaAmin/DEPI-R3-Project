@@ -25,6 +25,7 @@ namespace Bookify.BusinessLayer.Services
         {
             this.unitOfWork = unitOfWork;
             roomRepository = unitOfWork.Rooms;
+            roomTypeRepository = unitOfWork.RoomTypes;
             roomImageRepository = unitOfWork.RoomImages;
             this.imageStorageService = imageStorageService;
         }

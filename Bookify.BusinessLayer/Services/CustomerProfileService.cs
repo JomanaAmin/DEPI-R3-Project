@@ -1,5 +1,6 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
+using Bookify.BusinessLayer.DTOs.BaseUserDTOs.AdminProfileDTOs;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs.CustomerProfileDTOs;
 using Bookify.BusinessLayer.DTOs.BookingDTOs;
 using Bookify.DAL.Entities;
@@ -33,6 +34,10 @@ namespace Bookify.BusinessLayer.Services
                 CustomerId = user.Id, // Links to BaseUser.Id
                 FirstName = baseUserCreateDTO.FirstName ?? "Guest",
                 LastName = baseUserCreateDTO.LastName ?? "User",
+                Cart = new DAL.Entities.Cart
+                {
+                    CustomerId = user.Id
+                }
             };
 
             await customerProfileRepository.CreateAsync(customerProfile);
@@ -63,6 +68,29 @@ namespace Bookify.BusinessLayer.Services
         protected override string GetRoleName()
         {
             return "Customer";
+        }
+        public async Task<CustomerProfileViewDTO> ChangePassword(BaseUserChangePasswordDTO baseUserChangePasswordDTO)
+        {
+            BaseUser? user = await GetUserByEmailAsync(baseUserChangePasswordDTO.Email);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+            var passwordCheck = await userManager.CheckPasswordAsync(user, baseUserChangePasswordDTO.CurrentPassword);
+            if (!passwordCheck)
+            {
+                throw new Exception("Current password is incorrect.");
+            }
+            if (baseUserChangePasswordDTO.NewPassword != baseUserChangePasswordDTO.ConfirmNewPassword)
+            {
+                throw new Exception("New password and confirmation do not match.");
+            }
+            var result = await ChangePasswordAsync(user, baseUserChangePasswordDTO.CurrentPassword, baseUserChangePasswordDTO.NewPassword);
+            if (!result.Succeeded)
+            {
+                throw new Exception("Failed to change password");
+            }
+            return await GetCustomerProfileAsync(user.Id);
         }
 
         public async Task<CustomerProfileViewDTO> GetCustomerProfileAsync(string customerId)

@@ -74,6 +74,7 @@ namespace Bookify.BusinessLayer.Services
             CartViewDTO? cartViewDTO = cartRepo.GetAllAsQueryable().AsNoTracking().Where(
                 c => c.CustomerId == customerId
                 ).Select(
+          
                     c=> new CartViewDTO {
                         CartId = c.CartId,
                         Items = c.CartItems.Select(ci => new CartItemDTO
@@ -83,13 +84,15 @@ namespace Bookify.BusinessLayer.Services
                             RoomId=ci.RoomId,
                             CheckInDate=ci.CheckInDate,
                             CheckOutDate=ci.CheckOutDate,
-                            PricePerNight=ci.Room.RoomType.PricePerNight,
-                            Subtotal=ci.Subtotal,
-                            Nights=ci.Nights,
+                            PricePerNight=ci.Room.RoomType.PricePerNight,                            
+                            Nights= EF.Functions.DateDiffDay(ci.CheckInDate, ci.CheckOutDate),
+                            Subtotal = EF.Functions.DateDiffDay(ci.CheckInDate, ci.CheckOutDate) * ci.Room.RoomType.PricePerNight,
                             PreviewImageUrl=ci.Room.RoomImages.Select(ri=>ri.ImageUrl).FirstOrDefault()??string.Empty
 
                         }).ToList(),
-                        Total = c.CartItems.Sum(ci => ci.Subtotal),
+                        Total = c.CartItems.Sum(ci =>
+                        EF.Functions.DateDiffDay(ci.CheckInDate, ci.CheckOutDate)
+                        * ci.Room.RoomType.PricePerNight),
                     }
                 
                 ).FirstOrDefault();

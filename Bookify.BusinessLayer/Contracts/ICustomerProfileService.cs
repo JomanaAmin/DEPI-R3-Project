@@ -1,4 +1,5 @@
 ﻿using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
+using Bookify.BusinessLayer.DTOs.BaseUserDTOs.AdminProfileDTOs;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs.CustomerProfileDTOs;
 using Bookify.BusinessLayer.DTOs.BookingDTOs;
 using Bookify.DAL.Entities;
@@ -17,5 +18,7 @@ namespace Bookify.BusinessLayer.Contracts
         Task<CustomerProfileViewDTO> UpdateCustomerDetailsAsync(string customerId, CustomerProfileUpdateDTO updateDto);
         Task DeleteCustomerProfileAsync(string customerId);
         Task<List<BookingViewDTO>> ViewCustomerBookingsAsync(string customerId);
+        Task<CustomerProfileViewDTO> ChangePassword(BaseUserChangePasswordDTO baseUserChangePasswordDTO);
+
     }
 }

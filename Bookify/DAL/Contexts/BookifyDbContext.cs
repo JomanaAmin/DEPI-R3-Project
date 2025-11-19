@@ -1,6 +1,7 @@
-﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using Bookify.DAL.Entities;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
-using Bookify.DAL.Entities;
 using Microsoft.EntityFrameworkCore.Design;
 
 namespace Bookify.DAL.Contexts
@@ -104,6 +105,27 @@ namespace Bookify.DAL.Contexts
                 entity.Property(t => t.Amount)
                     .HasPrecision(18, 2);
             });
+            var adminRoleId = Guid.NewGuid().ToString();
+            var customerRoleId = Guid.NewGuid().ToString();
+
+            // 2. Create the IdentityRole objects
+            modelBuilder.Entity<IdentityRole>().HasData(
+                new IdentityRole
+                {
+                    Id = adminRoleId,
+                    Name = "Admin",
+                    NormalizedName = "ADMIN",
+                    ConcurrencyStamp = adminRoleId // Recommended to set ConcurrencyStamp
+                },
+                new IdentityRole
+                {
+                    Id = customerRoleId,
+                    Name = "Customer",
+                    NormalizedName = "CUSTOMER",
+                    ConcurrencyStamp = customerRoleId // Recommended to set ConcurrencyStamp
+                }
+            );
+            // -
 
         }
     }

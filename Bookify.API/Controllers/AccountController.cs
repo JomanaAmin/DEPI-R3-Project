@@ -45,6 +45,57 @@ namespace Bookify.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet]
+        [HttpGet("admin/{adminId}")]
+        public async Task<IActionResult> GetAdminProfile(string adminId)
+        {
+            try
+            {
+                var response=await adminProfileService.GetAdminProfileAsync(adminId);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpGet("customer/{customerId}")]
+        public async Task<IActionResult> GetCustomerProfile(string customerId)
+        {
+            try
+            {
+                var response=await customerProfileService.GetCustomerProfileAsync(customerId);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("customer/{customerId}")]
+        public async Task<IActionResult> DeleteCustomerProfile(string customerId)
+        {
+            try
+            {
+                await customerProfileService.DeleteCustomerProfileAsync(customerId);
+                return Ok("Customer profile deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+        [HttpDelete("admin/{adminId}")]
+        public async Task<IActionResult> DeleteAdminProfile(string adminId)
+        {
+            try
+            {
+                await adminProfileService.DeleteAdminProfileAsync(adminId);
+                return Ok("Admin profile deleted successfully.");
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
     }
 }

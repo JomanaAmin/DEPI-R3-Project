@@ -1,11 +1,11 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs.AdminProfileDTOs;
-using Bookify.BusinessLayer.DTOs.BaseUserDTOs.CustomerProfileDTOs;
 using Bookify.DAL.Entities;
 using Bookify.DAL.Repositories;
 using Bookify.DAL.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -60,19 +60,80 @@ namespace Bookify.BusinessLayer.Services
             }
             await FinalizeRegistrationAsync(user, baseUserCreateDTO);
         }
-        public Task<CustomerProfileViewDTO> GetAdminProfileAsync(string adminId)
+
+        public async Task<AdminProfileViewDTO> ChangePassword(BaseUserChangePasswordDTO baseUserChangePasswordDTO) 
         {
-            throw new NotImplementedException();
+            BaseUser? user = await GetUserByEmailAsync(baseUserChangePasswordDTO.Email);
+            if (user == null)
+            {
+                throw new Exception("User not found.");
+            }
+            var passwordCheck = await userManager.CheckPasswordAsync(user, baseUserChangePasswordDTO.CurrentPassword);
+            if (!passwordCheck)
+            {
+                throw new Exception("Current password is incorrect.");
+            }
+            if (baseUserChangePasswordDTO.NewPassword != baseUserChangePasswordDTO.ConfirmNewPassword)
+            {
+                throw new Exception("New password and confirmation do not match.");
+            }
+            var result = await ChangePasswordAsync(user, baseUserChangePasswordDTO.CurrentPassword,baseUserChangePasswordDTO.NewPassword);
+            if (!result.Succeeded) 
+            {
+                throw new Exception("Failed to change password");
+            }
+            return await GetAdminProfileAsync(user.Id);
+        }
+        public async Task<AdminProfileViewDTO> GetAdminProfileAsync(string adminId)
+        {
+            AdminProfileViewDTO? adminProfileViewDTO = await adminProfileRepository.GetAllAsQueryable().AsNoTracking().Where(ap => ap.AdminId == adminId)
+            .Select(ap => new AdminProfileViewDTO
+            {
+                AdminId = ap.AdminId,
+                Email = ap.User.Email,
+                FullName = ap.FirstName + " " + ap.LastName,
+                CreatedAt = ap.CreatedAt
+            }
+
+            )
+            .SingleOrDefaultAsync();
+            if (adminProfileViewDTO == null)
+            {
+                throw new Exception("Admin profile not found.");
+            }
+            return adminProfileViewDTO;
         }
 
-        public Task UpdateAdminDetailsAsync(string adminId, AdminProfileUpdateDTO updateDto)
+        public async Task<AdminProfileViewDTO> UpdateAdminDetailsAsync(string adminId, AdminProfileUpdateDTO updateDto)
         {
-            throw new NotImplementedException();
+            AdminProfile? adminProfile = await adminProfileRepository.GetByIdAsync(adminId);
+            if (adminProfile == null)
+            {
+                throw new Exception("admin profile not found.");
+            }
+            adminProfile.FirstName = updateDto.FirstName;
+            adminProfile.LastName = updateDto.LastName;
+            adminProfileRepository.Update(adminProfile);
+            await unitOfWork.SaveChangesAsync();
+            return await GetAdminProfileAsync(adminId);
         }
 
-        public Task DeleteAdminSProfileAsync(string customerId)
+        public async Task DeleteAdminProfileAsync(string adminId)
         {
-            throw new NotImplementedException();
+            AdminProfile? adminProfile = await adminProfileRepository.GetAllAsQueryable().AsNoTracking().Where(cp => cp.AdminId == adminId).Include(cp => cp.User).SingleOrDefaultAsync();
+            if (adminProfile == null)
+            {
+                throw new Exception("admin profile not found.");
+            }
+
+            AdminProfile? toBeDeletedResult = await adminProfileRepository.Delete(adminId);
+            if (toBeDeletedResult == null) throw new Exception("Admin profile not found");
+            var success = await DeleteByUserAsync(adminProfile.User);
+            if (!success)
+            {
+                throw new Exception("Could not delete associated user account.");
+            }
+            await unitOfWork.SaveChangesAsync();
         }
     }
 }
