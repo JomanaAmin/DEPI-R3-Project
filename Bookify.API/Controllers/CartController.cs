@@ -20,14 +20,26 @@ namespace Bookify.API.Controllers
             return Ok(await cartService.GetCartByUserIdAsync(customerId));
         }
         [HttpPut("{customerId}")]
-        public async Task<IActionResult> GetCart(string customerId, CartItemUpdateDatesDTO cartDTO) 
+        public async Task<IActionResult> UpdateCartItem(string customerId, CartItemUpdateDatesDTO cartDTO) 
         {
             return Ok(await cartService.UpdateItemDatesAsync(customerId, cartDTO));
         }
         [HttpDelete("{customerId, cartItemId}")]
-        public async Task<IActionResult> GetCart(string customerId, int cartItemId) 
+        public async Task<IActionResult> DeleteItemFromCart(string customerId, int cartItemId) 
         {
             return Ok(await cartService.RemoveItemFromCartAsync(customerId, cartItemId));
+        }
+        [HttpPost("{customerId}")]
+        public async Task<IActionResult> AddItemToCart(string customerId, CartAddItemDTO cartItemDTO) 
+        {
+            try
+            {
+                await cartService.AddItemToCartAsync(customerId, cartItemDTO);
+                return Ok($"Added room {cartItemDTO.RoomId} to cart, from {cartItemDTO.CheckInDate} to {cartItemDTO.CheckOutDate}");
+            }
+            catch (Exception ex) {
+                return BadRequest(ex.Message);
+            }
         }
 
     }

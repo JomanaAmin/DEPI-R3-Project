@@ -33,6 +33,7 @@ namespace Bookify.BusinessLayer.Services
         public async Task AddItemToCartAsync(string customerId, CartAddItemDTO cartItemDTO)
         {
             CustomerProfile? customer = await customerRepository.GetByIdAsync(customerId);
+
             if (customer == null)
             {
                 throw new Exception("Customer not found");
@@ -45,14 +46,14 @@ namespace Bookify.BusinessLayer.Services
             //} //the room they are trying to book does not exist.
             //decimal subtotal = (room?.RoomType?.PricePerNight ?? 0) * nights;
             //this method fetches entire room object including room type to get price per night.
-
+            int cartId= await customerRepository.GetAllAsQueryable().AsNoTracking().Where(c=>c.CustomerId==customerId).Select(c=>c.Cart.CartId).SingleOrDefaultAsync();
             decimal pricePerNight = roomRepository.GetAllAsQueryable().AsNoTracking().Where(r => r.RoomId == cartItemDTO.RoomId).Select(r => r.RoomType.PricePerNight).FirstOrDefault();
             //This is more efficient as it only fetches the price per night instead of entire room object.
             int nights = (cartItemDTO.CheckOutDate - cartItemDTO.CheckInDate).Days;
             decimal subtotal = pricePerNight * nights;
             CartItem cartItem = new CartItem {
                 RoomId=cartItemDTO.RoomId,
-                CartId=cartItemDTO.CartId,
+                CartId= cartId,
                 CheckInDate=cartItemDTO.CheckInDate,
                 CheckOutDate=cartItemDTO.CheckOutDate,
                 Nights =nights,
@@ -62,6 +63,7 @@ namespace Bookify.BusinessLayer.Services
             await _unitOfWork.SaveChangesAsync();
             return;
         }
+
 
         //////////GET CART//////////
         public async Task<CartViewDTO> GetCartByUserIdAsync(string customerId)
