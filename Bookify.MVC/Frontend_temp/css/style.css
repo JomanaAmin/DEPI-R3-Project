@@ -213,16 +213,19 @@
     transition: .5s;
 }
 
+/* Remove text/icon transition & color change on hover */
 .service-item i,
 .service-item h5,
 .service-item p {
-    transition: .5s;
+    transition: none;
+    color: inherit;
 }
 
+/* Ensure hover does not alter text/icon color */
 .service-item:hover i,
 .service-item:hover h5,
 .service-item:hover p {
-    color: #FFFFFF !important;
+    color: inherit !important;
 }
 
 
