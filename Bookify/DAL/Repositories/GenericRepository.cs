@@ -1,6 +1,7 @@
-﻿using System.Linq.Expressions;
-using Bookify.DAL.Contexts;
+﻿using Bookify.DAL.Contexts;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
+using System.Linq.Expressions;
 
 namespace Bookify.DAL.Repositories
 {
@@ -68,6 +69,10 @@ namespace Bookify.DAL.Repositories
             }
             _dbSet.Remove(toBeDeleted);
             return toBeDeleted;
+        }
+        public void DeleteRange(IEnumerable<T> entities)
+        {
+            _dbSet.RemoveRange(entities);
         }
     }
 }

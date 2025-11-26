@@ -21,7 +21,8 @@ namespace Bookify.BusinessLayer.DTOs.CartDTOs
         public string PreviewImageUrl { get; set; } = null!; 
         public decimal PricePerNight { get; set; }
         public decimal Subtotal { get; set; }
-        
+        public bool IsValid { get; set; }
+
         //public string RoomTypeName { get; set; } = null!;
 
         //public bool IsAvailable { get; set; }

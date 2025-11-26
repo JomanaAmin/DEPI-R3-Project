@@ -22,7 +22,9 @@ namespace Bookify.BusinessLayer.Contracts
         Task<bool> ValidateCartItemsAsync(string userId);
         Task<CheckoutSummaryDTO> CalculateCheckoutSummaryAsync(string userId);
         public void validateCustomerId(string customerId, int cartItemId);
+        Task<bool> IsRoomAvailableAsync(int roomId, DateTime checkIn, DateTime checkOut);
 
+        //Task CustomerExists(string customerId);
 
 
     }

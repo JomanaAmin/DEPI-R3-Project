@@ -1,4 +1,5 @@
-﻿using System.Linq.Expressions;
+﻿using Microsoft.EntityFrameworkCore;
+using System.Linq.Expressions;
 
 namespace Bookify.DAL.Repositories
 {
@@ -13,5 +14,6 @@ namespace Bookify.DAL.Repositories
         void Update(T entity);//deferred
         Task<T?> Delete(int id);//deferred
         Task<T?> Delete(string id);//deferred
+        void DeleteRange(IEnumerable<T> entities);
     }
 }

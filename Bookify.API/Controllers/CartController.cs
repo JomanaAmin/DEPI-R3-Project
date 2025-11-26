@@ -1,5 +1,6 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.CartDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,6 +30,12 @@ namespace Bookify.API.Controllers
         {
             return Ok(await cartService.RemoveItemFromCartAsync(customerId, cartItemId));
         }
+        [HttpDelete("{customerId}")]
+        public async Task<IActionResult> ClearFromCart(string customerId) 
+        {
+            await cartService.ClearCartAsync(customerId);
+            return Ok();
+        }
         [HttpPost("{customerId}")]
         public async Task<IActionResult> AddItemToCart(string customerId, CartAddItemDTO cartItemDTO) 
         {
@@ -41,6 +48,22 @@ namespace Bookify.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [HttpPost("checkout")]
+        //[Authorize(Roles = "Customer")] // Only Customers can check out
+        public async Task<IActionResult> Checkout(string customerId)
+        {
+            try
+            {
 
+                var response = await cartService.CalculateCheckoutSummaryAsync(customerId);
+
+                return Ok(response);
+            }
+            catch (Exception ex)
+            { 
+     
+                return BadRequest(new { Message = ex.Message });
+            }
+        }
     }
 }
