@@ -86,6 +86,9 @@
                                 <a href="service.html" class="nav-item nav-link">Services</a>
                                 <a href="room.html" class="nav-item nav-link">Rooms</a>
                                 <a href="booking.html" class="nav-item nav-link ">Booking</a>
+                                <!-- Added Auth links -->
+                                <a href="#" class="nav-item nav-link" role="button" data-bs-toggle="modal" data-bs-target="#loginModal">Log In</a>
+                                <a href="#" class="nav-item nav-link" role="button" data-bs-toggle="modal" data-bs-target="#signupModal">Sign Up</a>
                             </div>
                         </div>
                     </nav>
@@ -383,6 +386,65 @@
         <!-- Video Start -->
 
 
+        <!-- Auth Modals Start -->
+        <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="loginModalLabel">Log In</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="loginForm">
+                            <div class="mb-3">
+                                <label for="loginEmail" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="loginEmail" placeholder="name@example.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="loginPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="Password" minlength="4" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Log In</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="signupModal" tabindex="-1" aria-labelledby="signupModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="signupModalLabel">Sign Up</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="signupForm">
+                            <div class="mb-3">
+                                <label for="signupUsername" class="form-label">Username</label>
+                                <input type="text" class="form-control" id="signupUsername" placeholder="Your username" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="signupEmail" class="form-label">Email address</label>
+                                <input type="email" class="form-control" id="signupEmail" placeholder="name@example.com" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="signupPhone" class="form-label">Phone number</label>
+                                <input type="tel" class="form-control" id="signupPhone" placeholder="e.g. +20 10 1234 5678" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="signupPassword" class="form-label">Password</label>
+                                <input type="password" class="form-control" id="signupPassword" placeholder="Password" minlength="4" required>
+                            </div>
+                            <button type="submit" class="btn btn-primary w-100">Create Account</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Auth Modals End -->
+
+
         <!-- Service Start -->
         <div class="container-xxl py-5">
             <div class="container">
@@ -664,6 +726,28 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
+
+    <!-- Modal submit handler (prevent page reload, just close the modal) -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var loginForm = document.getElementById('loginForm');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('loginModal'));
+                    modal.hide();
+                });
+            }
+            var signupForm = document.getElementById('signupForm');
+            if (signupForm) {
+                signupForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+                    var modal = bootstrap.Modal.getOrCreateInstance(document.getElementById('signupModal'));
+                    modal.hide();
+                });
+            }
+        });
+    </script>
 </body>
 
 </html>
