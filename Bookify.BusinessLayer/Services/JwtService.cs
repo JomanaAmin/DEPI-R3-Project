@@ -41,20 +41,27 @@ namespace Bookify.BusinessLayer.Services
             var valid = await userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
             if (!valid)
                 throw new Exception("Incorrect password");
+            var roles = await userManager.GetRolesAsync(user);
             var issuer = configuration["JwtConfig:Issuer"];
             var audience = configuration["JwtConfig:Audience"];
             var key = configuration["JwtConfig:Key"];
             int tokenValidityMins = configuration.GetValue<int>("JwtConfig:TokenValidityInMinutes");
             var expiryTime = DateTime.UtcNow.AddMinutes(tokenValidityMins);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.Email, user.Email!), // Use Email for the identity
+                new Claim("Id", user.Id), // Use "Id" for simple retrieval
+            };
+
+            // --- NEW: Add Role Claims ---
+            foreach (var role in roles)
+            {
+                claims.Add(new Claim(ClaimTypes.Role, role));
+            }
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(new[]
-                {
-                    new System.Security.Claims.Claim(ClaimTypes.Email, loginRequestDTO.Username),
-                    new System.Security.Claims.Claim("Id", user.Id.ToString()),
-                    //new System.Security.Claims.Claim(System.Security.Claims.ClaimTypes.Name, user.UserName)
-
-                }),
+                Subject = new ClaimsIdentity(claims),
                 NotBefore = DateTime.UtcNow.AddSeconds(-1), // Start 1 second in the past (optional, but safer)
 
                 Expires = expiryTime,
