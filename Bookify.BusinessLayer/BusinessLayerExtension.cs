@@ -17,6 +17,7 @@ namespace Bookify.BusinessLayer
             service.AddScoped<IRoomTypeService, RoomTypeService>();
             service.AddScoped<ICartService, CartService>();
             service.AddScoped<IPaymentService, PaymentService>();
+            service.AddScoped<IJwtService, JwtService>();
             service.AddScoped<ICustomerProfileService, CustomerProfileService>();
             service.AddScoped<IBookingService, BookingService>();
             service.AddScoped<IAdminProfileService, AdminProfileService>();
