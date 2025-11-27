@@ -108,9 +108,20 @@ namespace Bookify.BusinessLayer.Services
             return await ViewRoomDetails(roomUpdateDTO.RoomId);
         }
 
-        public async Task<List<RoomViewDTO>> ViewAllRooms()
+        public async Task<List<RoomViewDTO>> ViewAllRooms(int? roomTypeId, RoomStatus? status)
         {
-            List<RoomViewDTO> rooms = await roomRepository.GetAllAsQueryable().Select(
+            var query = roomRepository.GetAllAsQueryable();
+            if (roomTypeId != null)
+            {
+                query=query.Where(r => r.RoomTypeId == roomTypeId);
+            }
+            if (status!=null) 
+            {
+                query=query.Where(r => r.Status == status);
+            }
+            List<RoomViewDTO> rooms = await query
+             
+                .Select(
                 r => new RoomViewDTO
                 {
                     RoomId = r.RoomId,

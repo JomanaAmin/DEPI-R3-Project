@@ -1,5 +1,6 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.RoomDTOs;
+using Bookify.DAL.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,7 +11,7 @@ namespace Bookify.API.Controllers
     public class RoomController : ControllerBase
     {
         private readonly IRoomService roomService;
-        public RoomController(IRoomService roomService) 
+        public RoomController(IRoomService roomService)
         {
             this.roomService = roomService;
         }
@@ -18,13 +19,13 @@ namespace Bookify.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoom(int id)
         {
-            var response=await roomService.ViewRoomDetails(id);
+            var response = await roomService.ViewRoomDetails(id);
             return Ok(response);
         }
         [HttpGet]
-        public async Task<IActionResult> GetAllRooms()
+        public async Task<IActionResult> GetAllRooms(int? roomTypeId, RoomStatus? status)
         {
-            var response = await roomService.ViewAllRooms();
+            var response = await roomService.ViewAllRooms(roomTypeId,status);
             return Ok(response);
         }
         [HttpPost]

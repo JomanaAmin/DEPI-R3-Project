@@ -1,0 +1,15 @@
+[
+  {
+    "Name": "New Profile",
+    "Projects": [
+      {
+        "Path": "Bookify.API\\Bookify.API.csproj",
+        "Action": "Start"
+      },
+      {
+        "Path": "Bookify.MVC\\Bookify.MVC.csproj",
+        "Action": "Start"
+      }
+    ]
+  }
+]
