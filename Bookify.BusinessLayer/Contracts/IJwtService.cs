@@ -1,4 +1,4 @@
-﻿using Bookify.BusinessLayer.DTOs.BookingDTOs;
+﻿using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,8 +7,9 @@ using System.Threading.Tasks;
 
 namespace Bookify.BusinessLayer.Contracts
 {
-    public interface IBookingService
+    public interface IJwtService
     {
-        //Task CreateBookingFromCartAsync(string customerId);
+        Task<LoginResponseDTO> Authenticate(LoginRequestDTO loginRequestDTO);
+
     }
 }

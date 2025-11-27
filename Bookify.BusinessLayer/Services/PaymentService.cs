@@ -85,14 +85,14 @@ namespace Bookify.BusinessLayer.Services
 
         public async Task HandleWebhookAsync(string requestBody, string signatureHeader)
         {
-            // 1️⃣ Your Stripe webhook secret (from Stripe Dashboard)
+            //Your Stripe webhook secret (from Stripe Dashboard)
             var webhookSecret = "whsec_XXXXXXXXXXXXXXXXXXXXXXXX"; // Replace with your test secret
 
             Event stripeEvent;
 
             try
             {
-                // 2️⃣ Verify the webhook signature
+                // Verify the webhook signature
                 stripeEvent = EventUtility.ConstructEvent(
                     requestBody,
                     signatureHeader,
@@ -101,7 +101,7 @@ namespace Bookify.BusinessLayer.Services
             }
             catch (StripeException e)
             {
-                // Invalid signature
+                //Invalid signature
                 throw new Exception($"Stripe webhook signature verification failed: {e.Message}");
             }
 
@@ -118,35 +118,7 @@ namespace Bookify.BusinessLayer.Services
                 var customerEmail = session.CustomerEmail;
                 if (string.IsNullOrEmpty(customerEmail))
                     throw new Exception("Customer email not found in Stripe session.");
-                await bookingService.CreateBookingFromCartAsync(session.Metadata["customerId"]);
-                //// 5️⃣ Find the customer profile in DB
-                //var customer = await customerProfileRepository.GetAllAsQueryable()
-                //    .Include(c => c.User)
-                //    .FirstOrDefaultAsync(c => c.User.Email == customerEmail);
-
-                //if (customer == null)
-                //    throw new Exception("Customer not found in DB for the webhook event.");
-
-                //string customerId = customer.CustomerId;
-
-                //// 6️⃣ Retrieve the cart
-                //var cart = await cartService.GetCartByUserIdAsync(customerId);
-                //if (cart.Items.Count == 0)
-                //    throw new Exception("Cart is empty during webhook processing.");
-
-                //// 7️⃣ Create booking
-                //await unitOfWork.Bookings.CreateAsync(new DAL.Entities.Booking
-                //{
-                //    CustomerId = customerId,
-                //    TotalAmount = cart.Items.Sum(i => i.Subtotal),
-                //    BookingDate = DateTime.UtcNow,
-                //    // Map other fields as needed
-                //});
-
-                //await unitOfWork.SaveChangesAsync();
-
-                //// 8️⃣ Clear the cart
-                //await cartService.ClearCartAsync(customerId);
+               // await bookingService.CreateBookingFromCartAsync(session.Metadata["customerId"]);
             }
             else
             {
