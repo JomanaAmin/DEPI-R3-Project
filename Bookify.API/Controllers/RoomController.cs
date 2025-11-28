@@ -16,13 +16,14 @@ namespace Bookify.API.Controllers
         {
             this.roomService = roomService;
         }
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoom(int id)
         {
             var response = await roomService.ViewRoomDetails(id);
             return Ok(response);
         }
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllRooms(int? roomTypeId, RoomStatus? status)
         {
