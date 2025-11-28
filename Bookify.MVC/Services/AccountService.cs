@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Client;
 using System.Net;
 using System.Security.Authentication;
+using System.Text.Json;
 
 namespace Bookify.MVC.Services
 {
@@ -25,15 +26,41 @@ namespace Bookify.MVC.Services
             if (!response.IsSuccessStatusCode)
             {
                 string errorMessage = "Login failed. Please try again.";
-                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
-                if (errorDto?.Message != null)
+
+                // Safe handling: response body may be empty or not JSON
+                var contentString = await response.Content.ReadAsStringAsync();
+                if (!string.IsNullOrWhiteSpace(contentString))
                 {
-                    errorMessage = errorDto.Message;
+                    try
+                    {
+                        var errorDto = JsonSerializer.Deserialize<AccountErrorDTO>(contentString, new JsonSerializerOptions
+                        {
+                            PropertyNameCaseInsensitive = true
+                        });
+                        if (errorDto?.Message != null)
+                        {
+                            errorMessage = errorDto.Message;
+                        }
+                        else
+                        {
+                            // fallback to raw content if no structured message
+                            errorMessage = contentString.Trim();
+                        }
+                    }
+                    catch (JsonException)
+                    {
+                        // Non-JSON response (HTML, empty, etc.) => fallback on status code
+                        if (response.StatusCode == HttpStatusCode.Unauthorized)
+                            errorMessage = "Invalid email or password.";
+                        else
+                            errorMessage = $"Login failed: {response.StatusCode}";
+                    }
                 }
                 else if (response.StatusCode == HttpStatusCode.Unauthorized)
                 {
                     errorMessage = "Invalid email or password.";
                 }
+
                 return new LoginResponseDTO
                 {
                     IsSuccessful = false,

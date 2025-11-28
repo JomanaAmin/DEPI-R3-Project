@@ -27,7 +27,7 @@ namespace Bookify.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginRequestDTO model, string? returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
