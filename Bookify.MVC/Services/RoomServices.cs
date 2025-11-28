@@ -1,6 +1,10 @@
-﻿using System.Web;
+﻿using Bookify.DAL.Entities;
 using Bookify.MVC.Contracts;
 using Bookify.MVC.Models;
+using Bookify.MVC.Models.RoomDTOs;
+using System.Drawing;
+using System.Net.Http;
+using System.Web;
 
 namespace Bookify.MVC.Services
 {
@@ -8,20 +12,17 @@ namespace Bookify.MVC.Services
     {
         private readonly HttpClient _httpClient;
         public RoomServices(HttpClient httpClient) { _httpClient = httpClient; }
-        public async Task<List<RoomDto>> GetRoomDtos(string roomId, string Floor, string RoomTypeName)
+        public async Task<List<RoomViewDTO>> GetAllRoomsAsync(int? roomTypeId, RoomStatus? status) 
         {
-            // Build query string if filters are provided
             var baseUri = _httpClient.BaseAddress?.ToString() ?? "/";
             var builder = new UriBuilder(new Uri(new Uri(baseUri), "room"));
             var query = HttpUtility.ParseQueryString(builder.Query);
-            if (!string.IsNullOrWhiteSpace(roomId)) query["roomId"] = roomId;
-            if (!string.IsNullOrWhiteSpace(Floor)) query["floor"] = Floor;
-            if (!string.IsNullOrWhiteSpace(RoomTypeName)) query["roomTypeName"] = RoomTypeName;
-            builder.Query = query.ToString();
-
-            // Expect API to return a list of RoomDto
-            var rooms = await _httpClient.GetFromJsonAsync<List<RoomDto>>(builder.Uri);
-            return rooms ?? new List<RoomDto>();
+            if (roomTypeId!=null) query["roomTypeId"] = roomTypeId.ToString();
+            if (status!=null) query["status"] = status.ToString(); 
+            var response = await _httpClient.GetFromJsonAsync<AllRoomsDTO>("Room");
+            if(response?.Rooms==null)
+                return new List<RoomViewDTO>();
+            return response.Rooms;
         }
     }
 }
