@@ -1,6 +1,7 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.RoomDTOs;
 using Bookify.BusinessLayer.DTOs.RoomTypeDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,7 +16,7 @@ namespace Bookify.API.Controllers
         {
             this.roomTypeService = roomTypeService;
         }
-
+        [AllowAnonymous]
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoomType(int id)
         {
@@ -23,6 +24,7 @@ namespace Bookify.API.Controllers
             //return Ok($"room {id}!");
             return Ok(response);
         }
+        [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllRoomTypes()
         {
@@ -30,6 +32,7 @@ namespace Bookify.API.Controllers
             return Ok(response);
             //return Ok("All rooms!");
         }
+        [Authorize(Roles = "Admin")]
         [HttpPost]
         public async Task<IActionResult> CreateRoomType(RoomTypeCreateDTO roomTypeCreateDTO)
         {
@@ -37,7 +40,7 @@ namespace Bookify.API.Controllers
             return Ok(response);
             //return Ok("Room created!"); 
         }
-
+        [Authorize(Roles = "Admin")]
         [HttpPut]
         public async Task<IActionResult> UpdateRoomType(RoomTypeUpdateDTO roomTypeUpdateDTO)
         {
@@ -45,7 +48,7 @@ namespace Bookify.API.Controllers
             return Ok(response); 
             //return Ok("Room updated!"); 
         }
-
+        [Authorize(Roles ="Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoomType(int id)
         {

@@ -20,6 +20,17 @@ namespace Bookify.API.Controllers
             this.customerProfileService = customerProfileService;
             this.adminProfileService = adminProfileService;
         }
+        private string GetAuthenticatedUserId()
+        {
+            var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
+                        ?? User.FindFirst(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub)?.Value
+                        ?? User.FindFirst("sub")?.Value;
+
+            if (string.IsNullOrEmpty(userId))
+                throw new UnauthorizedAccessException("User ID claim is missing from the token.");
+
+            return userId;
+        }
         ///////////REGISTER CUSTOMER///////////
         [AllowAnonymous]
         [HttpPost("register-customer")]
@@ -55,39 +66,60 @@ namespace Bookify.API.Controllers
         }
         [Authorize (Roles ="Admin")]
 
-        [HttpGet("admin-profile/{adminId}")]
-        public async Task<IActionResult> GetAdminProfile(string adminId)
+        [HttpGet("admin-profile")]
+        public async Task<IActionResult> GetAdminProfile()
         {
             try
             {
-                var response=await adminProfileService.GetAdminProfileAsync(adminId);
+                var adminId = GetAuthenticatedUserId();
+                var response =await adminProfileService.GetAdminProfileAsync(adminId);
                 return Ok(response);
+            }
+            catch(UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("customer-profile/{customerId}")]
-        public async Task<IActionResult> GetCustomerProfile(string customerId)
+        [HttpGet("customer-profile")]
+        public async Task<IActionResult> GetCustomerProfile()
         {
+            // inside GetCustomerProfile()
+            Console.WriteLine("Is Authenticated = " + User.Identity?.IsAuthenticated);
+            foreach (var c in User.Claims)
+            {
+                Console.WriteLine($"Claim: {c.Type} = {c.Value}");
+            }
             try
             {
-                var response=await customerProfileService.GetCustomerProfileAsync(customerId);
+                var customerId = GetAuthenticatedUserId();
+                var response =await customerProfileService.GetCustomerProfileAsync(customerId);
                 return Ok(response);
+            }
+            catch(UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
         }
-        [HttpDelete("customer/{customerId}")]
-        public async Task<IActionResult> DeleteCustomerProfile(string customerId)
+        [HttpDelete("customer")]
+        public async Task<IActionResult> DeleteCustomerProfile()
         {
             try
             {
+                var customerId = GetAuthenticatedUserId();
                 await customerProfileService.DeleteCustomerProfileAsync(customerId);
                 return Ok("Customer profile deleted successfully.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {
@@ -95,13 +127,18 @@ namespace Bookify.API.Controllers
             }
         }
         [Authorize(Roles = "Admin")]
-        [HttpDelete("admin/{adminId}")]
-        public async Task<IActionResult> DeleteAdminProfile(string adminId)
+        [HttpDelete("admin")]
+        public async Task<IActionResult> DeleteAdminProfile()
         {
             try
             {
+                var adminId = GetAuthenticatedUserId();
                 await adminProfileService.DeleteAdminProfileAsync(adminId);
                 return Ok("Admin profile deleted successfully.");
+            }
+            catch (UnauthorizedAccessException ex)
+            {
+                return Unauthorized(ex.Message);
             }
             catch (Exception ex)
             {

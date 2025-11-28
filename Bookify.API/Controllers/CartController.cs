@@ -23,8 +23,6 @@ namespace Bookify.API.Controllers
       
         private string GetAuthenticatedUserId()
         {
-            Console.WriteLine("Is Authenticated = " + User.Identity.IsAuthenticated);
-
             var userId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value
                         ?? User.FindFirst(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub)?.Value
                         ?? User.FindFirst("sub")?.Value;
