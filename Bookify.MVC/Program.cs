@@ -1,3 +1,4 @@
+using Bookify.MVC.Services;
 using Microsoft.Extensions.FileProviders;
 
 namespace Bookify.MVC
@@ -8,6 +9,10 @@ namespace Bookify.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpClient<IRoomServices, RoomServices>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:baseURL"]);
+            });
             //builder.Services.AddScoped<IImageStorageService,LocalImageStorageService>();
             var app = builder.Build();
 

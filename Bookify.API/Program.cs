@@ -1,5 +1,6 @@
 using Bookify;
 using Bookify.BusinessLayer;
+using Bookify.BusinessLayer.Contracts;
 using Bookify.DAL.Contexts;
 using Bookify.DAL.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -25,6 +26,7 @@ namespace Bookify.API
             builder.Services.AddIdentity<BaseUser, IdentityRole>()
     .AddEntityFrameworkStores<BookifyDbContext>()
     .AddDefaultTokenProviders();
+           
 
             builder.Services.AddSwaggerGen(options =>
             {
