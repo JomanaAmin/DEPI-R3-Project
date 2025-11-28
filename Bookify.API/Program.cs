@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
+using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 namespace Bookify.API
 {
@@ -57,31 +58,6 @@ namespace Bookify.API
             });
             builder.Services.AddBusinessLayer();
             builder.Services.AddDataAccessLayer(builder.Configuration);
-            //builder.Services.AddAuthentication(
-            //  options =>
-            //  {
-            //      options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            //      options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-            //      options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
-            //  }
-            //  ).AddJwtBearer(
-            //    options =>
-            //    {
-            //        options.RequireHttpsMetadata = false; //enable in production
-            //        options.SaveToken = true;
-            //        options.TokenValidationParameters = new TokenValidationParameters
-            //        {
-            //            ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
-            //            ValidAudience = builder.Configuration["JwtConfig:Audience"],
-            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"]!)),
-            //            ValidateIssuer = true,
-            //            ValidateAudience = true,
-            //            ValidateLifetime = true,
-            //            ValidateIssuerSigningKey = true
-            //        };
-
-            //    }
-            //  );
             var validationKey = builder.Configuration["JwtConfig:Key"];
             Console.WriteLine($"[DEBUG] Validation Key Used: {validationKey}");
 
@@ -108,7 +84,9 @@ namespace Bookify.API
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = false,
-                    ValidateIssuerSigningKey = true
+                    ValidateIssuerSigningKey = true,
+                    NameClaimType = JwtRegisteredClaimNames.Sub,   //important
+                    RoleClaimType = System.Security.Claims.ClaimTypes.Role
                 };
                 options.Events = new JwtBearerEvents
                 {

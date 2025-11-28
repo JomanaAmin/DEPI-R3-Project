@@ -16,7 +16,7 @@ namespace Bookify.API.Controllers
             this.jwtService = jwtService;
         }
         [AllowAnonymous]
-        [HttpPost("admin")]
+        [HttpPost]
         public async Task<IActionResult> AdminLogin(LoginRequestDTO loginRequest)
         {
             try

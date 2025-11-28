@@ -49,20 +49,20 @@ namespace Bookify.BusinessLayer.Services
             int tokenValidityMins = configuration.GetValue<int>("JwtConfig:TokenValidityInMinutes");
             var expiryTime = DateTime.UtcNow.AddMinutes(tokenValidityMins);
 
-            //
-            var signingKey = configuration["JwtConfig:Key"];
-            Console.WriteLine($"[DEBUG] Signing Key Used: {signingKey}");
-            //
+            var roles = await userManager.GetRolesAsync(user);
+
+            var claims = new List<Claim>
+            {
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email ?? string.Empty),
+                new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.Id)
+            };
+
+            // add each role claim from Identity
+            claims.AddRange(roles.Select(r => new Claim(ClaimTypes.Role, r)));
+
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity([
-            
-                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email), // Use Email for the identity
-                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-                    new Claim(ClaimTypes.Role, "Admin"),
-                    new Claim(ClaimTypes.Role, "Customer")
-
-                    ]),
+                Subject = new ClaimsIdentity(claims),
                 NotBefore = DateTime.UtcNow.AddSeconds(-1), // Start 1 second in the past (optional, but safer)
 
                 Expires = expiryTime,
