@@ -28,9 +28,15 @@ namespace Bookify.API.Controllers
         [HttpGet]
         public async Task<IActionResult> GetAllRoomTypes()
         {
-            var response = await roomTypeService.ViewAllRoomTypes();
-            return Ok(response);
-            //return Ok("All rooms!");
+            try
+            {
+                var response = await roomTypeService.ViewAllRoomTypes();
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
         [Authorize(Roles = "Admin")]
         [HttpPost]

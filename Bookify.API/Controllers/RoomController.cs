@@ -20,8 +20,15 @@ namespace Bookify.API.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetRoom(int id)
         {
-            var response = await roomService.ViewRoomDetails(id);
-            return Ok(response);
+            try
+            {
+                var response = await roomService.ViewRoomDetails(id);
+                return Ok(response);
+            }
+            catch (Exception ex)
+            {
+                return NotFound(ex.Message);
+            }
         }
         [AllowAnonymous]
         [HttpGet]

@@ -6,18 +6,18 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Bookify.MVC.Controllers
 {
-    public class RoomController1 : Controller
+    public class RoomController : Controller
     {
         private readonly IRoomServices RoomServices;
-        public RoomController1(IRoomServices roomService)
+        public RoomController(IRoomServices roomService)
         {
             this.RoomServices = RoomServices;
         }
 
         // Accept optional query parameters for filtering
-        public async Task<IActionResult> Index(string? roomId, string? floor, string? roomTypeName)
+        public async Task<IActionResult> Index(int? roomTypeId, RoomStatus? status)
         {
-            var rooms = await RoomServices.GetRoomDtos(roomId ?? string.Empty, floor ?? string.Empty, roomTypeName ?? string.Empty);
+            var rooms = await RoomServices.GetAllRoomsAsync(roomTypeId, status);
             return View(rooms); // Pass data to the view
         }
     }
