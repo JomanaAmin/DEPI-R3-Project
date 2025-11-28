@@ -1,4 +1,5 @@
 ﻿using Bookify.BusinessLayer.Contracts;
+using Bookify.BusinessLayer.CustomExceptions;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs.AdminProfileDTOs;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs.CustomerProfileDTOs;
@@ -50,7 +51,7 @@ namespace Bookify.BusinessLayer.Services
             bool emailExists=await EmailExistsAsync(baseUserCreateDTO.Email);
             if (emailExists)
             {
-                throw new Exception("Email already in use.");
+                throw new EmailInvalidException("Email already in use.");
             }
             BaseUser user = new BaseUser
             {

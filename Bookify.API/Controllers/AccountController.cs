@@ -1,10 +1,14 @@
 ﻿using Bookify.BusinessLayer.Contracts;
+using Bookify.BusinessLayer.CustomExceptions;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace Bookify.API.Controllers
 {
+    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class AccountController : ControllerBase
@@ -17,6 +21,7 @@ namespace Bookify.API.Controllers
             this.adminProfileService = adminProfileService;
         }
         ///////////REGISTER CUSTOMER///////////
+        [AllowAnonymous]
         [HttpPost("register-customer")]
         public async Task<IActionResult> RegisterCustomer([FromBody] BaseUserCreateDTO baseUserCreateDTO)
         {
@@ -25,13 +30,16 @@ namespace Bookify.API.Controllers
                 await customerProfileService.RegisterCustomerAsync(baseUserCreateDTO);
                 return Ok("Customer registered successfully.");
             }
+            catch (EmailInvalidException ex)
+            {
+                return BadRequest(ex.Message);
+            }
             catch (Exception ex)
             {
                 return BadRequest(ex.Message);
             }
-            //await customerProfileService.RegisterCustomerAsync(baseUserCreateDTO);
-            //return Ok("Customer registered successfully.");
         }
+        [AllowAnonymous]
         [HttpPost("register-admin")]
         public async Task<IActionResult> RegisterAdmin([FromBody] BaseUserCreateDTO baseUserCreateDTO)
         {
@@ -45,7 +53,9 @@ namespace Bookify.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("admin/{adminId}")]
+        [Authorize (Roles ="Admin")]
+
+        [HttpGet("admin-profile/{adminId}")]
         public async Task<IActionResult> GetAdminProfile(string adminId)
         {
             try
@@ -58,7 +68,7 @@ namespace Bookify.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
-        [HttpGet("customer/{customerId}")]
+        [HttpGet("customer-profile/{customerId}")]
         public async Task<IActionResult> GetCustomerProfile(string customerId)
         {
             try
@@ -84,6 +94,7 @@ namespace Bookify.API.Controllers
                 return BadRequest(ex.Message);
             }
         }
+        [Authorize(Roles = "Admin")]
         [HttpDelete("admin/{adminId}")]
         public async Task<IActionResult> DeleteAdminProfile(string adminId)
         {
