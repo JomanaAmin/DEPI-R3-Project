@@ -10,7 +10,12 @@ namespace Bookify.MVC
         {
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
+            builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient<IRoomServices, RoomServices>(c =>
+            {
+                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:baseURL"]);
+            });
+            builder.Services.AddHttpClient<IAccountService, AccountService>(c =>
             {
                 c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:baseURL"]);
             });
