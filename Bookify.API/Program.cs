@@ -21,6 +21,10 @@ namespace Bookify.API
             builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
+            builder.Services.AddIdentity<BaseUser, IdentityRole>()
+    .AddEntityFrameworkStores<BookifyDbContext>()
+    .AddDefaultTokenProviders();
+
             builder.Services.AddSwaggerGen(options =>
             {
                 var jwtSecurityScheme = new OpenApiSecurityScheme
@@ -87,8 +91,10 @@ namespace Bookify.API
                 options => { 
                     options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
                     options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+
                 }
-                
+
                 )
                 .AddJwtBearer(options =>
             {
@@ -98,7 +104,7 @@ namespace Bookify.API
                 {
                     ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
                     ValidAudience = builder.Configuration["JwtConfig:Audience"],
-                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"])),
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"]!)),
                     ValidateIssuer = true,
                     ValidateAudience = true,
                     ValidateLifetime = false,
@@ -120,10 +126,6 @@ namespace Bookify.API
 
             });
 
-     
-            builder.Services.AddIdentity<BaseUser, IdentityRole>()
-      .AddEntityFrameworkStores<BookifyDbContext>()
-      .AddDefaultTokenProviders();
 
             //custom identity options for testing purposes
             builder.Services.Configure<IdentityOptions>(options =>

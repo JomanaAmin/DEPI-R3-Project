@@ -1,8 +1,10 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.CartDTOs;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 
@@ -38,10 +40,11 @@ namespace Bookify.API.Controllers
         //    return userId;
         //}
         // [Authorize(Roles = "Customer,Admin")]
-        [Authorize]
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [HttpGet("test")]
         public IActionResult Test() => Ok("You reached the endpoint");
 
+        [Authorize]
         [HttpGet("{customerId}")]
         public async Task<IActionResult> GetCart(string customerId)
         {
