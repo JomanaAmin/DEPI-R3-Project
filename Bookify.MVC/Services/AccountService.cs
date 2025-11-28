@@ -1,0 +1,208 @@
+﻿using Bookify.MVC.Contracts;
+using Bookify.MVC.Models.AccountModels;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Identity.Client;
+using System.Net;
+using System.Security.Authentication;
+
+namespace Bookify.MVC.Services
+{
+    public class AccountService : IAccountService
+    {
+        private readonly HttpClient httpClient;
+        private readonly IHttpContextAccessor httpContextAccessor;
+
+        public AccountService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
+        {
+            this.httpClient = httpClient;
+            this.httpContextAccessor = httpContextAccessor;
+        }
+        public async Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO)
+        {
+
+            var response = await httpClient.PostAsJsonAsync("Login", loginRequestDTO);
+
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorMessage = "Login failed. Please try again.";
+                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
+                if (errorDto?.Message != null)
+                {
+                    errorMessage = errorDto.Message;
+                }
+                else if (response.StatusCode == HttpStatusCode.Unauthorized)
+                {
+                    errorMessage = "Invalid email or password.";
+                }
+                return new LoginResponseDTO
+                {
+                    IsSuccessful = false,
+                    ValidationMessage = errorMessage
+                };
+            }
+
+            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
+            if (loginResponse != null && !string.IsNullOrEmpty(loginResponse.AccessToken))
+            {
+                // Store token in cookie for subsequent requests
+                httpContextAccessor.HttpContext.Response.Cookies.Append(
+                    "AuthToken",
+                    loginResponse.AccessToken,
+                    new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Strict }
+                );
+
+                loginResponse.IsSuccessful = true;
+                return loginResponse;
+            }
+
+            return new LoginResponseDTO
+            {
+                IsSuccessful = false,
+                ValidationMessage = "Login succeeded but received no token."
+            };
+        }
+
+        public async Task<SignupResponseDTO> CreateAccountAdminAsync(SignupRequestDTO signupRequest) 
+        {
+            var response = await httpClient.PostAsJsonAsync("Account/register-admin", signupRequest);
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorMessage = "Account creation failed. Please try again.";
+                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
+                if (errorDto?.Message != null)
+                {
+                    errorMessage = errorDto.Message;
+                }
+                return new SignupResponseDTO
+                {
+                    IsSuccessful = false,
+                    ValidationMessage = errorMessage
+                };
+            }
+            //If successful,I should log the user in using the Token
+            return new SignupResponseDTO
+            {
+                IsSuccessful = true,
+                ValidationMessage = "Account created successfully."
+            };
+        }
+        public async Task<SignupResponseDTO> CreateAccountCustomerAsync(SignupRequestDTO signupRequest) 
+        {
+            var response = await httpClient.PostAsJsonAsync("Account/register-customer", signupRequest);
+            if (!response.IsSuccessStatusCode)
+            {
+                string errorMessage = "Account creation failed. Please try again.";
+                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
+                if (errorDto?.Message != null)
+                {
+                    errorMessage = errorDto.Message;
+                }
+                return new SignupResponseDTO
+                {
+                    IsSuccessful = false,
+                    ValidationMessage = errorMessage
+                };
+            }
+            //If successful,I should log the user in using the Token
+            return new SignupResponseDTO
+            {
+                IsSuccessful = true,
+                ValidationMessage = "Account created successfully."
+            };
+        }
+        public async Task<CustomerAccountViewDTO> ViewCustomerProfile()
+        {
+            // 1. Send the secured GET request. 
+            // The AuthTokenHandler (registered earlier) automatically adds the JWT from the cookie.
+            var response = await httpClient.GetAsync("Account/customer-profile");
+
+            if (response.IsSuccessStatusCode)
+            {
+                // 2. Success: Read and return the profile data
+                var profileDto = await response.Content.ReadFromJsonAsync<CustomerAccountViewDTO>();
+
+                // You might add a success flag or message to AccountViewDTO if needed, 
+                // but for a successful GET, returning the data is enough.
+                return profileDto ?? new CustomerAccountViewDTO
+                {
+                    Email = profileDto?.Email ?? string.Empty,
+                    IsSuccessful = true,
+                    FirstName = profileDto?.FirstName ?? string.Empty,
+                    LastName = profileDto?.LastName ?? string.Empty
+                };
+            }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                // 3. Handle Token Failure (401/403)
+                // This usually means the token is missing, expired, or doesn't have permissions.
+                // Since the token handler handles adding the token, an error here means the user is logged out.
+                // You would typically throw a specific exception here to trigger a redirect to the login page 
+                // in the MVC Controller.
+                throw new AuthenticationException("Your session has expired. Please log in again.");
+            }
+            else
+            {
+                // 4. Handle other failures (404, 500)
+                // For security, read the generic error if provided by the API
+                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
+                string errorMessage = errorDto?.Message ?? "Could not load profile due to a server error.";
+                return new CustomerAccountViewDTO
+                {
+                    // You might want to add an ErrorMessage property to AccountViewDTO to convey this.
+                    ValidationMessage = errorMessage,
+                    IsSuccessful = false,
+                    FirstName = string.Empty,
+                    LastName = string.Empty,
+                    Email = string.Empty
+                };
+            }
+        }
+        public async Task<AdminAccountViewDTO> ViewAdminProfile()
+        {
+            // 1. Send the secured GET request. 
+            // The AuthTokenHandler (registered earlier) automatically adds the JWT from the cookie.
+            var response = await httpClient.GetAsync("Account/admin-profile");
+
+            if (response.IsSuccessStatusCode)
+            {
+                // 2. Success: Read and return the profile data
+                var profileDto = await response.Content.ReadFromJsonAsync<AdminAccountViewDTO>();
+
+                // You might add a success flag or message to AccountViewDTO if needed, 
+                // but for a successful GET, returning the data is enough.
+                return profileDto ?? new AdminAccountViewDTO
+                {
+                    Email = profileDto?.Email ?? string.Empty,
+                    IsSuccessful = true,
+                    FirstName = profileDto?.FirstName ?? string.Empty,
+                    LastName = profileDto?.LastName ?? string.Empty
+                };
+            }
+            else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+            {
+                // 3. Handle Token Failure (401/403)
+                // This usually means the token is missing, expired, or doesn't have permissions.
+                // Since the token handler handles adding the token, an error here means the user is logged out.
+                // You would typically throw a specific exception here to trigger a redirect to the login page 
+                // in the MVC Controller.
+                throw new AuthenticationException("Your session has expired. Please log in again.");
+            }
+            else
+            {
+                // 4. Handle other failures (404, 500)
+                // For security, read the generic error if provided by the API
+                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
+                string errorMessage = errorDto?.Message ?? "Could not load profile due to a server error.";
+                return new AdminAccountViewDTO
+                {
+                    // You might want to add an ErrorMessage property to AccountViewDTO to convey this.
+                    ValidationMessage= errorMessage,
+                    IsSuccessful = false,
+                    FirstName= string.Empty,
+                    LastName= string.Empty,
+                    Email = string.Empty
+                };
+            }
+        }
+    }
+}
