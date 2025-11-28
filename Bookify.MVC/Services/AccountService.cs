@@ -62,7 +62,7 @@ namespace Bookify.MVC.Services
             };
         }
 
-        public async Task<SignupResponseDTO> CreateAccountAdminAsync(SignupRequestDTO signupRequest) 
+        public async Task<SignupResponseDTO> CreateAccountAdminAsync(SignupRequestDTO signupRequest)
         {
             var response = await httpClient.PostAsJsonAsync("Account/register-admin", signupRequest);
             if (!response.IsSuccessStatusCode)
@@ -79,14 +79,28 @@ namespace Bookify.MVC.Services
                     ValidationMessage = errorMessage
                 };
             }
-            //If successful,I should log the user in using the Token
+
+            // Account created successfully — attempt to log the user in immediately
+            var loginResult = await LoginAsync(new LoginRequestDTO { Username = signupRequest.Email, Password = signupRequest.Password });
+            if (loginResult != null && loginResult.IsSuccessful)
+            {
+                return new SignupResponseDTO
+                {
+                    IsSuccessful = true,
+                    ValidationMessage = "Account created and logged in.",
+                    AccessToken = loginResult.AccessToken,
+                    Expiration = loginResult.Expiration
+                };
+            }
+
+            // Account created but automatic login failed
             return new SignupResponseDTO
             {
-                IsSuccessful = true,
-                ValidationMessage = "Account created successfully."
+                IsSuccessful = false,
+                ValidationMessage = "Account created but automatic login failed: " + (loginResult?.ValidationMessage ?? "unknown error")
             };
         }
-        public async Task<SignupResponseDTO> CreateAccountCustomerAsync(SignupRequestDTO signupRequest) 
+        public async Task<SignupResponseDTO> CreateAccountCustomerAsync(SignupRequestDTO signupRequest)
         {
             var response = await httpClient.PostAsJsonAsync("Account/register-customer", signupRequest);
             if (!response.IsSuccessStatusCode)
@@ -103,11 +117,25 @@ namespace Bookify.MVC.Services
                     ValidationMessage = errorMessage
                 };
             }
-            //If successful,I should log the user in using the Token
+
+            // Account created successfully — attempt to log the user in immediately
+            var loginResult = await LoginAsync(new LoginRequestDTO { Username = signupRequest.Email, Password = signupRequest.Password });
+            if (loginResult != null && loginResult.IsSuccessful)
+            {
+                return new SignupResponseDTO
+                {
+                    IsSuccessful = true,
+                    ValidationMessage = "Account created and logged in.",
+                    AccessToken = loginResult.AccessToken,
+                    Expiration = loginResult.Expiration
+                };
+            }
+
+            // Account created but automatic login failed
             return new SignupResponseDTO
             {
-                IsSuccessful = true,
-                ValidationMessage = "Account created successfully."
+                IsSuccessful = false,
+                ValidationMessage = "Account created but automatic login failed: " + (loginResult?.ValidationMessage ?? "unknown error")
             };
         }
         public async Task<CustomerAccountViewDTO> ViewCustomerProfile()
@@ -196,10 +224,10 @@ namespace Bookify.MVC.Services
                 return new AdminAccountViewDTO
                 {
                     // You might want to add an ErrorMessage property to AccountViewDTO to convey this.
-                    ValidationMessage= errorMessage,
+                    ValidationMessage = errorMessage,
                     IsSuccessful = false,
-                    FirstName= string.Empty,
-                    LastName= string.Empty,
+                    FirstName = string.Empty,
+                    LastName = string.Empty,
                     Email = string.Empty
                 };
             }
