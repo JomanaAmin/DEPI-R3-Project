@@ -31,53 +31,96 @@ namespace Bookify.API
                     Type = SecuritySchemeType.Http,
                     Scheme = JwtBearerDefaults.AuthenticationScheme,
                     Description = "Put **_ONLY_** your JWT Bearer token on textbox below!",
-                    Reference = new OpenApiReference
-                    {
-                        Id = JwtBearerDefaults.AuthenticationScheme,
-                        Type = ReferenceType.SecurityScheme
-                    }
+                    
                 };
-                options.AddSecurityDefinition("Bearer", jwtSecurityScheme);
+                options.AddSecurityDefinition(JwtBearerDefaults.AuthenticationScheme, jwtSecurityScheme);
                 options.AddSecurityRequirement(
-                  new OpenApiSecurityRequirement
-                  {
-            { jwtSecurityScheme, Array.Empty<string>() }
-                  }
-                    );
-            }
-            );
+                    new OpenApiSecurityRequirement
+                    {
+                        {
+                            new OpenApiSecurityScheme
+                            {
+                                Reference = new OpenApiReference
+                                {
+                                    Id = JwtBearerDefaults.AuthenticationScheme,
+                                    Type = ReferenceType.SecurityScheme
+                                }
+                            },
+                            Array.Empty<string>()
+                        }
+                    }
+                );
+            });
             builder.Services.AddBusinessLayer();
             builder.Services.AddDataAccessLayer(builder.Configuration);
-            builder.Services.AddAuthentication(
-              options =>
-              {
-                  options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-                  options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-                  options.DefaultSignInScheme = JwtBearerDefaults.AuthenticationScheme;
-              }
-              ).AddJwtBearer(
-                options =>
-                {
-                    options.RequireHttpsMetadata = false;
-                    options.SaveToken = true;
-                    options.TokenValidationParameters = new Microsoft.IdentityModel.Tokens.TokenValidationParameters
-                    {
-                        ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
-                        ValidAudience = builder.Configuration["JwtConfig:Audience"],
-                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"]!)),
-                        ValidateIssuer = true,
-                        ValidateAudience = true,
-                        ValidateLifetime = true,
-                        ValidateIssuerSigningKey = true
-                    };
+            //builder.Services.AddAuthentication(
+            //  options =>
+            //  {
+            //      options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+            //      options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            //      options.DefaultScheme = JwtBearerDefaults.AuthenticationScheme;
+            //  }
+            //  ).AddJwtBearer(
+            //    options =>
+            //    {
+            //        options.RequireHttpsMetadata = false; //enable in production
+            //        options.SaveToken = true;
+            //        options.TokenValidationParameters = new TokenValidationParameters
+            //        {
+            //            ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
+            //            ValidAudience = builder.Configuration["JwtConfig:Audience"],
+            //            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"]!)),
+            //            ValidateIssuer = true,
+            //            ValidateAudience = true,
+            //            ValidateLifetime = true,
+            //            ValidateIssuerSigningKey = true
+            //        };
 
-                }
-              );
+            //    }
+            //  );
+            var validationKey = builder.Configuration["JwtConfig:Key"];
+            Console.WriteLine($"[DEBUG] Validation Key Used: {validationKey}");
+
             builder.Services.AddAuthorization();
 
-            //builder.Services.AddIdentityApiEndpoints<IdentityRole>()
-            //    .AddEntityFrameworkStores<BookifyDbContext>();
+            builder.Services.AddAuthentication(
+                options => { 
+                    options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                    options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+                }
+                
+                )
+                .AddJwtBearer(options =>
+            {
+                options.RequireHttpsMetadata = false; //enable in production
+                options.SaveToken = true;
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidIssuer = builder.Configuration["JwtConfig:Issuer"],
+                    ValidAudience = builder.Configuration["JwtConfig:Audience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JwtConfig:Key"])),
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = false,
+                    ValidateIssuerSigningKey = true
+                };
+                options.Events = new JwtBearerEvents
+                {
+                    OnAuthenticationFailed = context =>
+                    {
+                        Console.WriteLine("JWT Auth failed: " + context.Exception?.Message);
+                        return Task.CompletedTask;
+                    },
+                    OnTokenValidated = context =>
+                    {
+                        Console.WriteLine("JWT Auth succeeded");
+                        return Task.CompletedTask;
+                    }
+                };
 
+            });
+
+     
             builder.Services.AddIdentity<BaseUser, IdentityRole>()
       .AddEntityFrameworkStores<BookifyDbContext>()
       .AddDefaultTokenProviders();
@@ -95,7 +138,7 @@ namespace Bookify.API
             });
             var app = builder.Build();
 
-            //app.MapIdentityApi<IdentityUser>();
+        
             // Configure the HTTP request pipeline.
             if (app.Environment.IsDevelopment())
             {
@@ -104,10 +147,9 @@ namespace Bookify.API
             }
 
             app.UseHttpsRedirection();
+            app.UseRouting();
             app.UseAuthentication();
             app.UseAuthorization();
-
-
             app.MapControllers();
 
             app.Run();

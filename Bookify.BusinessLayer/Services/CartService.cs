@@ -51,7 +51,16 @@ namespace Bookify.BusinessLayer.Services
             //decimal subtotal = (room?.RoomType?.PricePerNight ?? 0) * nights;
             //this method fetches entire room object including room type to get price per night.
             int cartId= await customerRepository.GetAllAsQueryable().AsNoTracking().Where(c=>c.CustomerId==customerId).Select(c=>c.Cart.CartId).SingleOrDefaultAsync();
+            Console.WriteLine($"Cart ID: {cartId}");
+
             decimal pricePerNight = roomRepository.GetAllAsQueryable().AsNoTracking().Where(r => r.RoomId == cartItemDTO.RoomId).Select(r => r.RoomType.PricePerNight).FirstOrDefault();
+            if (pricePerNight == 0)
+            {
+                // This handles both RoomId=0 and a valid ID for a room that doesn't exist.
+                throw new Exception($"Room with ID {cartItemDTO.RoomId} not found or price is invalid.");
+            }
+            Console.WriteLine($"pricePerNight: {pricePerNight}");
+
             //This is more efficient as it only fetches the price per night instead of entire room object.
             if (cartItemDTO.CheckInDate > cartItemDTO.CheckOutDate) 
             {
@@ -251,14 +260,15 @@ namespace Bookify.BusinessLayer.Services
         public void validateCustomerId(string customerId,int cartItemId) 
         {
             string? fetchedCustomerId = cartItemRepo.GetAllAsQueryable().AsNoTracking().Where(ci => ci.CartItemId == cartItemId).Select(ci => ci.Cart.CustomerId).FirstOrDefault();
-            if (fetchedCustomerId==null)
-            {
-                throw new Exception("Cart item not found or does not belong to the customer");
-            }
             if (fetchedCustomerId != customerId)
             {
                 throw new Exception("Unauthorized to perform this operation.");
             }
+            if (fetchedCustomerId==null)
+            {
+                throw new Exception("Cart item not found or does not belong to the customer");
+            }
+
         }
         public async Task<bool> IsRoomAvailableAsync(int roomId, DateTime checkIn, DateTime checkOut)
         {

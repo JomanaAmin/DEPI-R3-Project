@@ -1,5 +1,6 @@
 ﻿using Bookify.BusinessLayer.Contracts;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,7 +15,7 @@ namespace Bookify.API.Controllers
         {
             this.jwtService = jwtService;
         }
-
+        [AllowAnonymous]
         [HttpPost("admin")]
         public async Task<IActionResult> AdminLogin(LoginRequestDTO loginRequest)
         {

@@ -5,6 +5,7 @@ using Bookify.DAL.Repositories;
 using Bookify.DAL.UnitOfWork;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
+using Microsoft.IdentityModel.JsonWebTokens;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.Collections.Generic;
@@ -41,27 +42,27 @@ namespace Bookify.BusinessLayer.Services
             var valid = await userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
             if (!valid)
                 throw new Exception("Incorrect password");
-            var roles = await userManager.GetRolesAsync(user);
+    
             var issuer = configuration["JwtConfig:Issuer"];
             var audience = configuration["JwtConfig:Audience"];
             var key = configuration["JwtConfig:Key"];
             int tokenValidityMins = configuration.GetValue<int>("JwtConfig:TokenValidityInMinutes");
             var expiryTime = DateTime.UtcNow.AddMinutes(tokenValidityMins);
 
-            var claims = new List<Claim>
-            {
-                new Claim(ClaimTypes.Email, user.Email!), // Use Email for the identity
-                new Claim("Id", user.Id), // Use "Id" for simple retrieval
-            };
-
-            // --- NEW: Add Role Claims ---
-            foreach (var role in roles)
-            {
-                claims.Add(new Claim(ClaimTypes.Role, role));
-            }
+            //
+            var signingKey = configuration["JwtConfig:Key"];
+            Console.WriteLine($"[DEBUG] Signing Key Used: {signingKey}");
+            //
             var tokenDescriptor = new SecurityTokenDescriptor
             {
-                Subject = new ClaimsIdentity(claims),
+                Subject = new ClaimsIdentity([
+            
+                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Email, user.Email), // Use Email for the identity
+                    new Claim(System.IdentityModel.Tokens.Jwt.JwtRegisteredClaimNames.Sub, user.Id.ToString()),
+                    new Claim(ClaimTypes.Role, "Admin"),
+                    new Claim(ClaimTypes.Role, "Customer")
+
+                    ]),
                 NotBefore = DateTime.UtcNow.AddSeconds(-1), // Start 1 second in the past (optional, but safer)
 
                 Expires = expiryTime,
@@ -69,9 +70,8 @@ namespace Bookify.BusinessLayer.Services
                 Audience = audience,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.UTF8.GetBytes(key)), SecurityAlgorithms.HmacSha256Signature)
             };
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var securityToken = tokenHandler.CreateToken(tokenDescriptor);
-            var accessToken = tokenHandler.WriteToken(securityToken);
+            var tokenHandler = new JsonWebTokenHandler();
+            var accessToken = tokenHandler.CreateToken(tokenDescriptor);
             return new LoginResponseDTO
             {
                 Username = user.UserName,
