@@ -1,4 +1,5 @@
 ﻿using System.Web;
+using Bookify.MVC.Contracts;
 using Bookify.MVC.Models;
 
 namespace Bookify.MVC.Services

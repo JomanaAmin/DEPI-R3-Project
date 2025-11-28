@@ -12,8 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Models\ViewModels\" />
-    <Folder Include="Contracts\" />
-    <Folder Include="Contracts\" />
     <Folder Include="wwwroot\app\" />
   </ItemGroup>
 
