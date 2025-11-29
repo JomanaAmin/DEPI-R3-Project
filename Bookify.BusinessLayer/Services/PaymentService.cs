@@ -102,7 +102,7 @@ namespace Bookify.BusinessLayer.Services
             catch (StripeException e)
             {
                 // Invalid signature
-                Error error = new Error("Unauthorized Error", $"{msg}", ErrorType.Unauthorized);
+               // Error error = new Error("Unauthorized Error", $"{msg}", ErrorType.Unauthorized);
                 //throw new CustomException(error);
                 throw new Exception($"Stripe webhook signature verification failed: {e.Message}");
             }

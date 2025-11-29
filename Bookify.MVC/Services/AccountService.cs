@@ -2,9 +2,8 @@
 using Bookify.MVC.Models;
 using Bookify.MVC.Models.AccountModels;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Identity.Client;
-using System.Net;
-using System.Security.Authentication;
+using Microsoft.Extensions.Logging;
+using System.Net.Http.Json;
 using System.Text.Json;
 
 namespace Bookify.MVC.Services
@@ -13,194 +12,294 @@ namespace Bookify.MVC.Services
     {
         private readonly HttpClient httpClient;
         private readonly IHttpContextAccessor httpContextAccessor;
+        private readonly ILogger<AccountService> logger;
 
-        public AccountService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor)
+        public AccountService(HttpClient httpClient, IHttpContextAccessor httpContextAccessor, ILogger<AccountService> logger)
         {
             this.httpClient = httpClient;
             this.httpContextAccessor = httpContextAccessor;
+            this.logger = logger;
         }
+
+        private static readonly JsonSerializerOptions JsonOptions = new()
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        private async Task<ErrorDTO> ReadErrorAsync(HttpResponseMessage? response)
+        {
+            if (response == null) return new ErrorDTO { Message = "No response received from API." };
+
+            try
+            {
+                if (response.Content == null) return new ErrorDTO { Message = $"API returned status {(int)response.StatusCode} {response.StatusCode} with no content." };
+
+                var raw = await response.Content.ReadAsStringAsync();
+                if (string.IsNullOrWhiteSpace(raw))
+                {
+                    return new ErrorDTO { Message = $"API returned status {(int)response.StatusCode} {response.StatusCode} with empty body." };
+                }
+
+                // Try to parse JSON error first
+                try
+                {
+                    var parsed = JsonSerializer.Deserialize<ErrorDTO>(raw, JsonOptions);
+                    if (parsed != null && !string.IsNullOrWhiteSpace(parsed.Message))
+                    {
+                        return parsed;
+                    }
+                }
+                catch (JsonException)
+                {
+                    // fallthrough to return raw body as message
+                }
+
+                // If not JSON, return the raw body as message (guards against HTML error pages etc.)
+                return new ErrorDTO { Message = raw };
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Failed to read error response from API");
+                return new ErrorDTO { Message = $"Unable to read error response: {ex.Message}" };
+            }
+        }
+
         public async Task<ApiResponse<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequest)
         {
-            var response = await httpClient.PostAsJsonAsync("/login", loginDto);
+            logger.LogInformation("LoginAsync called. Email: {Email}", loginRequest?.Username);
 
-            if (!response.IsSuccessStatusCode)
+            try
             {
-                var error = await response.Content.ReadFromJsonAsync<ErrorDTO>();
-                return ApiResponse<LoginResponseDTO>.Fail(error);
-            }
+                logger.LogDebug("Posting to {Base}{Path} with payload {@Payload}", httpClient.BaseAddress, "login", loginRequest);
+                var response = await httpClient.PostAsJsonAsync("login", loginRequest);
 
-            var data = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
-            return ApiResponse<LoginResponseDTO>.Success(data);
-        }
-
-        public async Task<SignupResponseDTO> CreateAccountAdminAsync(SignupRequestDTO signupRequest)
-        {
-            var response = await httpClient.PostAsJsonAsync("Account/register-admin", signupRequest);
-            if (!response.IsSuccessStatusCode)
-            {
-                string errorMessage = "Account creation failed. Please try again.";
-                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
-                if (errorDto?.Message != null)
+                if (response == null)
                 {
-                    errorMessage = errorDto.Message;
+                    logger.LogError("HttpClient.PostAsJsonAsync returned null response");
+                    return ApiResponse<LoginResponseDTO>.Fail(new ErrorDTO { Message = "No response from API." });
                 }
-                return new SignupResponseDTO
-                {
-                    IsSuccessful = false,
-                    ValidationMessage = errorMessage
-                };
-            }
 
-            // Account created successfully — attempt to log the user in immediately
-            var loginResult = await LoginAsync(new LoginRequestDTO { Username = signupRequest.Email, Password = signupRequest.Password });
-            if (loginResult != null && loginResult.IsSuccessful)
-            {
-                return new SignupResponseDTO
-                {
-                    IsSuccessful = true,
-                    ValidationMessage = "Account created and logged in.",
-                    AccessToken = loginResult.AccessToken,
-                    Expiration = loginResult.Expiration
-                };
-            }
+                logger.LogDebug("Received status code {Status}", response.StatusCode);
 
-            // Account created but automatic login failed
-            return new SignupResponseDTO
-            {
-                IsSuccessful = false,
-                ValidationMessage = "Account created but automatic login failed: " + (loginResult?.ValidationMessage ?? "unknown error")
-            };
-        }
-        public async Task<SignupResponseDTO> CreateAccountCustomerAsync(SignupRequestDTO signupRequest)
-        {
-            var response = await httpClient.PostAsJsonAsync("Account/register-customer", signupRequest);
-            if (!response.IsSuccessStatusCode)
-            {
-                string errorMessage = "Account creation failed. Please try again.";
-                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
-                if (errorDto?.Message != null)
+                if (response.IsSuccessStatusCode)
                 {
-                    errorMessage = errorDto.Message;
+                    if (response.Content?.Headers.ContentLength > 0)
+                    {
+                        try
+                        {
+                            var data = await response.Content.ReadFromJsonAsync<LoginResponseDTO>(JsonOptions);
+                            if (data != null)
+                            {
+                                logger.LogInformation("Login succeeded for {Email}", loginRequest?.Username);
+                                return ApiResponse<LoginResponseDTO>.Success(data);
+                            }
+
+                            logger.LogWarning("Deserialized login response was null for {Email}", loginRequest?.Username);
+                        }
+                        catch (JsonException ex)
+                        {
+                            // Content not valid JSON — capture raw and return helpful message
+                            var raw = await response.Content.ReadAsStringAsync();
+                            logger.LogError(ex, "Failed to deserialize login success payload. Raw content: {Raw}", raw);
+                            return ApiResponse<LoginResponseDTO>.Fail(new ErrorDTO { Message = $"Unexpected response format: {raw}" });
+                        }
+                    }
+                    else
+                    {
+                        logger.LogWarning("Login returned success status but empty content for {Email}", loginRequest?.Username);
+                    }
+
+                    return ApiResponse<LoginResponseDTO>.Fail(new ErrorDTO { Message = "API returned success but no authentication data was received." });
                 }
-                return new SignupResponseDTO
+                else
                 {
-                    IsSuccessful = false,
-                    ValidationMessage = errorMessage
-                };
+                    var error = await ReadErrorAsync(response);
+                    logger.LogWarning("Login failed for {Email}: {Message}", loginRequest?.Username, error.Message);
+                    return ApiResponse<LoginResponseDTO>.Fail(error);
+                }
             }
-
-            // Account created successfully — attempt to log the user in immediately
-            var loginResult = await LoginAsync(new LoginRequestDTO { Username = signupRequest.Email, Password = signupRequest.Password });
-            if (loginResult != null && loginResult.IsSuccessful)
+            catch (HttpRequestException ex)
             {
-                return new SignupResponseDTO
-                {
-                    IsSuccessful = true,
-                    ValidationMessage = "Account created and logged in.",
-                    AccessToken = loginResult.AccessToken,
-                    Expiration = loginResult.Expiration
-                };
+                logger.LogError(ex, "Network error calling login endpoint for {Email}", loginRequest?.Username);
+                return ApiResponse<LoginResponseDTO>.Fail(new ErrorDTO { Message = $"Network error calling API: {ex.Message}" });
             }
-
-            // Account created but automatic login failed
-            return new SignupResponseDTO
+            catch (JsonException ex)
             {
-                IsSuccessful = false,
-                ValidationMessage = "Account created but automatic login failed: " + (loginResult?.ValidationMessage ?? "unknown error")
-            };
-        }
-        public async Task<CustomerAccountViewDTO> ViewCustomerProfile()
-        {
-            // 1. Send the secured GET request. 
-            // The AuthTokenHandler (registered earlier) automatically adds the JWT from the cookie.
-            var response = await httpClient.GetAsync("Account/customer-profile");
-
-            if (response.IsSuccessStatusCode)
-            {
-                // 2. Success: Read and return the profile data
-                var profileDto = await response.Content.ReadFromJsonAsync<CustomerAccountViewDTO>();
-
-                // You might add a success flag or message to AccountViewDTO if needed, 
-                // but for a successful GET, returning the data is enough.
-                return profileDto ?? new CustomerAccountViewDTO
-                {
-                    Email = profileDto?.Email ?? string.Empty,
-                    IsSuccessful = true,
-                    FirstName = profileDto?.FirstName ?? string.Empty,
-                    LastName = profileDto?.LastName ?? string.Empty
-                };
+                logger.LogError(ex, "JSON (de)serialization error in LoginAsync for {Email}", loginRequest?.Username);
+                return ApiResponse<LoginResponseDTO>.Fail(new ErrorDTO { Message = $"Serialization error: {ex.Message}" });
             }
-            else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
+            catch (Exception ex)
             {
-                // 3. Handle Token Failure (401/403)
-                // This usually means the token is missing, expired, or doesn't have permissions.
-                // Since the token handler handles adding the token, an error here means the user is logged out.
-                // You would typically throw a specific exception here to trigger a redirect to the login page 
-                // in the MVC Controller.
-                throw new AuthenticationException("Your session has expired. Please log in again.");
-            }
-            else
-            {
-                // 4. Handle other failures (404, 500)
-                // For security, read the generic error if provided by the API
-                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
-                string errorMessage = errorDto?.Message ?? "Could not load profile due to a server error.";
-                return new CustomerAccountViewDTO
-                {
-                    // You might want to add an ErrorMessage property to AccountViewDTO to convey this.
-                    ValidationMessage = errorMessage,
-                    IsSuccessful = false,
-                    FirstName = string.Empty,
-                    LastName = string.Empty,
-                    Email = string.Empty
-                };
+                logger.LogError(ex, "Unexpected error in LoginAsync for {Email}", loginRequest?.Username);
+                return ApiResponse<LoginResponseDTO>.Fail(new ErrorDTO { Message = $"Unexpected error calling API: {ex.Message}" });
             }
         }
-        public async Task<AdminAccountViewDTO> ViewAdminProfile()
+
+        public async Task<ApiResponse<SignupResponseDTO>> CreateAccountAdminAsync(SignupRequestDTO signupRequest)
         {
-            // 1. Send the secured GET request. 
-            // The AuthTokenHandler (registered earlier) automatically adds the JWT from the cookie.
-            var response = await httpClient.GetAsync("Account/admin-profile");
-
-            if (response.IsSuccessStatusCode)
+            logger.LogDebug("CreateAccountAdminAsync called for {Email}", signupRequest?.Email);
+            try
             {
-                // 2. Success: Read and return the profile data
-                var profileDto = await response.Content.ReadFromJsonAsync<AdminAccountViewDTO>();
-
-                // You might add a success flag or message to AccountViewDTO if needed, 
-                // but for a successful GET, returning the data is enough.
-                return profileDto ?? new AdminAccountViewDTO
+                var response = await httpClient.PostAsJsonAsync("/account/register-admin", signupRequest);
+                if (response == null)
                 {
-                    Email = profileDto?.Email ?? string.Empty,
-                    IsSuccessful = true,
-                    FirstName = profileDto?.FirstName ?? string.Empty,
-                    LastName = profileDto?.LastName ?? string.Empty
-                };
-            }
-            else if (response.StatusCode == HttpStatusCode.Unauthorized || response.StatusCode == HttpStatusCode.Forbidden)
-            {
-                // 3. Handle Token Failure (401/403)
-                // This usually means the token is missing, expired, or doesn't have permissions.
-                // Since the token handler handles adding the token, an error here means the user is logged out.
-                // You would typically throw a specific exception here to trigger a redirect to the login page 
-                // in the MVC Controller.
-                throw new AuthenticationException("Your session has expired. Please log in again.");
-            }
-            else
-            {
-                // 4. Handle other failures (404, 500)
-                // For security, read the generic error if provided by the API
-                var errorDto = await response.Content.ReadFromJsonAsync<AccountErrorDTO>();
-                string errorMessage = errorDto?.Message ?? "Could not load profile due to a server error.";
-                return new AdminAccountViewDTO
+                    logger.LogError("No response from CreateAccountAdminAsync");
+                    return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = "No response from API." });
+                }
+
+                if (!response.IsSuccessStatusCode)
                 {
-                    // You might want to add an ErrorMessage property to AccountViewDTO to convey this.
-                    ValidationMessage = errorMessage,
-                    IsSuccessful = false,
-                    FirstName = string.Empty,
-                    LastName = string.Empty,
-                    Email = string.Empty
-                };
+                    var error = await ReadErrorAsync(response);
+                    return ApiResponse<SignupResponseDTO>.Fail(error);
+                }
+
+                try
+                {
+                    var data = await response.Content.ReadFromJsonAsync<SignupResponseDTO>(JsonOptions);
+                    if (data == null)
+                    {
+                        logger.LogWarning("CreateAccountAdminAsync success payload was null");
+                        return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = "API returned success but no data." });
+                    }
+                    return ApiResponse<SignupResponseDTO>.Success(data);
+                }
+                catch (JsonException ex)
+                {
+                    var raw = await response.Content.ReadAsStringAsync();
+                    logger.LogError(ex, "Failed to deserialize signup success payload. Raw: {Raw}", raw);
+                    return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = $"Unexpected response format: {raw}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unexpected error in CreateAccountAdminAsync");
+                return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<SignupResponseDTO>> CreateAccountCustomerAsync(SignupRequestDTO signupRequest)
+        {
+            logger.LogDebug("CreateAccountCustomerAsync called for {Email}", signupRequest?.Email);
+            try
+            {
+                var response = await httpClient.PostAsJsonAsync("/account/register-admin", signupRequest);
+                if (response == null)
+                {
+                    logger.LogError("No response from CreateAccountCustomerAsync");
+                    return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = "No response from API." });
+                }
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await ReadErrorAsync(response);
+                    return ApiResponse<SignupResponseDTO>.Fail(error);
+                }
+
+                try
+                {
+                    var data = await response.Content.ReadFromJsonAsync<SignupResponseDTO>(JsonOptions);
+                    if (data == null)
+                    {
+                        logger.LogWarning("CreateAccountCustomerAsync success payload was null");
+                        return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = "API returned success but no data." });
+                    }
+                    return ApiResponse<SignupResponseDTO>.Success(data);
+                }
+                catch (JsonException ex)
+                {
+                    var raw = await response.Content.ReadAsStringAsync();
+                    logger.LogError(ex, "Failed to deserialize signup (customer) success payload. Raw: {Raw}", raw);
+                    return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = $"Unexpected response format: {raw}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unexpected error in CreateAccountCustomerAsync");
+                return ApiResponse<SignupResponseDTO>.Fail(new ErrorDTO { Message = ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<CustomerAccountViewDTO>> ViewCustomerProfile()
+        {
+            logger.LogDebug("ViewCustomerProfile called");
+            try
+            {
+                var response = await httpClient.GetAsync("account/customer-profile");
+                if (response == null)
+                {
+                    logger.LogError("No response from ViewCustomerProfile");
+                    return ApiResponse<CustomerAccountViewDTO>.Fail(new ErrorDTO { Message = "No response from API." });
+                }
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await ReadErrorAsync(response);
+                    return ApiResponse<CustomerAccountViewDTO>.Fail(error);
+                }
+
+                try
+                {
+                    var data = await response.Content.ReadFromJsonAsync<CustomerAccountViewDTO>(JsonOptions);
+                    if (data == null)
+                    {
+                        logger.LogWarning("ViewCustomerProfile returned null data");
+                        return ApiResponse<CustomerAccountViewDTO>.Fail(new ErrorDTO { Message = "API returned success but no data." });
+                    }
+                    return ApiResponse<CustomerAccountViewDTO>.Success(data);
+                }
+                catch (JsonException ex)
+                {
+                    var raw = await response.Content.ReadAsStringAsync();
+                    logger.LogError(ex, "Failed to deserialize customer profile payload. Raw: {Raw}", raw);
+                    return ApiResponse<CustomerAccountViewDTO>.Fail(new ErrorDTO { Message = $"Unexpected response format: {raw}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unexpected error in ViewCustomerProfile");
+                return ApiResponse<CustomerAccountViewDTO>.Fail(new ErrorDTO { Message = ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<AdminAccountViewDTO>> ViewAdminProfile()
+        {
+            logger.LogDebug("ViewAdminProfile called");
+            try
+            {
+                var response = await httpClient.GetAsync("account/admin-profile");
+                if (response == null)
+                {
+                    logger.LogError("No response from ViewAdminProfile");
+                    return ApiResponse<AdminAccountViewDTO>.Fail(new ErrorDTO { Message = "No response from API." });
+                }
+
+                if (!response.IsSuccessStatusCode)
+                {
+                    var error = await ReadErrorAsync(response);
+                    return ApiResponse<AdminAccountViewDTO>.Fail(error);
+                }
+
+                try
+                {
+                    var data = await response.Content.ReadFromJsonAsync<AdminAccountViewDTO>(JsonOptions);
+                    if (data == null)
+                    {
+                        logger.LogWarning("ViewAdminProfile returned null data");
+                        return ApiResponse<AdminAccountViewDTO>.Fail(new ErrorDTO { Message = "API returned success but no data." });
+                    }
+                    return ApiResponse<AdminAccountViewDTO>.Success(data);
+                }
+                catch (JsonException ex)
+                {
+                    var raw = await response.Content.ReadAsStringAsync();
+                    logger.LogError(ex, "Failed to deserialize admin profile payload. Raw: {Raw}", raw);
+                    return ApiResponse<AdminAccountViewDTO>.Fail(new ErrorDTO { Message = $"Unexpected response format: {raw}" });
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.LogError(ex, "Unexpected error in ViewAdminProfile");
+                return ApiResponse<AdminAccountViewDTO>.Fail(new ErrorDTO { Message = ex.Message });
             }
         }
     }

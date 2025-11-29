@@ -1,4 +1,4 @@
-using Bookify.BusinessLayer.Services;
+using Bookify.BusinessLayer; // add this
 using Bookify.MVC.Contracts;
 using Bookify.MVC.Services;
 using Microsoft.Extensions.FileProviders;
@@ -12,13 +12,24 @@ namespace Bookify.MVC
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddBusinessLayer();
+
             builder.Services.AddHttpClient<IRoomServices, RoomServices>(c =>
             {
                 c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]);
             });
-            builder.Services.AddHttpClient<IAccountService, AccountService>(c =>
+            builder.Services.AddHttpClient<IAccountService, AccountService>(client =>
             {
-                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]);
+                client.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); // Your API base URL
+            })
+            .ConfigurePrimaryHttpMessageHandler(() =>
+            {
+                // !!! WARNING: THIS IS FOR DEVELOPMENT/LOCALHOST ONLY !!!
+                return new HttpClientHandler
+                {
+                    // This tells the HttpClient to ignore the self-signed certificate error.
+                    ServerCertificateCustomValidationCallback = (message, cert, chain, errors) => true
+                };
             });
             //builder.Services.AddScoped<IImageStorageService,LocalImageStorageService>();
             var app = builder.Build();
@@ -101,6 +112,7 @@ namespace Bookify.MVC
                         context.Response.ContentType = "text/html";
                         await context.Response.SendFileAsync(indexFile);
                     });
+                    app.MapFallback("/api/{*path}", () => Results.NotFound());
 
                     app.MapFallback("/app/{*path}", async context =>
                     {

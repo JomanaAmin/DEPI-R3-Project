@@ -1,9 +1,11 @@
-﻿namespace Bookify.MVC.Models
+﻿using Bookify.BusinessLayer;
+
+namespace Bookify.MVC.Models
 {
     public class ErrorDTO
     {
-        public string ErrorMessage { get; set; }
-        public string ErrorType { get; set; }
+        public string Message { get; set; }
+        public ErrorType Type { get; set; }
 
     }
 }

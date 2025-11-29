@@ -1,9 +1,27 @@
-﻿<form action="/Account/Login" method="post">
+﻿@using Bookify.MVC.Models.AccountModels
+@model LoginRequestDTO
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<!-- Display ModelState errors -->
+<div style="color:red">
+    @Html.ValidationSummary(true)
+</div>
+
+<form asp-action="Login" asp-controller="Account" method="post">
     <label for="username">Username:</label>
-    <input type="text" id="username" name="Username" required>
+    <input asp-for="Username" id="username" />
+    <span asp-validation-for="Username" style="color:red"></span>
 
     <label for="password">Password:</label>
-    <input type="password" id="password" name="Password" required>
+    <input asp-for="Password" type="password" id="password" />
+    <span asp-validation-for="Password" style="color:red"></span>
 
     <button type="submit">Login</button>
 </form>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

@@ -15,7 +15,17 @@ namespace Bookify.API
             if (exception is CustomException customException) 
             {
                 var problemDetails = ErrorToProblemDetailsMapper.ToProblemDetails(customException.error);
+                // **<< THIS IS THE CRITICAL MISSING LINE >>**
+                // Set the HTTP response status code using the Status value from the ProblemDetails object.
+                httpContext.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
+
+                // Ensure the Content-Type is set for proper client parsing (though WriteAsJsonAsync often handles this)
+                httpContext.Response.ContentType = "application/problem+json";
+
+                // Write the body
                 await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
+
+                // Indicate that the exception has been handled
                 return true;
             }
             // For security, always return a generic 500 without internal details

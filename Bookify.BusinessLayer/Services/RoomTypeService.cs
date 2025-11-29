@@ -44,7 +44,7 @@ namespace Bookify.BusinessLayer.Services
             RoomType? roomType = await roomTypeRepository.Delete(roomTypeId);
             if (roomType == null)
             {
-                throw new Exception("Room type not found");
+                ExceptionFactory.CreateRoomTypeNotFoundException();
             }
             await unitOfWork.SaveChangesAsync();
             return MapToRoomTypeDetailsDTO(roomType);
@@ -56,7 +56,7 @@ namespace Bookify.BusinessLayer.Services
             RoomType? roomType = await roomTypeRepository.GetByIdAsync(roomTypeUpdateDTO.RoomTypeId);
             if (roomType == null)
             {
-                throw new Exception($"Room type with ID: {roomTypeUpdateDTO.RoomTypeId} not found");
+                ExceptionFactory.CreateRoomTypeNotFoundException();
             }
             roomType.TypeName = roomTypeUpdateDTO.TypeName;
             roomType.Description = roomTypeUpdateDTO.Description;
@@ -75,7 +75,7 @@ namespace Bookify.BusinessLayer.Services
             RoomType? roomType = await roomTypeRepository.GetByIdAsync(roomTypeId);
             if (roomType==null)
             {
-                throw new Exception("Room type not found");
+                ExceptionFactory.CreateRoomTypeNotFoundException();
             }
             return MapToRoomTypeDetailsDTO(roomType);
         }
