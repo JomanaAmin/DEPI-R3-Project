@@ -34,12 +34,12 @@ namespace Bookify.BusinessLayer.Services
             // 1️ Validate the customer exists
             var customer = await customerProfileRepository.GetAllAsQueryable().AsNoTracking().Where(c => c.CustomerId == customerId).Include(c=>c.User).FirstOrDefaultAsync();
             if (customer == null)
-                throw new Exception("Customer not found.");
+                ExceptionFactory.ProfileNotFoundException("Customer");
 
             // 2️ Validate cart items and calculate totals
             bool validCart = await cartService.ValidateCartItemsAsync(customerId);
             if (!validCart)
-                throw new Exception("Cart contains invalid items.");
+                ExceptionFactory.CartInvalidItemsException();
 
             var cart = await cartService.GetCartByUserIdAsync(customerId);
             // 3️ Create Stripe line items
@@ -102,6 +102,8 @@ namespace Bookify.BusinessLayer.Services
             catch (StripeException e)
             {
                 // Invalid signature
+                Error error = new Error("Unauthorized Error", $"{msg}", ErrorType.Unauthorized);
+                //throw new CustomException(error);
                 throw new Exception($"Stripe webhook signature verification failed: {e.Message}");
             }
 

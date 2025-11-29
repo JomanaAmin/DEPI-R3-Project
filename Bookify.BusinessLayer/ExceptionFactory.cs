@@ -18,11 +18,6 @@ namespace Bookify.BusinessLayer
             Error error = new Error("Validation Error", "Cart item not found", ErrorType.Validation);
             throw new CustomException(error);
         }
-        public static void CreateCustomerNotFoundException()
-        {
-            Error error = new Error("Validation Error", "Customer not found", ErrorType.Validation);
-            throw new CustomException(error);
-        }
         public static void CreateRoomNotFoundException()
         {
             Error error = new Error("Validation Error", "Room not found", ErrorType.Validation);
@@ -56,6 +51,21 @@ namespace Bookify.BusinessLayer
         public static void UnauthorizedException(string msg)
         {
             Error error = new Error("Unauthorized Error", $"{msg}", ErrorType.Unauthorized);
+            throw new CustomException(error);
+        }
+        public static void Exception(string msg)
+        {
+            Error error = new Error("Unauthorized Error", $"{msg}", ErrorType.Unauthorized);
+            throw new CustomException(error);
+        }
+        public static void CartInvalidItemsException()
+        {
+            Error error = new Error("Validation Error", "Cart contains invalid items.", ErrorType.Validation);
+            throw new CustomException(error);
+        }
+        public static void LoginFailedException()
+        {
+            Error error = new Error("Validation Error", "Invalid login. Try again.", ErrorType.Validation);
             throw new CustomException(error);
         }
     }
