@@ -35,7 +35,7 @@ namespace Bookify.BusinessLayer.Services
             RoomType? roomType = await roomTypeRepository.GetByIdAsync(roomCreateDTO.RoomTypeId);
             if (roomType == null) 
             {
-                throw new Exception($"Room Type {roomCreateDTO.RoomTypeId} not found");
+                ExceptionFactory.CreateRoomNotFoundException();
             }
             Room room = new Room 
             {
@@ -58,7 +58,7 @@ namespace Bookify.BusinessLayer.Services
         public async Task DeleteRoomAsync(int roomId)
         {
             Room? room = await roomRepository.Delete(roomId);
-            if(room == null) throw new Exception("Room not found");
+            if (room == null) ExceptionFactory.CreateRoomNotFoundException();
             await unitOfWork.SaveChangesAsync();
         }
         //public async Task<RoomDetailsDTO> DeleteRoomAsync(int roomId)
@@ -74,7 +74,7 @@ namespace Bookify.BusinessLayer.Services
             Room room= await roomRepository.GetByIdAsync(roomUpdateDTO.RoomId);
             if (room == null) 
             {
-                throw new Exception($"Room with ID: {roomUpdateDTO.RoomId} not found");
+                ExceptionFactory.CreateRoomNotFoundException();
             }
             room.RoomTypeId = roomUpdateDTO.RoomTypeId;
             room.Floor= roomUpdateDTO.Floor;
@@ -138,29 +138,7 @@ namespace Bookify.BusinessLayer.Services
             return rooms;
         }
 
-        //public async Task<RoomDetailsDTO> ViewRoomDetails(int roomId)
-        //{
-        //    RoomDetailsDTO? room = await roomRepository.GetAllAsQueryable().Select(
-        //        r=> new RoomDetailsDTO 
-        //        {
-        //            RoomId = r.RoomId,
-        //            RoomTypeId = r.RoomTypeId,
-        //            RoomTypeName = r.RoomType.TypeName,
-        //            PricePerNight = r.RoomType.PricePerNight,
-        //            Floor =  r.Floor,
-        //            BuildingNumber = r.BuildingNumber,
-        //            Status = r.Status,
-        //            RoomType = r.RoomType,
-        //            Images= r.RoomImages.Select(
-        //                img=> img.ImageUrl
-        //                ).ToList()
-
-        //        }
-        //        ).SingleOrDefaultAsync(r=>r.RoomId== roomId);
-        //    if (room == null) throw new Exception("Room ID does not exist");
-        //    return room;
-
-        //}
+       
 
         public async Task<RoomDetailsDTO> ViewRoomDetails(int roomId)
         {
@@ -191,7 +169,7 @@ namespace Bookify.BusinessLayer.Services
 
                 }
                 ).SingleOrDefaultAsync(r => r.RoomId == roomId);
-            if (room == null) throw new Exception("Room ID does not exist");
+            if (room == null) ExceptionFactory.CreateRoomNotFoundException();
             return room;
 
         }

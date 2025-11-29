@@ -46,7 +46,7 @@ namespace Bookify.BusinessLayer.Services
             bool emailExists = await EmailExistsAsync(baseUserCreateDTO.Email);
             if (emailExists)
             {
-                throw new Exception("Email already in use.");
+                ExceptionFactory.EmailAlreadyInUseException();
             }
             BaseUser user = new BaseUser
             {
@@ -56,7 +56,7 @@ namespace Bookify.BusinessLayer.Services
             var result = await userManager.CreateAsync(user, baseUserCreateDTO.Password);
             if (!result.Succeeded)
             {
-                throw new Exception("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+                ExceptionFactory.UserCreationException();
             }
             await FinalizeRegistrationAsync(user, baseUserCreateDTO);
         }
@@ -66,21 +66,24 @@ namespace Bookify.BusinessLayer.Services
             BaseUser? user = await GetUserByEmailAsync(baseUserChangePasswordDTO.Email);
             if (user == null)
             {
-                throw new Exception("User not found.");
+                ExceptionFactory.IncorrectEmailException();
             }
             var passwordCheck = await userManager.CheckPasswordAsync(user, baseUserChangePasswordDTO.CurrentPassword);
             if (!passwordCheck)
             {
-                throw new Exception("Current password is incorrect.");
+                Error error = new Error("Validation Error", "Current password is incorrect.", ErrorType.Validation);
+                throw new CustomException(error);
             }
             if (baseUserChangePasswordDTO.NewPassword != baseUserChangePasswordDTO.ConfirmNewPassword)
             {
-                throw new Exception("New password and confirmation do not match.");
+                Error error = new Error("Validation Error", "New password and confirmation do not match.", ErrorType.Validation);
+                throw new CustomException(error);
             }
             var result = await ChangePasswordAsync(user, baseUserChangePasswordDTO.CurrentPassword,baseUserChangePasswordDTO.NewPassword);
             if (!result.Succeeded) 
             {
-                throw new Exception("Failed to change password");
+                Error error = new Error("Internal Error", "Failed to change password", ErrorType.Internal);
+                throw new CustomException(error);
             }
             return await GetAdminProfileAsync(user.Id);
         }
@@ -99,7 +102,7 @@ namespace Bookify.BusinessLayer.Services
             .SingleOrDefaultAsync();
             if (adminProfileViewDTO == null)
             {
-                throw new Exception("Admin profile not found.");
+                ExceptionFactory.ProfileNotFoundException("Admin");
             }
             return adminProfileViewDTO;
         }
@@ -109,7 +112,8 @@ namespace Bookify.BusinessLayer.Services
             AdminProfile? adminProfile = await adminProfileRepository.GetByIdAsync(adminId);
             if (adminProfile == null)
             {
-                throw new Exception("admin profile not found.");
+                ExceptionFactory.ProfileNotFoundException("Admin");
+
             }
             adminProfile.FirstName = updateDto.FirstName;
             adminProfile.LastName = updateDto.LastName;
@@ -123,7 +127,8 @@ namespace Bookify.BusinessLayer.Services
             AdminProfile? adminProfile = await adminProfileRepository.GetAllAsQueryable().AsNoTracking().Where(cp => cp.AdminId == adminId).Include(cp => cp.User).SingleOrDefaultAsync();
             if (adminProfile == null)
             {
-                throw new Exception("admin profile not found.");
+                ExceptionFactory.ProfileNotFoundException("Admin");
+
             }
 
             AdminProfile? toBeDeletedResult = await adminProfileRepository.Delete(adminId);
@@ -131,7 +136,8 @@ namespace Bookify.BusinessLayer.Services
             var success = await DeleteByUserAsync(adminProfile.User);
             if (!success)
             {
-                throw new Exception("Could not delete associated user account.");
+                Error error = new Error("Internal Server Error", "Could not delete associated user account.", ErrorType.Internal);
+                throw new CustomException(error);
             }
             await unitOfWork.SaveChangesAsync();
         }

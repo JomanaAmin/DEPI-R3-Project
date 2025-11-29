@@ -1,5 +1,4 @@
 ﻿using Bookify.BusinessLayer.Contracts;
-using Bookify.BusinessLayer.CustomExceptions;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -22,24 +21,7 @@ namespace Bookify.API.Controllers
         public async Task<IActionResult> AdminLogin(LoginRequestDTO loginRequest)
         {
             string defaultMessage = "Invalid credentials, please try again.";
-            try
-            {
-                return Ok(await jwtService.Authenticate(loginRequest));
-            }
-            catch (EmailInvalidException ex)
-            {
-                return Unauthorized(defaultMessage);
-            }
-            catch (IncorrectPasswordException ex)
-            {
-                return Unauthorized(defaultMessage);
-            }
-            catch (Exception ex)
-            {
-                return StatusCode((int)HttpStatusCode.InternalServerError,
-                                  new { message = "An unexpected server error occurred." });
-            }
-
+            return Ok(await jwtService.Authenticate(loginRequest));
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Bookify.MVC.Contracts;
+using Bookify.MVC.Models;
 using Bookify.MVC.Models.AccountModels;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
@@ -27,23 +28,20 @@ namespace Bookify.MVC.Controllers
         }
 
         [HttpPost]
-        //[ValidateAntiForgeryToken]
-        public async Task<IActionResult> Login(LoginRequestDTO model, string? returnUrl = null)
+        public async Task<IActionResult> Login(LoginRequestDTO model)
         {
-            ViewData["ReturnUrl"] = returnUrl;
-            if (!ModelState.IsValid)
-                return View(model);
+            ApiResponse<LoginResponseDTO> result = await accountService.LoginAsync(model);
 
-            var result = await accountService.LoginAsync(model);
-            if (result.IsSuccessful)
+            if (result.IsSuccess)
             {
-                if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                    return Redirect(returnUrl);
-
+                // Success: result.Data contains LoginResponseDTO
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError(string.Empty, result.ValidationMessage ?? "Login failed");
+            // Error: result.Error contains ErrorDTO
+            ModelState.AddModelError("", result.Error.Message);
+
+            // Return the same form so user can fix input
             return View(model);
         }
 
@@ -57,17 +55,18 @@ namespace Bookify.MVC.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterCustomer(SignupRequestDTO model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            ApiResponse<SignupResponseDTO> result = await accountService.CreateAccountCustomerAsync(model);
 
-            var result = await accountService.CreateAccountCustomerAsync(model);
-            if (result.IsSuccessful)
+            if (result.IsSuccess)
             {
-                // AccountService attempts automatic login and sets cookie.
+                // Success: result.Data contains LoginResponseDTO
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError(string.Empty, result.ValidationMessage ?? "Registration failed");
+            // Error: result.Error contains ErrorDTO
+            ModelState.AddModelError("", result.Error.Message);
+
+            // Return the same form so user can fix input
             return View(model);
         }
 
@@ -78,25 +77,25 @@ namespace Bookify.MVC.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterAdmin(SignupRequestDTO model)
         {
-            if (!ModelState.IsValid)
-                return View(model);
+            ApiResponse<SignupResponseDTO> result = await accountService.CreateAccountAdminAsync(model);
 
-            var result = await accountService.CreateAccountAdminAsync(model);
-            if (result.IsSuccessful)
+            if (result.IsSuccess)
             {
-                // AccountService attempts automatic login and sets cookie.
+                // Success: result.Data contains LoginResponseDTO
                 return RedirectToAction("Index", "Home");
             }
 
-            ModelState.AddModelError(string.Empty, result.ValidationMessage ?? "Registration failed");
+            // Error: result.Error contains ErrorDTO
+            ModelState.AddModelError("", result.Error.Message);
+
+            // Return the same form so user can fix input
             return View(model);
+        
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public IActionResult Logout()
         {
             // Remove the stored JWT cookie used by the AuthTokenHandler
@@ -107,40 +106,33 @@ namespace Bookify.MVC.Controllers
         [HttpGet]
         public async Task<IActionResult> CustomerProfile()
         {
-            try
-            {
-                var profile = await accountService.ViewCustomerProfile();
-                return View(profile);
-            }
-            catch (AuthenticationException)
-            {
-                // Session expired / unauthorized -> redirect to login
-                return RedirectToAction("Login");
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction("Index", "Home");
-            }
+          
+            var response = await accountService.ViewCustomerProfile();
+            if (response.IsSuccess)
+                return View(response);
+            ModelState.AddModelError("",response.Error.Message);
+            return View(response);
+      
+            
         }
 
-        [HttpGet]
-        public async Task<IActionResult> AdminProfile()
-        {
-            try
-            {
-                var profile = await accountService.ViewAdminProfile();
-                return View(profile);
-            }
-            catch (AuthenticationException)
-            {
-                return RedirectToAction("Login");
-            }
-            catch (Exception ex)
-            {
-                TempData["Error"] = ex.Message;
-                return RedirectToAction("Index", "Home");
-            }
-        }
+        //[HttpGet]
+        //public async Task<IActionResult> AdminProfile()
+        //{
+        //    try
+        //    {
+        //        var profile = await accountService.ViewAdminProfile();
+        //        return View(profile);
+        //    }
+        //    catch (AuthenticationException)
+        //    {
+        //        return RedirectToAction("Login");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        TempData["Error"] = ex.Message;
+        //        return RedirectToAction("Index", "Home");
+        //    }
+        //}
     }
 }

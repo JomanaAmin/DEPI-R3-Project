@@ -33,7 +33,9 @@ namespace Bookify.BusinessLayer.Services
             CartViewDTO cart = cartService.GetCartByUserIdAsync(customerId).Result;
             if (!cart.IsValid)
             {
-                throw new InvalidOperationException($"Cannot create booking from cart: {cart.ValidationMessage}");
+
+                Error error = new Error("Validation Error", $"Cannot create booking from cart: {cart.ValidationMessage}", ErrorType.Validation);
+                throw new CustomException(error);
             }
             Booking newBooking =  new Booking
             {

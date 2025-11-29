@@ -1,5 +1,4 @@
 ﻿using Bookify.BusinessLayer.Contracts;
-using Bookify.BusinessLayer.CustomExceptions;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Bookify.DAL.Entities;
 using Bookify.DAL.Repositories;
@@ -34,16 +33,16 @@ namespace Bookify.BusinessLayer.Services
         public async Task<LoginResponseDTO> Authenticate(LoginRequestDTO loginRequestDTO)
         {
             if (loginRequestDTO == null)
-                throw new Exception("Invalid Login");
+                ExceptionFactory.LoginFailedException();
             if (string.IsNullOrWhiteSpace(loginRequestDTO.Username) || (string.IsNullOrWhiteSpace(loginRequestDTO.Password)))
-                throw new Exception("Invalid Login");
+                ExceptionFactory.LoginFailedException();
             BaseUser? user = await userManager.FindByEmailAsync(loginRequestDTO.Username);
             if (user == null)
-                throw new EmailInvalidException();
+                ExceptionFactory.IncorrectEmailException();
             var valid = await userManager.CheckPasswordAsync(user, loginRequestDTO.Password);
             if (!valid)
-                throw new IncorrectPasswordException();
-    
+                ExceptionFactory.UnauthorizedException("Invalid credentials, please try again.");
+
             var issuer = configuration["JwtConfig:Issuer"];
             var audience = configuration["JwtConfig:Audience"];
             var key = configuration["JwtConfig:Key"];

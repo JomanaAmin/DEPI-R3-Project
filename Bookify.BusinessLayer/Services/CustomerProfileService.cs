@@ -1,5 +1,4 @@
 ﻿using Bookify.BusinessLayer.Contracts;
-using Bookify.BusinessLayer.CustomExceptions;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs.AdminProfileDTOs;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs.CustomerProfileDTOs;
@@ -51,7 +50,7 @@ namespace Bookify.BusinessLayer.Services
             bool emailExists=await EmailExistsAsync(baseUserCreateDTO.Email);
             if (emailExists)
             {
-                throw new EmailInvalidException("Email already in use.");
+                ExceptionFactory.EmailAlreadyInUseException();
             }
             BaseUser user = new BaseUser
             {
@@ -61,7 +60,7 @@ namespace Bookify.BusinessLayer.Services
             var result = await userManager.CreateAsync(user,baseUserCreateDTO.Password);
             if (!result.Succeeded)
             {
-                throw new Exception("User creation failed: " + string.Join(", ", result.Errors.Select(e => e.Description)));
+                ExceptionFactory.UserCreationException();
             }
             await FinalizeRegistrationAsync(user,baseUserCreateDTO);
         }
@@ -75,7 +74,7 @@ namespace Bookify.BusinessLayer.Services
             BaseUser? user = await GetUserByEmailAsync(baseUserChangePasswordDTO.Email);
             if (user == null)
             {
-                throw new Exception("User not found.");
+                ExceptionFactory.ProfileNotFoundException("Customer");
             }
             var passwordCheck = await userManager.CheckPasswordAsync(user, baseUserChangePasswordDTO.CurrentPassword);
             if (!passwordCheck)
@@ -109,7 +108,7 @@ namespace Bookify.BusinessLayer.Services
                 .SingleOrDefaultAsync();
             if (customerProfileViewDTO == null) 
             {
-                throw new Exception("Customer profile not found.");
+                ExceptionFactory.ProfileNotFoundException("Customer");
             }
             return customerProfileViewDTO;
         }
@@ -119,7 +118,7 @@ namespace Bookify.BusinessLayer.Services
             CustomerProfile? customerProfile = await customerProfileRepository.GetByIdAsync(customerId);
             if (customerProfile == null)
             {
-                throw new Exception("Customer profile not found.");
+                ExceptionFactory.ProfileNotFoundException("Customer");
             }
             customerProfile.FirstName = updateDto.FirstName;
             customerProfile.LastName = updateDto.LastName;
@@ -137,11 +136,13 @@ namespace Bookify.BusinessLayer.Services
             }
             
             CustomerProfile? toBeDeletedResult = await customerProfileRepository.Delete(customerId);
-            if (toBeDeletedResult == null) throw new Exception("Customer profile not found");
-            var success=await DeleteByUserAsync(customerProfile.User);
+            if (toBeDeletedResult == null) 
+                ExceptionFactory.ProfileNotFoundException("Customer");
+
+            var success =await DeleteByUserAsync(customerProfile.User);
             if (!success) 
             {
-                throw new Exception("Could not delete associated user account.");
+                ExceptionFactory.ProfileNotFoundException("Customer");
             }
             await unitOfWork.SaveChangesAsync();
         }
