@@ -40,16 +40,9 @@ namespace Bookify.BusinessLayer.Services
 
             if (customer == null)
             {
-                throw new Exception("Customer not found");
+                ExceptionFactory.ProfileNotFoundException("Customer");
             } //this customer has no account! ask them to create one.
 
-            //Room? room = await roomRepository.GetByIdAsync(cartItemDTO.RoomId);
-            //if (room == null)
-            //{
-            //    throw new Exception("Room not found");
-            //} //the room they are trying to book does not exist.
-            //decimal subtotal = (room?.RoomType?.PricePerNight ?? 0) * nights;
-            //this method fetches entire room object including room type to get price per night.
             int cartId= await customerRepository.GetAllAsQueryable().AsNoTracking().Where(c=>c.CustomerId==customerId).Select(c=>c.Cart.CartId).SingleOrDefaultAsync();
             Console.WriteLine($"Cart ID: {cartId}");
 
@@ -57,14 +50,15 @@ namespace Bookify.BusinessLayer.Services
             if (pricePerNight == 0)
             {
                 // This handles both RoomId=0 and a valid ID for a room that doesn't exist.
-                throw new Exception($"Room with ID {cartItemDTO.RoomId} not found or price is invalid.");
+                ExceptionFactory.CreateRoomNotFoundException();
             }
             Console.WriteLine($"pricePerNight: {pricePerNight}");
 
             //This is more efficient as it only fetches the price per night instead of entire room object.
             if (cartItemDTO.CheckInDate > cartItemDTO.CheckOutDate) 
             {
-                throw new Exception("Check-out date must be after check-in date");
+                Error error = new Error("Validation Error", "Check-out date must be after check-in date", ErrorType.Validation);
+                throw new CustomException(error);
             }
             int nights = (cartItemDTO.CheckOutDate - cartItemDTO.CheckInDate).Days;
             decimal subtotal = pricePerNight * nights;
@@ -88,7 +82,7 @@ namespace Bookify.BusinessLayer.Services
             CustomerProfile? customer = await customerRepository.GetByIdAsync(customerId);
             if (customer == null)
             {
-                throw new Exception("Customer not found");
+                ExceptionFactory.ProfileNotFoundException("Customer");
             }
             CartViewDTO? cartViewDTO = await cartRepo.GetAllAsQueryable().AsNoTracking().Where(
                 c => c.CustomerId == customerId
@@ -118,7 +112,7 @@ namespace Bookify.BusinessLayer.Services
                 ).FirstOrDefaultAsync();
             if (cartViewDTO == null)
             {
-                throw new Exception("Cart not found");
+                ExceptionFactory.CreateCartNotFoundException();
             }
             if (!cartViewDTO.Items.Any()) 
             {
@@ -142,10 +136,6 @@ namespace Bookify.BusinessLayer.Services
         {
             validateCustomerId(customerId, cartItemId);
             CartItem? cartItem = await cartItemRepo.Delete(cartItemId);
-            //if (cartItem == null)
-            //{
-            //    throw new Exception("Cart item not found");
-            //} already checked above
             await _unitOfWork.SaveChangesAsync();
             return await GetCartByUserIdAsync(customerId);
         }
@@ -157,7 +147,8 @@ namespace Bookify.BusinessLayer.Services
             CartItem? cartItem = await cartItemRepo.GetByIdAsync(cartDTO.CartItemId);
             if (cartItem == null)
             {
-                throw new Exception("Cart item not found");
+                ExceptionFactory.CreateCartItemNotFoundException();
+
             }
             int nights = (cartDTO.NewCheckOutDate - cartDTO.NewCheckInDate).Days;
             cartItem.CheckInDate = cartDTO.NewCheckInDate;
@@ -176,15 +167,16 @@ namespace Bookify.BusinessLayer.Services
             CustomerProfile? customer = await customerRepository.GetByIdAsync(customerId);
             if (customer == null)
             {
-                throw new Exception("Customer not found");
+                ExceptionFactory.ProfileNotFoundException("Customer");
+
             }
             int? cartId = await cartRepo.GetAllAsQueryable().AsNoTracking().Where(c => c.CustomerId == customerId).Select(c => c.CartId).FirstOrDefaultAsync();
             
             if (cartId == null)
             {
-                throw new Exception("Cart not found");
+                ExceptionFactory.CreateCartNotFoundException();
             }
-            
+
             var c = await cartItemRepo.GetAllAsQueryable().AsNoTracking().Where(ci => ci.CartId == cartId).ToListAsync();
             bool isValid = true;
             foreach (var cartItem in c) 
@@ -204,7 +196,8 @@ namespace Bookify.BusinessLayer.Services
             CustomerProfile? customer = await customerRepository.GetByIdAsync(customerId);
             if (customer == null)
             {
-                throw new Exception("Customer not found");
+                ExceptionFactory.ProfileNotFoundException("Customer");
+
             }
             bool valid = await ValidateCartItemsAsync(customerId);
             if (!valid) 
@@ -225,7 +218,7 @@ namespace Bookify.BusinessLayer.Services
             }).FirstOrDefaultAsync();
             if (checkoutSummary == null) 
             {
-                throw new Exception("Cart not found");
+                ExceptionFactory.CreateCartNotFoundException(); 
             }
             return checkoutSummary;
         }
@@ -237,12 +230,13 @@ namespace Bookify.BusinessLayer.Services
             CustomerProfile? customer = await customerRepository.GetByIdAsync(customerId);
             if (customer == null)
             {
-                throw new Exception("Customer not found");
+                ExceptionFactory.ProfileNotFoundException("Customer");
+
             }
             Cart? cart = await cartRepo.GetAllAsQueryable().AsNoTracking().Where(c => c.CustomerId == customerId).Include(c=>c.CartItems).SingleOrDefaultAsync();
             if (cart == null) 
             {
-                throw new Exception($"Cart for customer {customerId} not found");
+                ExceptionFactory.CreateCartNotFoundException();
             }
             //List<int> cartItemIds = await cartItemRepo.GetAllAsQueryable().AsNoTracking().Where(ci => ci.CartId == cartId).Select(ci => ci.CartItemId).ToListAsync();
             //foreach (int cartItemId in cartItemIds) 
@@ -262,11 +256,12 @@ namespace Bookify.BusinessLayer.Services
             string? fetchedCustomerId = cartItemRepo.GetAllAsQueryable().AsNoTracking().Where(ci => ci.CartItemId == cartItemId).Select(ci => ci.Cart.CustomerId).FirstOrDefault();
             if (fetchedCustomerId != customerId)
             {
-                throw new Exception("Unauthorized to perform this operation.");
+                ExceptionFactory.UnauthorizedException("Unauthorized to perform this operation.");
             }
             if (fetchedCustomerId==null)
             {
-                throw new Exception("Cart item not found or does not belong to the customer");
+                Error error = new Error("Validation Error", "Cart item not found or does not belong to the customer", ErrorType.Validation);
+                throw new CustomException(error);
             }
 
         }
@@ -278,14 +273,6 @@ namespace Bookify.BusinessLayer.Services
             .Where(bi => bi.CheckOutDate > checkIn && checkOut > bi.CheckInDate).AnyAsync(); //this checks if overlap exists, will return true if exists
             return !overlappingBookings; //means overlap=false, room is available or vice versa
         }
-        //public async Task CustomerExists(string customerId) 
-        //{
-        //    CustomerProfile? customer = await customerRepository.GetByIdAsync(customerId);
-        //        if (customer == null)
-        //        {
-        //            throw new Exception("Customer not found");
-        //}
-        //}
 
     }
 }
