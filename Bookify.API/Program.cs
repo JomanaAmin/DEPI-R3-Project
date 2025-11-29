@@ -18,11 +18,22 @@ namespace Bookify.API
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
-
-            builder.Services.AddControllers();
-            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
-            builder.Services.AddEndpointsApiExplorer();
+            // Add services to the container.
+            builder.Services.AddControllers();
+            // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+            builder.Services.AddEndpointsApiExplorer();
+            
+            // Add CORS to allow MVC frontend to access resources
+            builder.Services.AddCors(options =>
+            {
+                options.AddPolicy("AllowMVC", policy =>
+                {
+                    policy.WithOrigins("https://localhost:7149", "http://localhost:5088")
+                        .AllowAnyHeader()
+                        .AllowAnyMethod();
+                });
+            });
+            
             builder.Services.AddIdentity<BaseUser, IdentityRole>()
     .AddEntityFrameworkStores<BookifyDbContext>()
     .AddDefaultTokenProviders();
@@ -107,11 +118,11 @@ namespace Bookify.API
             });
 
 
-            //custom identity options for testing purposes
-            builder.Services.Configure<IdentityOptions>(options =>
+            //custom identity options for testing purposes
+            builder.Services.Configure<IdentityOptions>(options =>
             {
-                // WARNING: These settings are too weak for production. Use for testing only.
-                options.Password.RequireDigit = false;
+                // WARNING: These settings are too weak for production. Use for testing only.
+                options.Password.RequireDigit = false;
                 options.Password.RequireLowercase = false;
                 options.Password.RequireUppercase = false;
                 options.Password.RequireNonAlphanumeric = false;
@@ -120,16 +131,23 @@ namespace Bookify.API
             });
             var app = builder.Build();
 
-        
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
 
             app.UseHttpsRedirection();
+            
+            // Enable static file serving for images
+            app.UseStaticFiles();
+            
             app.UseRouting();
+            
+            // Use CORS policy
+            app.UseCors("AllowMVC");
+            
             app.UseAuthentication();
             app.UseAuthorization();
             app.MapControllers();

@@ -1,6 +1,5 @@
 ﻿using Bookify.DAL.Entities;
-using Bookify.MVC.Models;
-using Bookify.MVC.Models.RoomDTOs;
+using Bookify.BusinessLayer.DTOs.RoomDTOs;
 
 namespace Bookify.MVC.Contracts
 {
@@ -8,5 +7,6 @@ namespace Bookify.MVC.Contracts
     {
         Task<List<RoomViewDTO>> GetAllRoomsAsync(int? roomTypeId, RoomStatus? status);
         Task<RoomViewDTO?> GetRoomByIdAsync(int id);
+        Task<RoomDetailsDTO?> GetRoomDetailsAsync(int roomId);
     }
 }

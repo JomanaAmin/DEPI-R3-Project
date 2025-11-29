@@ -1,0 +1,29 @@
+@using Bookify.BusinessLayer.DTOs.RoomDTOs
+@model RoomDetailsDTO
+@{
+    ViewData["Title"] = $"Room #{Model.RoomId}";
+}
+<div class="container py-4">
+    <h2 class="mb-3">Room #@Model.RoomId - @Model.RoomTypeDetails.TypeName</h2>
+    <p><strong>Status:</strong> @Model.Status</p>
+    <p><strong>Floor:</strong> @Model.Floor</p>
+    <p><strong>Building:</strong> @Model.BuildingNumber</p>
+    <p><strong>Price per night:</strong> @Model.RoomTypeDetails.PricePerNight.ToString("C")</p>
+
+    <h5 class="mt-4">Images</h5>
+    <div class="row">
+        @if (Model.Images != null && Model.Images.Any())
+        {
+            foreach (var img in Model.Images)
+            {
+                <div class="col-md-3 mb-3">
+                    <img src="@img" alt="Room image" class="img-fluid rounded" />
+                </div>
+            }
+        }
+        else
+        {
+            <p>No images available.</p>
+        }
+    </div>
+</div>

@@ -1,0 +1,38 @@
+@using Bookify.BusinessLayer.DTOs.RoomDTOs
+@model IEnumerable<RoomViewDTO>
+@{
+    ViewData["Title"] = "Rooms";
+}
+
+<div class="container-xxl py-5">
+    <div class="container">
+        <div class="text-center">
+            <h6 class="section-title text-center text-primary text-uppercase">Our Rooms</h6>
+            <h1 class="mb-5">Explore Our <span class="text-primary text-uppercase">Rooms</span></h1>
+        </div>
+        <div class="row g-4">
+            @foreach (var room in Model)
+            {
+                var imageUrl = string.IsNullOrWhiteSpace(room.ThumbnailImage) ? "/img/placeholder-room.jpg" : room.ThumbnailImage;
+                <div class="col-lg-4 col-md-6">
+                    <div class="room-item shadow rounded overflow-hidden">
+                        <div class="position-relative">
+                            <img class="img-fluid" src="@imageUrl" alt="Room image">
+                        </div>
+                        <div class="p-4 mt-2">
+                            <div class="d-flex justify-content-between mb-3">
+                                <h5 class="mb-0">@room.RoomTypeName</h5>
+                                <span class="text-muted">@room.PricePerNight.ToString("C")</span>
+                            </div>
+                            <p class="text-body mb-3">Room #@room.RoomId - Status: @room.Status</p>
+                            <div class="d-flex justify-content-between">
+                                <a class="btn btn-sm btn-primary rounded py-2 px-4" asp-controller="RoomDetails" asp-action="Index" asp-route-id="@room.RoomId">View Detail</a>
+                                <a class="btn btn-sm btn-dark rounded py-2 px-4" asp-controller="RoomDetails" asp-action="Index" asp-route-id="@room.RoomId">Book Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</div>

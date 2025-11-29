@@ -11,15 +11,25 @@ namespace Bookify.MVC
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
+            
+            // Configure logging
+            builder.Logging.AddConsole();
+            builder.Logging.AddDebug();
+            
+            // Configure HttpClient for RoomServices with proper error handling
             builder.Services.AddHttpClient<IRoomServices, RoomServices>(c =>
             {
-                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:baseURL"]);
+                var baseAddress = builder.Configuration["ApiBaseAddress:BaseURL"];
+                Console.WriteLine($"Configuring RoomServices with BaseAddress: {baseAddress}");
+                c.BaseAddress = new Uri(baseAddress);
+                c.Timeout = TimeSpan.FromSeconds(30); // Add timeout
             });
+
             builder.Services.AddHttpClient<IAccountService, AccountService>(c =>
             {
-                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:baseURL"]);
+                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]);
             });
-            //builder.Services.AddScoped<IImageStorageService,LocalImageStorageService>();
+
             var app = builder.Build();
 
             if (!app.Environment.IsDevelopment())
@@ -45,10 +55,24 @@ namespace Bookify.MVC
                 if (File.Exists(Path.Combine(distPath, "index.html"))) staticRoot = distPath;
                 else if (File.Exists(Path.Combine(buildPath, "index.html"))) staticRoot = buildPath;
 
-                // make /app/page instead of /page only
                 app.Use(async (context, next) =>
                 {
                     var path = context.Request.Path.Value ?? string.Empty;
+                    if (path.Equals("/app/room.html", StringComparison.OrdinalIgnoreCase))
+                    {
+                        var id = context.Request.Query["id"].ToString();
+                        if (!string.IsNullOrWhiteSpace(id))
+                        {
+                            context.Response.Redirect($"/RoomDetails?id={id}", permanent: false);
+                            return;
+                        }
+                        else
+                        {
+                            // No id, go to rooms list
+                            context.Response.Redirect("/Rooms", permanent: false);
+                            return;
+                        }
+                    }
                     if (path.EndsWith(".html") && !path.StartsWith("/app/"))
                     {
                         var fileCandidate = Path.Combine(staticRoot, path.TrimStart('/'));
@@ -94,7 +118,6 @@ namespace Bookify.MVC
                 var indexFile = Path.Combine(staticRoot, "index.html");
                 if (File.Exists(indexFile))
                 {
-                    // opens frontend straight away
                     app.MapGet("/", async context =>
                     {
                         context.Response.ContentType = "text/html";
