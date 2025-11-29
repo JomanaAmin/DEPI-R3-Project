@@ -11,7 +11,7 @@ namespace Bookify.MVC
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
-            
+            builder.Services.AddScoped<RoomTypeService>();
             // Configure logging
             builder.Logging.AddConsole();
             builder.Logging.AddDebug();
@@ -25,10 +25,11 @@ namespace Bookify.MVC
                 c.Timeout = TimeSpan.FromSeconds(30); // Add timeout
             });
 
-            builder.Services.AddHttpClient<IAccountService, AccountService>(c =>
-            {
-                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]);
-            });
+      
+            builder.Services.AddHttpClient<RoomTypeService>(
+                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); });
+            builder.Services.AddHttpClient<AccountService>(
+                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); });
 
             var app = builder.Build();
 

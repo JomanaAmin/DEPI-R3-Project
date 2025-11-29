@@ -1,4 +1,5 @@
-﻿using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
+﻿using Bookify.BusinessLayer.Contracts;
+using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Bookify.DAL.Contexts;
 using Bookify.DAL.Entities;
 using Bookify.DAL.UnitOfWork;
@@ -11,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace Bookify.BusinessLayer.Services
 {
-    public abstract class BaseProfileService
+    public abstract class BaseProfileService : IBaseProfileService
     {
         protected readonly IUnitOfWork unitOfWork;
         protected readonly UserManager<BaseUser> userManager;

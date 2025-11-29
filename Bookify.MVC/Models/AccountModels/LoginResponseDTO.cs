@@ -2,10 +2,8 @@
 {
     public class LoginResponseDTO
     {
-        public string Username { get; set; }
-        public bool IsSuccessful { get; set; }
-        public string ValidationMessage { get; set; }
-        public string AccessToken { get; set; } // The actual JWT
+        public string? Username { get; set; }
+        public string? AccessToken { get; set; }
         public DateTime Expiration { get; set; }
     }
 }
