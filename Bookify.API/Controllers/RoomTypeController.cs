@@ -27,16 +27,9 @@ namespace Bookify.API.Controllers
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> GetAllRoomTypes()
-        {
-            try
-            {
-                var response = await roomTypeService.ViewAllRoomTypes();
-                return Ok(response);
-            }
-            catch (Exception ex)
-            {
-                return NotFound(ex.Message);
-            }
+        {   
+            var response = await roomTypeService.ViewAllRoomTypes();
+            return Ok(response);
         }
         [Authorize(Roles = "Admin")]
         [HttpPost]
@@ -44,7 +37,6 @@ namespace Bookify.API.Controllers
         {
             var response = await roomTypeService.CreateRoomTypeAsync(roomTypeCreateDTO);
             return Ok(response);
-            //return Ok("Room created!"); 
         }
         [Authorize(Roles = "Admin")]
         [HttpPut]
@@ -52,14 +44,12 @@ namespace Bookify.API.Controllers
         {
             var response = await roomTypeService.UpdateRoomTypeAsync(roomTypeUpdateDTO);
             return Ok(response); 
-            //return Ok("Room updated!"); 
         }
         [Authorize(Roles ="Admin")]
         [HttpDelete("{id}")]
         public async Task<IActionResult> DeleteRoomType(int id)
         {
             return Ok(await roomTypeService.DeleteRoomTypeAsync(id)); 
-            //return Ok($"Room {id} deleted!"); 
         }
     }
 }

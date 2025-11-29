@@ -68,20 +68,9 @@ namespace Bookify.API.Controllers
         [HttpDelete("customer")]
         public async Task<IActionResult> DeleteCustomerProfile()
         {
-            try
-            {
-                var customerId = GetAuthenticatedUserId();
-                await customerProfileService.DeleteCustomerProfileAsync(customerId);
-                return Ok("Customer profile deleted successfully.");
-            }
-            catch (UnauthorizedAccessException ex)
-            {
-                return Unauthorized(ex.Message);
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(ex.Message);
-            }
+            var customerId = GetAuthenticatedUserId();
+            await customerProfileService.DeleteCustomerProfileAsync(customerId);
+            return Ok("Customer profile deleted successfully.");
         }
         [Authorize(Roles = "Admin")]
         [HttpDelete("admin")]
