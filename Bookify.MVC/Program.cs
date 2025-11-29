@@ -12,7 +12,6 @@ namespace Bookify.MVC
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
-            builder.Services.AddBusinessLayer();
 
             builder.Services.AddHttpClient<IRoomServices, RoomServices>(c =>
             {
