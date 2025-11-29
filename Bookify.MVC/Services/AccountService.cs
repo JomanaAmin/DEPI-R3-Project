@@ -1,4 +1,5 @@
 ﻿using Bookify.MVC.Contracts;
+using Bookify.MVC.Models;
 using Bookify.MVC.Models.AccountModels;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Identity.Client;
@@ -18,75 +19,18 @@ namespace Bookify.MVC.Services
             this.httpClient = httpClient;
             this.httpContextAccessor = httpContextAccessor;
         }
-        public async Task<LoginResponseDTO> LoginAsync(LoginRequestDTO loginRequestDTO)
+        public async Task<ApiResponse<LoginResponseDTO>> LoginAsync(LoginRequestDTO loginRequest)
         {
-
-            var response = await httpClient.PostAsJsonAsync("Login", loginRequestDTO);
+            var response = await httpClient.PostAsJsonAsync("/login", loginDto);
 
             if (!response.IsSuccessStatusCode)
             {
-                string errorMessage = "Login failed. Please try again.";
-
-                // Safe handling: response body may be empty or not JSON
-                var contentString = await response.Content.ReadAsStringAsync();
-                if (!string.IsNullOrWhiteSpace(contentString))
-                {
-                    try
-                    {
-                        var errorDto = JsonSerializer.Deserialize<AccountErrorDTO>(contentString, new JsonSerializerOptions
-                        {
-                            PropertyNameCaseInsensitive = true
-                        });
-                        if (errorDto?.Message != null)
-                        {
-                            errorMessage = errorDto.Message;
-                        }
-                        else
-                        {
-                            // fallback to raw content if no structured message
-                            errorMessage = contentString.Trim();
-                        }
-                    }
-                    catch (JsonException)
-                    {
-                        // Non-JSON response (HTML, empty, etc.) => fallback on status code
-                        if (response.StatusCode == HttpStatusCode.Unauthorized)
-                            errorMessage = "Invalid email or password.";
-                        else
-                            errorMessage = $"Login failed: {response.StatusCode}";
-                    }
-                }
-                else if (response.StatusCode == HttpStatusCode.Unauthorized)
-                {
-                    errorMessage = "Invalid email or password.";
-                }
-
-                return new LoginResponseDTO
-                {
-                    IsSuccessful = false,
-                    ValidationMessage = errorMessage
-                };
+                var error = await response.Content.ReadFromJsonAsync<ErrorDTO>();
+                return ApiResponse<LoginResponseDTO>.Fail(error);
             }
 
-            var loginResponse = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
-            if (loginResponse != null && !string.IsNullOrEmpty(loginResponse.AccessToken))
-            {
-                // Store token in cookie for subsequent requests
-                httpContextAccessor.HttpContext.Response.Cookies.Append(
-                    "AuthToken",
-                    loginResponse.AccessToken,
-                    new CookieOptions { HttpOnly = true, Secure = true, SameSite = SameSiteMode.Strict }
-                );
-
-                loginResponse.IsSuccessful = true;
-                return loginResponse;
-            }
-
-            return new LoginResponseDTO
-            {
-                IsSuccessful = false,
-                ValidationMessage = "Login succeeded but received no token."
-            };
+            var data = await response.Content.ReadFromJsonAsync<LoginResponseDTO>();
+            return ApiResponse<LoginResponseDTO>.Success(data);
         }
 
         public async Task<SignupResponseDTO> CreateAccountAdminAsync(SignupRequestDTO signupRequest)

@@ -1,5 +1,4 @@
 ﻿using Bookify.BusinessLayer.Contracts;
-using Bookify.BusinessLayer.CustomExceptions;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Bookify.DAL.Entities;
 using Bookify.DAL.Repositories;

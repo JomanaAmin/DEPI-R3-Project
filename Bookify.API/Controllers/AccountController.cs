@@ -81,5 +81,5 @@ namespace Bookify.API.Controllers
             return Ok("Admin profile deleted successfully.");
         }
     }
-    }
 }
+

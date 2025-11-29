@@ -1,5 +1,4 @@
 ﻿using Bookify.BusinessLayer.Contracts;
-using Bookify.BusinessLayer.CustomExceptions;
 using Bookify.BusinessLayer.DTOs.BaseUserDTOs;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
