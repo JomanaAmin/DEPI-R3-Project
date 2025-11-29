@@ -1,3 +1,4 @@
+using Bookify.BusinessLayer.Services;
 using Bookify.MVC.Contracts;
 using Bookify.MVC.Services;
 using Microsoft.Extensions.FileProviders;
@@ -13,11 +14,11 @@ namespace Bookify.MVC
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddHttpClient<IRoomServices, RoomServices>(c =>
             {
-                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:baseURL"]);
+                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]);
             });
             builder.Services.AddHttpClient<IAccountService, AccountService>(c =>
             {
-                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:baseURL"]);
+                c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]);
             });
             //builder.Services.AddScoped<IImageStorageService,LocalImageStorageService>();
             var app = builder.Build();
@@ -27,7 +28,7 @@ namespace Bookify.MVC
                 app.UseExceptionHandler("/Home/Error");
                 app.UseHsts();
             }
-
+            //app.UseExceptionHandler();
             app.UseHttpsRedirection();
             app.UseStaticFiles();
 

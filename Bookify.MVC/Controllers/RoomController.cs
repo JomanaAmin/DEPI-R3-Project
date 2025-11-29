@@ -11,7 +11,7 @@ namespace Bookify.MVC.Controllers
         private readonly IRoomServices RoomServices;
         public RoomController(IRoomServices roomService)
         {
-            this.RoomServices = RoomServices;
+            this.RoomServices = roomService;
         }
 
         // Accept optional query parameters for filtering

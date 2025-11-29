@@ -1,6 +1,7 @@
 using Bookify;
 using Bookify.BusinessLayer;
 using Bookify.BusinessLayer.Contracts;
+using Bookify.BusinessLayer.Services;
 using Bookify.DAL.Contexts;
 using Bookify.DAL.Entities;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
@@ -19,14 +20,18 @@ namespace Bookify.API
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+            builder.Services.AddExceptionHandler<AppExceptionHandler>();
+            builder.Services.AddProblemDetails();
 
-            builder.Services.AddControllers();
+            builder.Services.AddControllers();
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddIdentity<BaseUser, IdentityRole>()
     .AddEntityFrameworkStores<BookifyDbContext>()
     .AddDefaultTokenProviders();
-           
+
+
+
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -119,10 +124,11 @@ namespace Bookify.API
                 options.SignIn.RequireConfirmedEmail = false;
             });
             var app = builder.Build();
+            app.UseExceptionHandler();
 
-        
-            // Configure the HTTP request pipeline.
-            if (app.Environment.IsDevelopment())
+
+            // Configure the HTTP request pipeline.
+            if (app.Environment.IsDevelopment())
             {
                 app.UseSwagger();
                 app.UseSwaggerUI();

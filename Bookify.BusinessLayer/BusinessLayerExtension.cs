@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web.Http.ExceptionHandling;
 
 namespace Bookify.BusinessLayer
 {
@@ -22,7 +23,7 @@ namespace Bookify.BusinessLayer
             service.AddScoped<IBookingService, BookingService>();
             service.AddScoped<IAdminProfileService, AdminProfileService>();
             service.AddScoped<IImageStorageService,ImageStorageService>();
-            
+
             return service;
         }
     }
