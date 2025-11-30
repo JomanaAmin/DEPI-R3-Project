@@ -14,11 +14,11 @@ namespace Bookify.MVC.Controllers
             this.RoomServices = roomService;
         }
 
-        // Accept optional query parameters for filtering
+        // take optional query 
         public async Task<IActionResult> Index(int? roomTypeId, RoomStatus? status)
         {
             var rooms = await RoomServices.GetAllRoomsAsync(roomTypeId, status);
-            return View(rooms); // Pass data to the view
+            return View(rooms); // Pass data 
         }
     }
 }
