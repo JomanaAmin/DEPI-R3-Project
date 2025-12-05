@@ -1,7 +1,5 @@
-using Bookify.DAL.Entities; // for RoomStatus
 using Bookify.MVC.Contracts; // IRoomServices
 using Microsoft.AspNetCore.Mvc;
-using Bookify.BusinessLayer.DTOs.RoomDTOs; // RoomViewDTO
 
 namespace Bookify.MVC.Controllers
 {
@@ -15,7 +13,7 @@ namespace Bookify.MVC.Controllers
 
         // /Rooms?roomTypeId=&status=
         [HttpGet]
-        public async Task<IActionResult> Index(int? roomTypeId, RoomStatus? status)
+        public async Task<IActionResult> Index(int? roomTypeId, Status? status)
         {
             var rooms = await _roomServices.GetAllRoomsAsync(roomTypeId, status);
             return View(rooms);

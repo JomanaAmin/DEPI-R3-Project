@@ -3,10 +3,10 @@ using Bookify.MVC.Models.AccountModels;
 
 namespace Bookify.MVC.Services
 {
-    public class AccountService
+    public class AccountMVCService
     {
         private readonly HttpClient httpClient;
-        public AccountService(HttpClient httpClient)
+        public AccountMVCService(HttpClient httpClient)
         {
             this.httpClient = httpClient;
         }

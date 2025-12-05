@@ -33,11 +33,6 @@ namespace Bookify.API
                         .AllowAnyMethod();
                 });
             });
-            
-            builder.Services.AddIdentity<BaseUser, IdentityRole>()
-    .AddEntityFrameworkStores<BookifyDbContext>()
-    .AddDefaultTokenProviders();
-           
 
             builder.Services.AddSwaggerGen(options =>
             {
@@ -69,8 +64,15 @@ namespace Bookify.API
                     }
                 );
             });
-            builder.Services.AddBusinessLayer();
             builder.Services.AddDataAccessLayer(builder.Configuration);
+
+            builder.Services.AddIdentity<BaseUser, IdentityRole>()
+            .AddEntityFrameworkStores<BookifyDbContext>()
+            .AddDefaultTokenProviders();
+
+
+            builder.Services.AddBusinessLayer();
+
             var validationKey = builder.Configuration["JwtConfig:Key"];
             Console.WriteLine($"[DEBUG] Validation Key Used: {validationKey}");
 

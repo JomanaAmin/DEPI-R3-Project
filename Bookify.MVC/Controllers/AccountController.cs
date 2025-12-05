@@ -1,15 +1,17 @@
 ﻿using Bookify.MVC.Models;
 using Bookify.MVC.Models.AccountModels;
 using Bookify.MVC.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Authentication;
+using System.Security.Claims;
 
 namespace Bookify.MVC.Controllers
 {
     public class AccountController : Controller
     {
-        private readonly AccountService accountService;
-        public AccountController(AccountService accountService)
+        private readonly AccountMVCService accountService;
+        public AccountController(AccountMVCService accountService)
         {
             this.accountService = accountService;
         }
@@ -26,18 +28,51 @@ namespace Bookify.MVC.Controllers
             return View();
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Login(LoginRequestDTO model)
+        //{
+        //    LoginResponseDTO? login = await accountService.LoginAsync(model);
+
+        //    if (login == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return Json(login);
+        //}
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginRequestDTO model)
         {
-            LoginResponseDTO? login = await accountService.LoginAsync(model);
+            var login = await accountService.LoginAsync(model);
 
             if (login == null)
             {
-                return NotFound();
+                ModelState.AddModelError("", "Invalid login");
+                return View(model);
             }
-            return Json(login);
-        }
 
+            // 1. Save JWT in secure cookie
+            Response.Cookies.Append("AccessToken", login.AccessToken, new CookieOptions
+            {
+                HttpOnly = true,
+                Secure = true,
+                SameSite = SameSiteMode.Strict,
+                Expires = login.Expiration
+            });
+
+            // 2. Create MVC authentication user
+                var claims = new List<Claim>
+                {
+                    new Claim(ClaimTypes.Name, login.Username)
+                };
+
+            var identity = new ClaimsIdentity(claims, "local");
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(principal);
+
+            return RedirectToAction("Index", "Home");
+        }
 
 
         [HttpGet]

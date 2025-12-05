@@ -1,7 +1,4 @@
-﻿using Bookify.DAL.Entities;
-using System.ComponentModel.DataAnnotations.Schema;
-
-namespace Bookify.MVC.Models.BookingModels
+﻿namespace Bookify.MVC.Models.BookingModels
 {
     public class BookingItemDTO
     {

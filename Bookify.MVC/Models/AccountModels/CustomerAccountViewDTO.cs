@@ -1,5 +1,4 @@
 ﻿
-using Bookify.MVC.Models.BookingModels;
 
 namespace Bookify.MVC.Models.AccountModels
 {

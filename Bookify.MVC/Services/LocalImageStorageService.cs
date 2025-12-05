@@ -1,12 +1,6 @@
-﻿using Bookify.BusinessLayer.Contracts;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Hosting; // Required for IWebHostEnvironment
-using System;
-using System.IO;
-using System.Threading.Tasks;
-namespace Bookify.MVC.Services
+﻿namespace Bookify.MVC.Services
 {
-    public class LocalImageStorageService : IImageStorageService
+    public class LocalImageStorageService 
     {
         private readonly IWebHostEnvironment _webHostEnvironment;
 

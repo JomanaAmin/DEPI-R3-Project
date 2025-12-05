@@ -1,9 +1,7 @@
-﻿using Bookify.DAL.Entities;
-using Bookify.MVC.Contracts;
-using Bookify.BusinessLayer.DTOs.RoomDTOs;
+﻿using Bookify.MVC.Contracts;
+using Bookify.MVC.Models.RoomDTOs;
 using Microsoft.AspNetCore.WebUtilities;
 using System.Net;
-using System.Net.Http.Json;
 
 namespace Bookify.MVC.Services
 {
@@ -19,7 +17,7 @@ namespace Bookify.MVC.Services
         }
 
         // Fetch all rooms with optional filters
-        public async Task<List<RoomViewDTO>> GetAllRoomsAsync(int? roomTypeId, RoomStatus? status)
+        public async Task<List<RoomViewDTO>> GetAllRoomsAsync(int? roomTypeId, Status? status)
         {
             var queryParams = new Dictionary<string, string>();
             if (roomTypeId.HasValue) queryParams["roomTypeId"] = roomTypeId.Value.ToString();

@@ -11,6 +11,8 @@ namespace Bookify.MVC
             var builder = WebApplication.CreateBuilder(args);
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
+            builder.Services.AddTransient<JwtHandler>();
+            builder.Services.AddScoped<CartMVCService>();
             builder.Services.AddScoped<RoomTypeService>();
             // Configure logging
             builder.Logging.AddConsole();
@@ -23,13 +25,21 @@ namespace Bookify.MVC
                 Console.WriteLine($"Configuring RoomServices with BaseAddress: {baseAddress}");
                 c.BaseAddress = new Uri(baseAddress);
                 c.Timeout = TimeSpan.FromSeconds(30); // Add timeout
-            });
+            }).AddHttpMessageHandler<JwtHandler>();
 
-      
+
+
             builder.Services.AddHttpClient<RoomTypeService>(
-                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); });
-            builder.Services.AddHttpClient<AccountService>(
-                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); });
+                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
+
+            builder.Services.AddHttpClient<AccountMVCService>(
+                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
+
+            builder.Services.AddAuthentication("Cookies")
+            .AddCookie("Cookies", opts =>
+            {
+                opts.LoginPath = "/Account/Login";
+            });
 
             var app = builder.Build();
 
@@ -134,6 +144,7 @@ namespace Bookify.MVC
             }
 
             app.UseRouting();
+            app.UseAuthentication();  
             app.UseAuthorization();
 
             app.MapControllerRoute(

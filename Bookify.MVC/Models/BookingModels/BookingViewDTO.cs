@@ -1,5 +1,4 @@
-﻿using Bookify.DAL.Entities;
-
+﻿
 namespace Bookify.MVC.Models.BookingModels
 {
     public class BookingViewDTO

@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using Bookify.BusinessLayer.Contracts;
-using Bookify.DAL.Entities;
-using Bookify.MVC.Contracts;
+﻿using Bookify.MVC.Contracts;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Bookify.MVC.Controllers
@@ -15,7 +12,7 @@ namespace Bookify.MVC.Controllers
         }
 
         // take optional query 
-        public async Task<IActionResult> Index(int? roomTypeId, RoomStatus? status)
+        public async Task<IActionResult> Index(int? roomTypeId, Status? status)
         {
             var rooms = await RoomServices.GetAllRoomsAsync(roomTypeId, status);
             return View(rooms); // Pass data 

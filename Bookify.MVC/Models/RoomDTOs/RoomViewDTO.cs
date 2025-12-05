@@ -1,5 +1,4 @@
-﻿using Bookify.DAL.Entities;
-
+﻿
 namespace Bookify.MVC.Models.RoomDTOs
 {
     public class RoomViewDTO
@@ -10,7 +9,7 @@ namespace Bookify.MVC.Models.RoomDTOs
 
         public decimal PricePerNight { get; set; }
 
-        public RoomStatus Status { get; set; } = RoomStatus.Available;
+        public Status Status { get; set; } = Status.Available;
         public string ThumbnailImage { get; set; }
     }
 }

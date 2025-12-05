@@ -7,11 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Bookify.API\Bookify.API.csproj" />
-    <ProjectReference Include="..\Bookify.BusinessLayer\Bookify.BusinessLayer.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
+    <Folder Include="Models\CartDTO\" />
     <Folder Include="Models\ViewModels\" />
     <Folder Include="wwwroot\app\" />
   </ItemGroup>
