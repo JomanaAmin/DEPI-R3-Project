@@ -1,17 +1,16 @@
 ﻿@model Bookify.MVC.Models.AccountModels.SignupRequestDTO
 
 @{
-    ViewData["Title"] = "RegisterCustomer";
+    ViewData["Title"] = "RegisterAdmin";
 }
 
-
-<h1>RegisterCustomer</h1>
+<h1>RegisterAdmin</h1>
 
 <h4>SignupRequestDTO</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="RegisterCustomer" method="post">
+        <form asp-action="RegisterAdmin">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Email" class="control-label"></label>

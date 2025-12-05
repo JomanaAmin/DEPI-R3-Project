@@ -1,48 +1,64 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Microsoft.AspNetCore.Diagnostics;
 using Bookify.BusinessLayer;
+
 namespace Bookify.API
 {
-    public class AppExceptionHandler : IExceptionHandler
+    public class AppExceptionHandler
     {
-        public async ValueTask<bool> TryHandleAsync(HttpContext httpContext, Exception exception, CancellationToken cancellationToken)
-        {
-            if (exception is CustomException customException) 
-            {
-                var problemDetails = ErrorToProblemDetailsMapper.ToProblemDetails(customException.error);
-                // **<< THIS IS THE CRITICAL MISSING LINE >>**
-                // Set the HTTP response status code using the Status value from the ProblemDetails object.
-                httpContext.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
+        private readonly RequestDelegate _next;
+        private readonly ILogger<AppExceptionHandler> _logger;
 
-                // Ensure the Content-Type is set for proper client parsing (though WriteAsJsonAsync often handles this)
+        // Middleware must have a constructor accepting RequestDelegate
+        public AppExceptionHandler(RequestDelegate next, ILogger<AppExceptionHandler> logger)
+        {
+            _next = next;
+            _logger = logger;
+        }
+
+        // Middleware must expose this method
+        public async Task InvokeAsync(HttpContext httpContext)
+        {
+            try
+            {
+                // Call the next middleware in the pipeline
+                await _next(httpContext);
+            }
+            catch (CustomException customException)
+            {
+                // Log the exception
+                _logger.LogWarning(customException, "A custom exception occurred.");
+
+                // Convert to ProblemDetails
+                var problemDetails = ErrorToProblemDetailsMapper.ToProblemDetails(customException.error);
+
+                // Set response
+                httpContext.Response.StatusCode = problemDetails.Status ?? StatusCodes.Status500InternalServerError;
                 httpContext.Response.ContentType = "application/problem+json";
 
-                // Write the body
-                await httpContext.Response.WriteAsJsonAsync(problemDetails, cancellationToken);
-
-                // Indicate that the exception has been handled
-                return true;
+                // Write JSON body
+                await httpContext.Response.WriteAsJsonAsync(problemDetails);
             }
-            // For security, always return a generic 500 without internal details
-            var genericProblem = new ProblemDetails
+            catch (Exception ex)
             {
-                Status = StatusCodes.Status500InternalServerError,
-                Title = "An internal server error occurred",
-                Detail = "A critical, unexpected issue prevented the request from being processed. Please try again later."
-            };
+                // Log unexpected exceptions
+                _logger.LogError(ex, "An unhandled exception occurred.");
 
-            // The Status property on ProblemDetails is nullable (int?), so we need a null check/coalesce before accessing Value
-            // In this case, we just assigned 500, so we can use .Value or the Status code directly.
-            httpContext.Response.StatusCode = genericProblem.Status ?? StatusCodes.Status500InternalServerError;
-            httpContext.Response.ContentType = "application/problem+json";
-            await httpContext.Response.WriteAsJsonAsync(genericProblem, cancellationToken);
+                // Generic ProblemDetails
+                var genericProblem = new ProblemDetails
+                {
+                    Status = StatusCodes.Status500InternalServerError,
+                    Title = "Internal Server Error",
+                    Detail = "An unexpected error occurred."
+                };
 
-            return true; // Indicate that we have handled the exception
+                httpContext.Response.StatusCode = genericProblem.Status ?? StatusCodes.Status500InternalServerError;
+                httpContext.Response.ContentType = "application/problem+json";
+                await httpContext.Response.WriteAsJsonAsync(genericProblem);
+            }
         }
     }
 }

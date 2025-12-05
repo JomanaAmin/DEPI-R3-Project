@@ -76,7 +76,8 @@ namespace Bookify.BusinessLayer.Services
             {
                 Username = user.UserName,
                 AccessToken = accessToken,
-                Expiration = expiryTime
+                Expiration = expiryTime,
+                Role= roles.FirstOrDefault() ?? string.Empty
             };
         }
     }

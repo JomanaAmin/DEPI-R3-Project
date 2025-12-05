@@ -1,5 +1,6 @@
 ﻿
 using Bookify.MVC.Models.AccountModels;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Bookify.MVC.Services
 {
@@ -23,14 +24,22 @@ namespace Bookify.MVC.Services
             return null;
             
         }
-        public async Task RegisterCustomerAsync(SignupRequestDTO signupRequest) 
+        public async Task<RequestResult> RegisterCustomerAsync(SignupRequestDTO signupRequest) 
         {
             var response = await httpClient.PostAsJsonAsync("account/register-customer", signupRequest);
-            if (!response.IsSuccessStatusCode)
+
+            if (response.IsSuccessStatusCode)
             {
-                throw new Exception("internal error exception");
+                return new RequestResult { Success = true };
             }
-            return;
+
+            var problem = await response.Content.ReadFromJsonAsync<ProblemDetails>();
+
+            return new RequestResult
+            {
+                Success = false,
+                ErrorMessage = problem?.Detail ?? "An unknown error occurred"
+            };
         }
     }
 }

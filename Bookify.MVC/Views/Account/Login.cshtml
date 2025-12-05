@@ -1,27 +1,38 @@
-﻿@using Bookify.MVC.Models.AccountModels
-@model LoginRequestDTO
+﻿@model Bookify.MVC.Models.AccountModels.LoginRequestDTO
 
 @{
     ViewData["Title"] = "Login";
 }
 
-<!-- Display ModelState errors -->
-<div style="color:red">
-    @Html.ValidationSummary(true)
+<h1>Login</h1>
+
+<h4>LoginRequestDTO</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Login">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Username" class="control-label"></label>
+                <input asp-for="Username" class="form-control" />
+                <span asp-validation-for="Username" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Password" class="control-label"></label>
+                <input asp-for="Password" class="form-control" />
+                <span asp-validation-for="Password" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Log in" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
 </div>
 
-<form asp-action="Login" asp-controller="Account" method="post">
-    <label for="username">Username:</label>
-    <input asp-for="Username" id="username" />
-    <span asp-validation-for="Username" style="color:red"></span>
-
-    <label for="password">Password:</label>
-    <input asp-for="Password" type="password" id="password" />
-    <span asp-validation-for="Password" style="color:red"></span>
-
-    <button type="submit">Login</button>
-</form>
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
 
 @section Scripts {
-    @await Html.PartialAsync("_ValidationScriptsPartial")
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

@@ -34,11 +34,20 @@ namespace Bookify.MVC
 
             builder.Services.AddHttpClient<AccountMVCService>(
                 c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
+            builder.Services.AddHttpClient<AdminService>(
+                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
 
             builder.Services.AddAuthentication("Cookies")
             .AddCookie("Cookies", opts =>
             {
                 opts.LoginPath = "/Account/Login";
+            });
+            builder.Services.AddDistributedMemoryCache(); // required for session
+            builder.Services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromHours(1); // how long the session lasts
+                options.Cookie.HttpOnly = true;             // security
+                options.Cookie.IsEssential = true;          // required for GDPR
             });
 
             var app = builder.Build();
@@ -142,6 +151,7 @@ namespace Bookify.MVC
                     });
                 }
             }
+            app.UseSession();
 
             app.UseRouting();
             app.UseAuthentication();  

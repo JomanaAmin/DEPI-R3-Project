@@ -72,6 +72,7 @@ namespace Bookify.API
 
 
             builder.Services.AddBusinessLayer();
+            builder.Services.AddProblemDetails(); 
 
             var validationKey = builder.Configuration["JwtConfig:Key"];
             Console.WriteLine($"[DEBUG] Validation Key Used: {validationKey}");
@@ -139,6 +140,7 @@ namespace Bookify.API
                 app.UseSwagger();
                 app.UseSwaggerUI();
             }
+            app.UseMiddleware<AppExceptionHandler>();
 
             app.UseHttpsRedirection();
             
@@ -152,6 +154,8 @@ namespace Bookify.API
             
             app.UseAuthentication();
             app.UseAuthorization();
+            //app.UseMiddleware<AppExceptionHandler>();
+
             app.MapControllers();
 
             app.Run();
