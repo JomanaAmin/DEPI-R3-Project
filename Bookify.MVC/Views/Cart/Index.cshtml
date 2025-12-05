@@ -1,0 +1,47 @@
+﻿@model Bookify.MVC.Models.CartDTO.CartViewDTO
+
+<h1>Your Cart</h1>
+
+@if (!Model.Items.Any())
+{
+    <p>Your cart is empty.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Cart Item ID</th>
+                <th>Room ID</th>
+                <th>Check-In</th>
+                <th>Check-Out</th>
+                <th>Nights</th>
+                <th>Price/Night</th>
+                <th>Subtotal</th>
+                <th>Valid?</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Items)
+            {
+                <tr>
+                    <td>@item.CartItemId</td>
+                    <td>@item.RoomId</td>
+                    <td>@item.CheckInDate.ToShortDateString()</td>
+                    <td>@item.CheckOutDate.ToShortDateString()</td>
+                    <td>@item.Nights</td>
+                    <td>@item.PricePerNight.ToString("C")</td>
+                    <td>@item.Subtotal.ToString("C")</td>
+                    <td>@item.IsValid</td>
+                    <td>
+                        @Html.ActionLink("Edit", "Edit", new { id = item.CartItemId }) |
+                        @Html.ActionLink("Delete", "Delete", new { id = item.CartItemId })
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <p><strong>Total:</strong> @Model.Total.ToString("C")</p>
+}

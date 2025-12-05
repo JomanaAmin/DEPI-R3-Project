@@ -12,7 +12,6 @@ namespace Bookify.MVC
             builder.Services.AddControllersWithViews();
             builder.Services.AddHttpContextAccessor();
             builder.Services.AddTransient<JwtHandler>();
-            builder.Services.AddScoped<CartMVCService>();
             builder.Services.AddScoped<RoomTypeService>();
             // Configure logging
             builder.Logging.AddConsole();
@@ -31,6 +30,8 @@ namespace Bookify.MVC
 
             builder.Services.AddHttpClient<RoomTypeService>(
                 c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
+            builder.Services.AddHttpClient<CartMVCService>(
+                c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
 
             builder.Services.AddHttpClient<AccountMVCService>(
                 c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
@@ -38,10 +39,14 @@ namespace Bookify.MVC
                 c=> { c.BaseAddress = new Uri(builder.Configuration["ApiBaseAddress:BaseURL"]); }).AddHttpMessageHandler<JwtHandler>();
 
             builder.Services.AddAuthentication("Cookies")
-            .AddCookie("Cookies", opts =>
-            {
-                opts.LoginPath = "/Account/Login";
-            });
+             .AddCookie("Cookies", options =>
+             {
+                 options.LoginPath = "/Account/Login"; 
+                 options.AccessDeniedPath = "/Account/AccessDenied";
+             });
+
+            builder.Services.AddAuthorization();
+
             builder.Services.AddDistributedMemoryCache(); // required for session
             builder.Services.AddSession(options =>
             {
@@ -151,10 +156,12 @@ namespace Bookify.MVC
                     });
                 }
             }
-            app.UseSession();
+            //app.UseSession();
 
             app.UseRouting();
-            app.UseAuthentication();  
+            app.UseAuthentication();
+
+
             app.UseAuthorization();
 
             app.MapControllerRoute(

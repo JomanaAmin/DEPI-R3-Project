@@ -24,21 +24,22 @@ namespace Bookify.MVC.Services
             return null;
             
         }
-        public async Task<RequestResult> RegisterCustomerAsync(SignupRequestDTO signupRequest) 
+        public async Task<RequestResult<object>> RegisterCustomerAsync(SignupRequestDTO signupRequest) 
         {
             var response = await httpClient.PostAsJsonAsync("account/register-customer", signupRequest);
 
             if (response.IsSuccessStatusCode)
             {
-                return new RequestResult { Success = true };
+                return new RequestResult<object> { Success = true };
             }
 
             var problem = await response.Content.ReadFromJsonAsync<ProblemDetails>();
 
-            return new RequestResult
+            return new RequestResult<object>
             {
                 Success = false,
-                ErrorMessage = problem?.Detail ?? "An unknown error occurred"
+                ErrorMessage = problem?.Detail ?? "An unknown error occurred",
+                Data=null
             };
         }
     }

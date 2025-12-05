@@ -1,9 +1,24 @@
+@using Bookify.MVC.Models.CartDTO
 @using Bookify.MVC.Models.RoomDTOs
 @model RoomDetailsDTO
-@{
-    ViewData["Title"] = $"Room #{Model.RoomId}";
-}
+
 <div class="container py-4">
+
+    @if (TempData["Success"] != null)
+    {
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            @TempData["Success"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+    @if (TempData["Error"] != null)
+    {
+        <div class="alert alert-danger alert-dismissible fade show" role="alert">
+            @TempData["Error"]
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    }
+
     <h2 class="mb-3">Room #@Model.RoomId - @Model.RoomTypeDetails.TypeName</h2>
     <p><strong>Status:</strong> @Model.Status</p>
     <p><strong>Floor:</strong> @Model.Floor</p>
@@ -26,4 +41,29 @@
             <p>No images available.</p>
         }
     </div>
+
+    <hr />
+    @if (User.Identity.IsAuthenticated && User.IsInRole("Customer"))
+    {
+        <form asp-controller="Cart" asp-action="AddToCart" method="post">
+            <input type="hidden" name="RoomId" value="@Model.RoomId" />
+
+            <div class="mb-3">
+                <label for="CheckInDate" class="form-label">Check-in Date</label>
+                <input type="date" class="form-control" id="CheckInDate" name="CheckInDate" required />
+            </div>
+
+            <div class="mb-3">
+                <label for="CheckOutDate" class="form-label">Check-out Date</label>
+                <input type="date" class="form-control" id="CheckOutDate" name="CheckOutDate" required />
+            </div>
+
+            <button type="submit" class="btn btn-primary">Add to Cart</button>
+        </form>
+    }
+    else
+    {
+        <p>Please <a asp-controller="Account" asp-action="Login">login</a> to add this room to your cart.</p>
+
+    }
 </div>
